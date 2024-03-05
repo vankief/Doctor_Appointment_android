@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Lịch chia theo tháng -->
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="302dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@color/white" />
+
+    <!-- Text "Select a time" -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select a time"
+        android:textSize="19dp"
+        android:textStyle="bold"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
+
+    <!-- RecyclerView để hiển thị danh sách thời gian -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/timeRecyclerView"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp" />
+
+    <!-- CardView chứa thông tin đặt lịch -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+
+        android:layout_marginEnd="24dp"
+        app:cardCornerRadius="8dp">
+
+        <!-- Layout ngang chứa Icon và thông tin đặt lịch -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <!-- Icon -->
+            <ImageView
+                android:id="@+id/offlineIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_mess" />
+
+            <!-- Layout chứa mô tả và giá tiền -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <!-- Tiêu đề -->
+                <TextView
+                    android:id="@+id/tvoffline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="Khám tại bệnh viện"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <!-- Mô tả -->
+                <TextView
+                    android:id="@+id/tvdescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Gặp bác sĩ tại phòng khám"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <!-- Phần giá tiền -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:text="200.000VND"
+                android:textSize="14sp"
+                android:textColor="@color/md_theme_light_primary"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+    <!-- CardView chứa thông tin đặt lịch -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        app:cardCornerRadius="8dp">
+
+        <!-- Layout ngang chứa Icon và thông tin đặt lịch -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <!-- Icon -->
+            <ImageView
+                android:id="@+id/videoIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_videocall" />
+
+            <!-- Layout chứa mô tả và giá tiền -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <!-- Tiêu đề -->
+                <TextView
+                    android:id="@+id/tvvideo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="Khám qua video call"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <!-- Mô tả -->
+                <TextView
+                    android:id="@+id/tvdescription1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Gặp bác sĩ qua video call"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <!-- Phần giá tiền -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:text="200.000VND"
+                android:textSize="14sp"
+                android:textColor="@color/md_theme_light_primary"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+    <!-- Button "Next" -->
+    <Button
+        android:id="@+id/nextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:backgroundTint="@color/md_theme_light_primary"
+        android:text="Tiếp tục"
+        android:textColor="@color/white" />
+
+</LinearLayout>

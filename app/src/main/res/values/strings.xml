@@ -1,0 +1,129 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">FatherOfApps</string>
+    <string name="default_notify_title">Message</string>
+    <string name="text_email">Email</string>
+    <string name="accessibility_service_description">Quyền kiểm soát app</string>
+    <string name="accessibility_service_label">AccessibilityService</string>
+    <string name="title_admin_permission">Đặt SafeKid làm một ứng dụng quản trị thiết bị</string>
+    <string name="detail_admin_permission">Làm vậy sẽ ngăn ứng dụng vô tình bị gỡ bỏ</string>
+    <string name="btn_accept">Kích hoạt</string>
+    <string name="title_draw_app_permission">Cho phép hiển thị trên các ứng dụng khác</string>
+    <string name="detail_draw_app_permission">Quyền này giúp bạn chặn các trò chơi và ứng dụng mà bạn đã cấm</string>
+    <string name="detail_other_permission">Cho phép truy cập các tính năng hệ thống</string>
+    <string name="detail_permisstion_enable_accessibility">Quyền này giúp app có thể theo dõi hoạt động trên điện thoại của con bạn</string>
+    <string name="title_permission_enable_accessibility">Cho phép trợ năng khởi chạy</string>
+
+    <string name="who_will_us">Who will use this device?</string>
+    <string name="label_text">Let\'s get started!</string>
+    <string name="parents">Parent</string>
+    <string name="the_device_">The device will have the ability to monitor your child’s actions, set rules, and receive notifications</string>
+    <string name="childs">Children</string>
+    <string name="child_details">Age restrictions and other settings will be limited to the device</string>
+    <string name="continue_">Continue !</string>
+    <string name="you_ve_set_">You\'ve set up an app for parents. Now let\'s move on to your child\'s device.</string>
+    <string name="completed_">Completed !!!</string>
+    <string name="welcome_">WELCOME !\n</string>
+    <string name="i_m_your_ch">I\'m your childcare assistant !!!</string>
+    <string name="welcome_2">WELCOME</string>
+    <string name="one_account">One account for parents and children</string>
+    <string name="you_need_to">You need to create a joint account for parent and child to remotely configure the child\'s device.</string>
+    <string name="create_an_account">Create an account!</string>
+    <string name="login">Login</string>
+
+    <string name="back">Back</string>
+    <string name="have_an_acc">Have an account?</string>
+    <string name="add_a_new_children">Add a new children\n</string>
+    <string name="add_children_s_name_and_birthday">Add children\'s name and birthday\n</string>
+    <string name="phone_number">Phone number</string>
+    <string name="sign_in_here">Sign in here</string>
+    <string name="remember_me">Remember me</string>
+    <string name="password">Password</string>
+    <string name="forgot_your_password">Forgot your password?</string>
+    <string name="don_t_have_an_account">Don’t have an account?</string>
+    <string name="sign_up_here">Sign up here</string>
+    <string name="one_account_for_parents_and_children">One account for parents and children</string>
+    <string name="i_can_show_">I can show your child\'s location on map !!!</string>
+    <string name="skip">Skip</string>
+    <string name="is_there_anything_else">Is there anything else?</string>
+    <string name="add_child">Add new child</string>
+    <string name="date">Date</string>
+    <string name="more">More</string>
+    <string name="help_you_se">Help you set up what is and what isn\'t allowed in child\'s world !</string>
+    <string name="share_repor">Share reports about child\'s habits show you really understand them</string>
+    <string name="let_s_get_started">Let\'s get started!</string>
+    <string name="so_now_we_c">So now we can send you notifications about your child\'s activities, location, and battery level.</string>
+    <string name="allow_sendi">Allow sending notifications</string>
+    <string name="next">Next!</string>
+    <string name="sometimes_i">Sometimes it will take time, \nso be patient and hold tight.</string>
+    <string name="th_ng_b_o_vi_ph_m">Thông Báo Vi Phạm</string>
+    <string name="exit">Exit</string>
+    <string name="search_apps">Search apps</string>
+    <string name="here_you_ha">Here you have the right to set up search activities on your child\'s website</string>
+    <string name="set_up_loca">Set up location</string>
+    <string name="position_mo">Position monitoring is disabled</string>
+    <string name="device_usag">Device usage</string>
+    <string name="statistics_">Statistics only</string>
+    <string name="apps">Apps</string>
+    <string name="application">Application control is enabled</string>
+    <string name="internet">Internet</string>
+    <string name="site_monito">Site monitoring is enabled</string>
+    <string name="activated">Activated</string>
+    <string name="set_the_times">Set the times and duration your child can use their device</string>
+    <string name="add_search_key_or_website">Add search key or website</string>
+    <string name="label">Activation code</string>
+    <string name="change_access_code">Change access code</string>
+    <string name="activation_code">Activation code</string>
+    <string name="child_s_profile">Child’s profile</string>
+    <string name="settings_warning">Settings warning</string>
+    <string name="settings_device">Settings device</string>
+    <string name="information_about_app">Information about app</string>
+    <string name="evaluate">Evaluate</string>
+    <string name="setting_permission">Setting permission</string>
+    <string name="pause_in_child_s_device">Pause in child’s device</string>
+    <string name="parent_key">Parent Key</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="name">Name:</string>
+    <string name="birthday">Birthday:</string>
+    <string name="key">Key:</string>
+    <string name="device">Device</string>
+    <string name="almost_read">Almost ready</string>
+    <string name="you_just_ne">You just need to give the app some permissions so it can work properly</string>
+    <string name="setting_child_s_device">Setting child’s device !</string>
+    <string name="allows_gran">Allows granting admin rights to the parent\'s device</string>
+    <string name="allows_auto">Allows automatic restart of the application when the application is shutdown</string>
+    <string name="allows_displ">Allows displaying the application above other applications</string>
+    <string name="allows_fath">Allows FatherOfApp to access this device\'s location</string>
+    <string name="allow">Allow!</string>
+    <string name="allows_disp">Allows displaying information about the current application your child\'s device is using</string>
+    <string name="allows_acce">Allows access to system features</string>
+    <string name="permission_">Permission needed</string>
+    <string name="skip_batter">- Skip battery optimization\n
+        - App notifications\n
+        - Location runs in the background</string>
+    <string name="search">Search</string>
+    <string name="allow_sending_notifications">Allow sending notifications</string>
+    <string name="position_monitoring_is_disabled">Position monitoring is disabled</string>
+    <string name="set_up_location">Set up location</string>
+    <string name="location_image">Location image</string>
+    <string name="device_usage">Device usage</string>
+    <string name="statistics_only">Statistics only</string>
+    <string name="control_keyword_blocking_and_web_filtering">Control keyword blocking and web filtering.</string>
+    <string name="listchild">List Child</string>
+    <string name="add_a_new_children_1">Add a new children</string>
+    <string name="no_one_but_you_can_change">No one but you can change this settings or get informations about your children.</string>
+    <string name="set_up_your">Set up your access code</string>
+    <string name="Please_enter_the_access_code">Please enter the access code</string>
+    <string name="doctorq">DoctorQ</string>
+    <string name="thousands_o">
+Thousands of doctors
+</string>
+    <string name="you_can_eas">
+You can easily contact with a thousands of doctors and contact for your needs.
+</string>
+    <string name="welcome_to_">
+Welcome to DoctorQ
+</string>
+    <string name="content_description_favorite">favorite</string>
+    <string name="content_description_notification">notification</string>
+
+</resources>
