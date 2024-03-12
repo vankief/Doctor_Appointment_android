@@ -29,6 +29,29 @@ class NetworkModule {
     fun providerMainSiteAPI(@Named("AuthSite") retrofit: Retrofit): AuthAPI {
         return retrofit.create(AuthAPI::class.java)
     }
+
+    @Provides
+    fun providerDoctorAPI(@Named("MainSite") retrofit: Retrofit): DoctorAPI {
+        return retrofit.create(DoctorAPI::class.java)
+    }
+
+    @Provides
+    fun providerPatientAPI(@Named("MainSite") retrofit: Retrofit): PatientAPI {
+        return retrofit.create(PatientAPI::class.java)
+    }
+
+    @Provides
+    fun providerSpecialistAPI(@Named("MainSite") retrofit: Retrofit): SpecialistAPI {
+        return retrofit.create(SpecialistAPI::class.java)
+    }
+
+    @Provides
+    fun providerPaymentAPI(@Named("MainSite") retrofit: Retrofit): PaymentAPI {
+        return retrofit.create(PaymentAPI::class.java)
+    }
+
+
+
     @Provides
     @Singleton
     @Named("AuthSite")
@@ -40,7 +63,6 @@ class NetworkModule {
             .baseUrl(BuildConfig.BASE_URL)
             .build()
     }
-
 
 
     @Provides

@@ -41,14 +41,11 @@ class RegisterFragment : BaseFragment() {
                 showValidationErrors(validationResult.second)
             }
             bindObservers()
-            navigationToHomeFragment()
         }
 
         dataBinding.txtLogin.setOnClickListener {
             navigationToLoginFragment()
         }
-
-
     }
 
     private fun validateUserInput(): Pair<Boolean, String> {

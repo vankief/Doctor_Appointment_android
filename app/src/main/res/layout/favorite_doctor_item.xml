@@ -10,14 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp">
+        >
 
         <!-- Phần 1: Ảnh đại diện -->
         <ImageView
             android:id="@+id/doctorImageView"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/person"
+            android:src="@drawable/ic_img_doctor"
             android:scaleType="centerCrop"
             android:layout_marginEnd="16dp"/>
 
