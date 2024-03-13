@@ -20,7 +20,7 @@
         >
 
         <ImageView
-            android:id="@+id/imgAvatar"
+            android:id="@+id/imgAvatarDoctor"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:src="@drawable/ic_img_doctor"

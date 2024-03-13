@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_homeFragment_to_specialistFragment"
             app:destination="@id/specialistFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_fragmentTopDoctor"
+            app:destination="@id/fragmentTopDoctor" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -62,6 +65,12 @@
         android:name="com.fatherofapps.androidbase.ui.specialist.SpecialistFragment"
         android:label="SpecialistFragment"
         tools:layout="@layout/fragment_specialist_doctor"
+        />
+    <fragment
+        android:id="@+id/fragmentTopDoctor"
+        android:name="com.fatherofapps.androidbase.ui.doctor.topdoctor.FragmentTopDoctor"
+        android:label="FragmentTopDoctor"
+        tools:layout="@layout/fragment_specialist_list_top_doctor"
         />
 
 </navigation>

@@ -14,6 +14,7 @@ import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.activities.MainActivity
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.response.SpecialistDoctor
+import com.fatherofapps.androidbase.data.response.TopDoctor
 import com.fatherofapps.androidbase.databinding.FragmentHomeBinding
 import com.fatherofapps.androidbase.helper.preferences.PreferenceManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -26,8 +27,10 @@ class HomeFragment @Inject constructor(
 
     private lateinit var dataBinding: FragmentHomeBinding
     private var  specialistDoctor: List<SpecialistDoctor> = emptyList()
+    private var topdoctor: List<TopDoctor> = emptyList()
     private val viewModel by viewModels<HomeViewModel>()
-    private var adapter: SpecialistAdapter? = null
+    private var specialistAdapter: SpecialistAdapter? = null
+    private var topDoctorAdapter: TopDoctorAdapter? = null
 
 
     companion object {
@@ -40,6 +43,7 @@ class HomeFragment @Inject constructor(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getDoctorsBySpecialist()
+        viewModel.getTopDoctors()
 
     }
     override fun onCreateView(
@@ -59,7 +63,7 @@ class HomeFragment @Inject constructor(
         hideOpenTopAppBar(true)
         hideOpenNavigation(true)
         setupObservers()
-
+        setupObserver()
         dataBinding.tvViewAllSpecialty.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToSpecialistFragment()
             navigateToPage(action)
@@ -68,13 +72,23 @@ class HomeFragment @Inject constructor(
 
     }
 
-    private fun setupRecyclerView() {
-        adapter = SpecialistAdapter(specialistDoctor)
+    private fun setupSpecialistRecyclerView() {
+        specialistAdapter = SpecialistAdapter(specialistDoctor)
         dataBinding.rvSpecialty.apply {
             layoutManager = LinearLayoutManager(context,
                 LinearLayoutManager.HORIZONTAL,
                 false) }
-        dataBinding.rvSpecialty.adapter = adapter
+        dataBinding.rvSpecialty.adapter = specialistAdapter
+
+    }
+
+    private fun setupTopDoctorRecyclerView() {
+        topDoctorAdapter = TopDoctorAdapter(topdoctor)
+        dataBinding.rvTopDoctor.apply {
+            layoutManager = LinearLayoutManager(context,
+                LinearLayoutManager.HORIZONTAL,
+                false) }
+        dataBinding.rvTopDoctor.adapter = topDoctorAdapter
     }
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -84,10 +98,30 @@ class HomeFragment @Inject constructor(
                 showErrorMessage("Network error")
             } else {
                 if (response.isSuccess()) {
-                    Log.d(TAG, "setupObservers: ${response.data}}")
+                    Log.d(TAG, "Specialist: ${response.data}}")
                     response.data?.let { data ->
                         specialistDoctor = data
-                        setupRecyclerView()
+                        setupSpecialistRecyclerView()
+                    }
+
+                } else {
+                    showErrorMessage(response.checkTypeErr())
+                }
+            }
+        })
+    }
+
+    @SuppressLint("FragmentLiveDataObserve")
+    private fun setupObserver() {
+        viewModel.topDoctorResponse.observe(viewLifecycleOwner, Observer { response ->
+            if (response == null) {
+                showErrorMessage("Network error")
+            } else {
+                if (response.isSuccess()) {
+                    Log.d(TAG, "Top Doctor: ${response.data}}")
+                    response.data?.let { data ->
+                        topdoctor = data
+                        setupTopDoctorRecyclerView()
                     }
 
                 } else {
