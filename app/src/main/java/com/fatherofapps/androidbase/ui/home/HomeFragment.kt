@@ -69,6 +69,11 @@ class HomeFragment @Inject constructor(
             navigateToPage(action)
         }
 
+        dataBinding.tvViewAllTopDoctor.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToFragmentTopDoctor()
+            navigateToPage(action)
+        }
+
 
     }
 

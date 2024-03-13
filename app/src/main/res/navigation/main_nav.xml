@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_homeFragment_to_fragmentTopDoctor"
             app:destination="@id/fragmentTopDoctor" />
+        <action
+            android:id="@+id/action_homeFragment_to_fragmentDoctorDetail"
+            app:destination="@id/fragmentDoctorDetail" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -71,6 +74,32 @@
         android:name="com.fatherofapps.androidbase.ui.doctor.topdoctor.FragmentTopDoctor"
         android:label="FragmentTopDoctor"
         tools:layout="@layout/fragment_specialist_list_top_doctor"
+        />
+    <fragment
+        android:id="@+id/fragmentDoctorDetail"
+        android:name="com.fatherofapps.androidbase.ui.appointment.doctordetail.FragmentDoctorDetail"
+        android:label="FragmentDoctorDetail"
+        tools:layout="@layout/fragment_doctor_detail"
+        >
+        <action
+            android:id="@+id/action_fragmentDoctorDetail_to_fragmentBookingAppointment"
+            app:destination="@id/fragmentBookingAppointment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentBookingAppointment"
+        android:name="com.fatherofapps.androidbase.ui.appointment.booking.FragmentBookingAppointment"
+        android:label="FragmentBookingAppointment"
+        tools:layout="@layout/fragment_book_appointment_step_2"
+        >
+        <action
+            android:id="@+id/action_fragmentBookingAppointment_to_fragmentBookingAppointmentStep3"
+            app:destination="@id/fragmentBookingAppointmentStep3" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentBookingAppointmentStep3"
+        android:name="com.fatherofapps.androidbase.ui.appointment.booking_step3.FragmentBookingAppointmentStep3"
+        android:label="FragmentBookingAppointmentStep3"
+        tools:layout="@layout/fragment_book_appointment_step_03"
         />
 
 </navigation>

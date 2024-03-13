@@ -44,7 +44,7 @@
                 android:layout_weight="1"
                 android:text="Xem tất cả"
                 android:textAlignment="textEnd"
-                android:textColor="@color/md_theme_light_primary" />
+                android:textColor="@color/md_theme_light_onPrimary" />
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSpecialty"
@@ -79,7 +79,7 @@
                 android:layout_weight="1"
                 android:text="Xem tất cả"
                 android:textAlignment="textEnd"
-                android:textColor="@color/md_theme_light_primary" />
+                android:textColor="@color/md_theme_light_onPrimary" />
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTopDoctor"
