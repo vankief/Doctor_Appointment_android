@@ -1,5 +1,7 @@
 package com.fatherofapps.androidbase.data.apis
 
+import com.fatherofapps.androidbase.data.models.Patient
+import com.fatherofapps.androidbase.data.request.updatePatient
 import com.fatherofapps.androidbase.data.response.ConfigResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -13,6 +15,6 @@ interface PatientAPI {
     suspend fun getPatientById(@Body id: String): Response<ConfigResponse<Any>>
 
     @PATCH("/patient/:id")
-    suspend fun updatePatient(): Response<ConfigResponse<Any>>
+    suspend fun updatePatient(@Body data: updatePatient): Response<ConfigResponse<Patient>>
 
 }

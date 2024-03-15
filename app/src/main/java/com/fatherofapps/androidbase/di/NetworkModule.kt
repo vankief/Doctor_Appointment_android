@@ -1,6 +1,7 @@
 package com.fatherofapps.androidbase.di
 
 import com.fatherofapps.androidbase.BuildConfig
+import com.fatherofapps.androidbase.common.AuthInterceptor
 import com.fatherofapps.androidbase.data.apis.*
 
 import com.squareup.moshi.Moshi
@@ -13,6 +14,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -92,16 +94,19 @@ class NetworkModule {
             .build()
     }
 
-    @Provides
     @Singleton
-    fun provideOKHttpClient(
-        httpLoggingInterceptor: HttpLoggingInterceptor
+    @Provides
+    fun provideOkHttpClient(
+        interceptor: AuthInterceptor,
     ): OkHttpClient {
-        val builder = OkHttpClient.Builder()
-
-        builder.interceptors().add(httpLoggingInterceptor)
-        return builder.build()
+        return OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .callTimeout(1, TimeUnit.MINUTES)
+            .connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(1, TimeUnit.MINUTES)
+            .writeTimeout(1, TimeUnit.MINUTES).build()
     }
+
 
     @Provides
     @Singleton

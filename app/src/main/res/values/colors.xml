@@ -89,4 +89,9 @@
     <color name="md_theme_dark_outlineVariant">#45464F</color>
     <color name="md_theme_dark_scrim">#000000</color>
     <color name="background_color">#E6EDFE</color>
+
+    // Color Specialist
+    <color name="color_specialist_01">#FF1843</color>
+    <color name="color_specialist_02">#6D5FFD</color>
+    <color name="color_specialist_03">#FFB800</color>
 </resources>

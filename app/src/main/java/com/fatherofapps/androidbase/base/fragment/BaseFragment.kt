@@ -12,6 +12,9 @@ import com.fatherofapps.androidbase.base.viewmodel.BaseViewModel
 import com.fatherofapps.androidbase.common.EventObserver
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 open class BaseFragment : Fragment() {
     protected fun hideOpenNavigation(isShow: Boolean = false) {
@@ -24,6 +27,13 @@ open class BaseFragment : Fragment() {
                 requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
             bottomNavigationView.visibility = View.GONE
         }
+    }
+
+    protected fun convertDateFormat(inputDate: String): String {
+        val inputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+        val date: Date = inputFormat.parse(inputDate) ?: Date()
+        return outputFormat.format(date)
     }
 
     protected fun hideOpenTopAppBar(isShow: Boolean) {

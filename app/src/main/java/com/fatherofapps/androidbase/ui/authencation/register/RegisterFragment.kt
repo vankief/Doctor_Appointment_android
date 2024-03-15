@@ -1,6 +1,7 @@
 package com.fatherofapps.androidbase.ui.authencation.register
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +26,9 @@ class RegisterFragment : BaseFragment() {
         dataBinding = FragmentSignupBinding.inflate(inflater, container, false)
         dataBinding.lifecycleOwner = viewLifecycleOwner
         return dataBinding.root
+    }
+    companion object {
+        private const val TAG = "RegisterFragment"
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,7 +76,8 @@ class RegisterFragment : BaseFragment() {
                 it.data?.accessToken?.let { it1 -> viewModel.saveAccessAndRefreshToken(it1,
                     it.data.refreshToken
                 ) }
-                navigationToHomeFragment()
+
+                navigationToProfileFragment()
             } else {
                 if(it?.message != null) {
                     showErrorMessage(it.message)
@@ -87,8 +92,9 @@ class RegisterFragment : BaseFragment() {
         findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
     }
 
-    private fun navigationToHomeFragment() {
-        findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToHomeFragment())
+    private fun navigationToProfileFragment(){
+        val action = RegisterFragmentDirections.actionRegisterFragmentToFragementCreateProfile()
+        findNavController().navigate(action)
     }
 
 }

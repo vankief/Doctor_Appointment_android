@@ -1,5 +1,6 @@
 package com.fatherofapps.androidbase.ui.authencation.register
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.fatherofapps.androidbase.base.viewmodel.BaseViewModel
@@ -37,15 +38,15 @@ class RegisterViewModel @Inject constructor(
     ): Pair<Boolean, String> {
         var result = Pair(true, "")
         if (emailAddress.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            result = Pair(false, "Please provide the credentials")
+            result = Pair(false, "Vui lòng nhập đầy đủ thông tin")
         } else if (!emailAddress.isEmpty() && !android.util.Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches()) {
-            result = Pair(false, "Email is invalid")
+            result = Pair(false, "Email không hợp lệ")
         } else if (!password.isEmpty() && password.length <= 6) {
-            result = Pair(false, "Password length should be greater than 6")
+            result = Pair(false, "Mật khẩu phải lớn hơn 6 ký tự")
         } else if (!confirmPassword.isEmpty() && confirmPassword.length <= 6) {
-            result = Pair(false, "Confirm Password length should be greater than 6")
+            result = Pair(false, "Mật khẩu phải lớn hơn 6 ký tự")
         } else if (!password.isEmpty() && !confirmPassword.isEmpty() && !password.equals(confirmPassword)) {
-            result = Pair(false, "Password and Confirm Password should be same")
+                result = Pair(false, "Mật khẩu không khớp")
         }
         return result
     }
@@ -54,6 +55,5 @@ class RegisterViewModel @Inject constructor(
         preferenceManager.save(ACCESS_TOKEN, accessToken)
         preferenceManager.save(REFRESH_TOKEN, refreshToken)
         preferenceManager.save(IS_FIRST_TIME, true)
-        preferenceManager.save(IS_LOGGED_IN, true)
     }
 }

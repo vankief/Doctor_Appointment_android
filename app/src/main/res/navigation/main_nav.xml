@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_fragementCreateProfile"
+            app:destination="@id/createProfilefragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -44,8 +47,8 @@
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
         <action
-            android:id="@+id/action_registerFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            android:id="@+id/action_registerFragment_to_fragementCreateProfile"
+            app:destination="@id/createProfilefragment" />
     </fragment>
     <fragment
         android:id="@+id/welcomeFragment"
@@ -101,5 +104,15 @@
         android:label="FragmentBookingAppointmentStep3"
         tools:layout="@layout/fragment_book_appointment_step_03"
         />
+    <fragment
+        android:id="@+id/createProfilefragment"
+        android:name="com.fatherofapps.androidbase.ui.authencation.profile.CreateProfileFragement"
+        android:label="FragementCreateProfile"
+        tools:layout="@layout/fragment_profile"
+        >
+        <action
+            android:id="@+id/action_fragementCreateProfile_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 
 </navigation>

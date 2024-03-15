@@ -1,5 +1,6 @@
 package com.fatherofapps.androidbase.ui.home
 
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -7,6 +8,8 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.data.response.TopDoctor
 import java.lang.Math.min
@@ -38,13 +41,20 @@ class TopDoctorAdapter(
 
     override fun onBindViewHolder(holder: TopDoctorViewHolder, position: Int) {
         val doctor = topDoctor[position]
-        // Sử dụng Glide để hiển thị hình ảnh từ đường dẫn URL
-        Glide.with(holder.itemView.context)
-            .load(doctor.img)  // Đường dẫn URL hình ảnh của bác sĩ
-            .override(160,160)
+        // Sử dụng Glide để preload hình ảnh từ đường dẫn URL
+        val preloadRequest: RequestBuilder<Drawable> = Glide.with(holder.itemView.context)
+            .load(doctor.img)
+            .diskCacheStrategy(DiskCacheStrategy.DATA)
+            .override(160, 160)
             .centerCrop()
-            .placeholder(R.drawable.ic_avt_doctor)
-            .into(holder.imgDoctor)  // ImageView để hiển thị hình ảnh
+        preloadRequest.preload()
+
+        // Sau khi preload, hiển thị hình ảnh trong onBindViewHolder
+        Glide.with(holder.itemView.context)
+            .load(doctor.img)
+            .override(160, 160)
+            .centerCrop()
+            .into(holder.imgDoctor)
         holder.txtDoctorName.text = doctor.name
         holder.txtDoctorSpecialization.text = doctor.specialist
     }

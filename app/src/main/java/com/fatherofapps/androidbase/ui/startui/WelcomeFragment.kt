@@ -23,10 +23,10 @@ class WelcomeFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        isLogin = viewModel.checkLogin()
-        if(isLogin){
-            navigateToHome()
-        }
+//        isLogin = viewModel.checkLogin()
+//        if(isLogin){
+//            navigateToHome()
+//        }
     }
 
     override fun onCreateView(
@@ -50,6 +50,20 @@ class WelcomeFragment : BaseFragment() {
             navigateToPage(WelcomeFragmentDirections.actionWelcomeFragmentToRegisterFragment())
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.checkLogined()
+        Log.d(TAG, "onResume: ")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.checkLogined()
+        Log.d(TAG, "onStart: ")
+    }
+
+
 
 
     fun  navigateToHome() {

@@ -22,6 +22,7 @@ class LoginFragment @Inject constructor()  : BaseFragment() {
     private lateinit var dataBinding: FragmentLoginBinding
     private val viewModel by viewModels<LoginViewModel>()
     private var isLogin: Boolean = false
+    private var isFirstTime : Boolean = false
 
     @Inject
     lateinit var preferenceManager: PreferenceManager
@@ -32,6 +33,8 @@ class LoginFragment @Inject constructor()  : BaseFragment() {
         if (isLogin) {
             navigateToHome()
         }
+
+
 
     }
 
@@ -106,6 +109,12 @@ class LoginFragment @Inject constructor()  : BaseFragment() {
                         it1,
                         it.data.refreshToken
                     )
+                    isFirstTime = viewModel.checkIsFirstTime()
+                    if (isFirstTime) {
+                        navigateToCreateProfile()
+                    } else {
+                        navigateToHome()
+                    }
                 }
             } else {
                 if(it == null) showErrorMessage("Error network")
@@ -113,6 +122,10 @@ class LoginFragment @Inject constructor()  : BaseFragment() {
 
             }
         })
+    }
+
+    private fun navigateToCreateProfile() {
+        findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToFragementCreateProfile())
     }
     override fun onDestroyView() {
         super.onDestroyView()

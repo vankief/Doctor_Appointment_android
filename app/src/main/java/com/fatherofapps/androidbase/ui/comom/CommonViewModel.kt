@@ -25,4 +25,8 @@ class CommonViewModel @Inject constructor(private val preferenceManager: Prefere
     fun setIsFirstTime(isFirstTime: Boolean) {
         preferenceManager.save(IS_FIRST_TIME, isFirstTime)
     }
+
+    fun checkLogined(){
+         preferenceManager.clear(IS_LOGGED_IN)
+    }
 }

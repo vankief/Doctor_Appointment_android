@@ -1,134 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardView"
+    <data>
+
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="24dp"
-        >
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="8dp">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="24dp">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imgAvatar"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_upload" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="8dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:text="Upload Photo Profile" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgAvatar"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_upload" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputName"
-        android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:hint="Họ tên"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        app:placeholderText="Họ tên"
-        app:startIconDrawable="@drawable/person">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:text="Upload Photo Profile" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtName"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputName"
             android:layout_width="match_parent"
-            android:layout_height="54dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="68dp"
+            android:hint="Họ tên"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            app:placeholderText="Họ tên"
+            app:startIconDrawable="@drawable/person">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputPhone"
-        android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:hint="Email"
-        app:placeholderText="Họ tên"
-        app:startIconDrawable="@drawable/ic_phone">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtName"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                app:strokeColor="@color/black"
+                app:strokeWidth="1dp"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtPhone"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputPhone"
             android:layout_width="match_parent"
-            android:layout_height="54dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="68dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:hint="Số điện thoại"
+            app:startIconDrawable="@drawable/ic_phone">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputGender"
-        android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:hint="Giới tính"
-        app:startIconDrawable="@drawable/ic_gender"
-       >
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtGender"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtPhone"
+                android:inputType="phone"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                app:strokeColor="@color/black"
+                app:strokeWidth="1dp"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <RadioGroup
+            android:id="@+id/radioGroupGender"
             android:layout_width="match_parent"
-            android:layout_height="54dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:orientation="horizontal">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputDoB"
-        android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:hint="Ngày sinh"
-        app:startIconDrawable="@drawable/baseline_today_24">
+            <RadioButton
+                android:id="@+id/radioButtonMale"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Nam"
+                android:checked="true" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtDoB"
+            <RadioButton
+                android:id="@+id/radioButtonFemale"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Nữ" />
+        </RadioGroup>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputDoB"
             android:layout_width="match_parent"
-            android:layout_height="54dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="68dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:hint="Ngày sinh"
+            app:startIconDrawable="@drawable/baseline_today_24">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputAddress"
-        android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:hint="Địa chỉ"
-        app:placeholderText="Hà Nội,..."
-        app:startIconDrawable="@drawable/ic_address">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtDoB"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:textColor="@color/black"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtAdress"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputAddress"
             android:layout_width="match_parent"
-            android:layout_height="54dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="68dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:hint="Địa chỉ"
+            app:placeholderText="Hà Nội,..."
+            app:startIconDrawable="@drawable/ic_address">
 
-    <Button
-        android:id="@+id/btnComfirm"
-        android:layout_width="match_parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_height="57dp"
-        android:layout_gravity="center"
-        android:text="Xác nhận" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtAdress"
+                android:layout_width="match_parent"
+                android:layout_height="54dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnComfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_gravity="center"
+            android:text="Xác nhận"
+            android:backgroundTint="@color/md_theme_light_onPrimary"
+            android:textColor="@color/white"
+            />
 
 
-</LinearLayout>
+    </LinearLayout>
+</layout>
