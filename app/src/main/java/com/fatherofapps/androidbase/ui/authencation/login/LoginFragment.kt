@@ -33,9 +33,6 @@ class LoginFragment @Inject constructor()  : BaseFragment() {
         if (isLogin) {
             navigateToHome()
         }
-
-
-
     }
 
     private fun navigateToHome() {

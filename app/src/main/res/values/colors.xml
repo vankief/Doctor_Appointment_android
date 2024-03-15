@@ -3,6 +3,7 @@
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="background_color">#FFFFFFFF</color>
 
     <color name="primaryColor">#ff6c2f</color>
     <color name="primaryLightColor">#ff9e5d</color>
@@ -24,22 +25,22 @@
 
 
     <color name="seed">#2972FE</color>
+    <color name="md_theme_light_primary">#2972FE</color>
 
-    <color name="md_theme_light_primary">#FFFFFF</color>
-    <color name="md_theme_light_onPrimary">#0056D2</color>
+    <color name="md_theme_light_onPrimary">#2972FE</color>
+
+
     <color name="md_theme_light_primaryContainer">#DAE2FF</color>
     <color name="md_theme_light_onPrimaryContainer">#001848</color>
-    <color name="md_theme_light_secondary">#585E71</color>
+    <color name="md_theme_light_secondary">#7C5800</color>
     <color name="md_theme_light_onSecondary">#FFFFFF</color>
-
-    <color name="md_theme_light_secondaryContainer">#ffff</color>
-    <color name="md_theme_light_onSecondaryContainer">#151B2C</color>
-    <color name="md_theme_light_tertiary">#735471</color>
+    <color name="md_theme_light_secondaryContainer">#1A2972FE</color>
+    <color name="md_theme_light_onSecondaryContainer">#271900</color>
+    <color name="md_theme_light_tertiary">#BF002D</color>
     <color name="md_theme_light_onTertiary">#FFFFFF</color>
-    <color name="md_theme_light_tertiaryContainer">#FED7F9</color>
-    <color name="md_theme_light_onTertiaryContainer">#2B122B</color>
+    <color name="md_theme_light_tertiaryContainer">#FFDAD9</color>
+    <color name="md_theme_light_onTertiaryContainer">#410008</color>
     <color name="md_theme_light_error">#BA1A1A</color>
-
     <color name="md_theme_light_errorContainer">#FFDAD6</color>
     <color name="md_theme_light_onError">#FFFFFF</color>
     <color name="md_theme_light_onErrorContainer">#410002</color>
@@ -57,6 +58,7 @@
     <color name="md_theme_light_surfaceTint">#0056D2</color>
     <color name="md_theme_light_outlineVariant">#C5C6D0</color>
     <color name="md_theme_light_scrim">#000000</color>
+
 
     <color name="md_theme_dark_primary">#B2C5FF</color>
     <color name="md_theme_dark_onPrimary">#002B73</color>
@@ -88,10 +90,8 @@
     <color name="md_theme_dark_surfaceTint">#B2C5FF</color>
     <color name="md_theme_dark_outlineVariant">#45464F</color>
     <color name="md_theme_dark_scrim">#000000</color>
-    <color name="background_color">#E6EDFE</color>
 
-    // Color Specialist
-    <color name="color_specialist_01">#FF1843</color>
-    <color name="color_specialist_02">#6D5FFD</color>
+    <color name="color_specialist_01">#E6FF5E7C</color>
+    <color name="color_specialist_02">#2972FE</color>
     <color name="color_specialist_03">#FFB800</color>
 </resources>

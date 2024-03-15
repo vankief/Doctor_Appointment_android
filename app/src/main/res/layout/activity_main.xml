@@ -40,7 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_menu"
-        android:backgroundTint="@color/white"
+        app:backgroundTint="@color/md_theme_light_secondaryContainer"
         app:itemIconTint="@color/md_theme_light_onPrimary"
         app:itemTextColor="@color/md_theme_light_onPrimary"
         />
