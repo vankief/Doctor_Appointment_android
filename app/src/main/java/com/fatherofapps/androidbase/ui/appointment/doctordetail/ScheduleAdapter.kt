@@ -16,7 +16,7 @@ class ScheduleAdapter: RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder>(
     private var selectedPosition = RecyclerView.NO_POSITION
 
     inner class ScheduleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val cardView: MaterialCardView = itemView.findViewById(R.id.cardView)
+        val cardView: MaterialCardView = itemView.findViewById(R.id.cardSchedule)
         val dayTextView: TextView = itemView.findViewById(R.id.tvDay)
         val DateTextView: TextView = itemView.findViewById(R.id.tvDate)
     }

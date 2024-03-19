@@ -34,6 +34,7 @@ class DoctorDetailFragment  @Inject constructor(): BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getDoctorDetail(args.doctorId)
+
     }
 
     override fun onCreateView(
@@ -43,6 +44,7 @@ class DoctorDetailFragment  @Inject constructor(): BaseFragment() {
     ): View? {
         dataBinding = FragmentDoctorDetailBinding.inflate(inflater, container, false)
         dataBinding.lifecycleOwner = viewLifecycleOwner
+        adapter = ScheduleAdapter()
         dataBinding.rvSchedule.apply {
             layoutManager = LinearLayoutManager(context,
                 LinearLayoutManager.HORIZONTAL,
