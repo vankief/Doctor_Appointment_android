@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/fragmentBookingAppointment">
+    app:startDestination="@id/videocallFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -11,6 +11,7 @@
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home"
         >
+
         <action
             android:id="@+id/action_homeFragment_to_specialistFragment"
             app:destination="@id/specialistFragment" />
@@ -19,7 +20,8 @@
             app:destination="@id/fragmentTopDoctor" />
         <action
             android:id="@+id/action_homeFragment_to_fragmentDoctorDetail"
-            app:destination="@id/fragmentDoctorDetail" />
+            app:destination="@id/doctorDetailfragment"/>
+
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -71,19 +73,31 @@
         android:name="com.fatherofapps.androidbase.ui.specialist.SpecialistFragment"
         android:label="SpecialistFragment"
         tools:layout="@layout/fragment_specialist_doctor"
-        />
+        >
+        <action
+            android:id="@+id/action_specialistFragment_to_fragmentTopDoctor"
+            app:destination="@id/fragmentTopDoctor" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentTopDoctor"
-        android:name="com.fatherofapps.androidbase.ui.doctor.topdoctor.FragmentTopDoctor"
+        android:name="com.fatherofapps.androidbase.ui.doctor.topdoctor.TopDoctorFragment"
         android:label="FragmentTopDoctor"
         tools:layout="@layout/fragment_specialist_list_top_doctor"
-        />
+        >
+        <action
+            android:id="@+id/action_fragmentTopDoctor_to_doctorDetailfragment"
+            app:destination="@id/doctorDetailfragment" />
+    </fragment>
     <fragment
-        android:id="@+id/fragmentDoctorDetail"
-        android:name="com.fatherofapps.androidbase.ui.appointment.doctordetail.FragmentDoctorDetail"
+        android:id="@+id/doctorDetailfragment"
+        android:name="com.fatherofapps.androidbase.ui.appointment.doctordetail.DoctorDetailFragment"
         android:label="FragmentDoctorDetail"
         tools:layout="@layout/fragment_doctor_detail"
         >
+        <argument
+            android:name= "doctorId"
+            app:argType= "string"
+            />
         <action
             android:id="@+id/action_fragmentDoctorDetail_to_fragmentBookingAppointment"
             app:destination="@id/fragmentBookingAppointment" />
@@ -94,6 +108,10 @@
         android:label="FragmentBookingAppointment"
         tools:layout="@layout/fragment_book_appointment_step_2"
         >
+        <argument
+            android:name= "day"
+            app:argType= "string"
+            />
         <action
             android:id="@+id/action_fragmentBookingAppointment_to_fragmentBookingAppointmentStep3"
             app:destination="@id/fragmentBookingAppointmentStep3" />
@@ -114,5 +132,11 @@
             android:id="@+id/action_fragementCreateProfile_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/videocallFragment"
+        android:name="com.fatherofapps.androidbase.ui.videocall.VideocallFragment"
+        android:label="VideocallFragment"
+        tools:layout="@layout/fragment_callvideo"
+        />
 
 </navigation>

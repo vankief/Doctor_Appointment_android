@@ -1,4 +1,4 @@
-package com.fatherofapps.androidbase.ui.home
+package com.fatherofapps.androidbase.ui.specialist
 
 import android.os.Build
 import android.view.LayoutInflater
@@ -32,7 +32,7 @@ class SpecialistAdapter(
 
         init {
             itemView.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToSpecialistFragment()
+                val action = SpecialistFragmentDirections.actionSpecialistFragmentToFragmentTopDoctor()
                 itemView.findNavController().navigate(action)
             }
         }
@@ -40,12 +40,12 @@ class SpecialistAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpecialistViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_specialization_card, parent, false)
+            .inflate(R.layout.item_specialization_card_specialist, parent, false)
         return SpecialistViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return min(specialists.size, 5)
+        return specialists.size
     }
 
     @RequiresApi(Build.VERSION_CODES.M)

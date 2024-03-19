@@ -1,9 +1,8 @@
-package com.fatherofapps.androidbase.ui.doctor.topdoctor
+package com.fatherofapps.androidbase.ui.videocall
 
 import com.fatherofapps.androidbase.base.viewmodel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-@HiltViewModel
-class TopDoctorViewModel @Inject constructor(): BaseViewModel() {
+class VideocallViewModel : BaseViewModel() {
 }

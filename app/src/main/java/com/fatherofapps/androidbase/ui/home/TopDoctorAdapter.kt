@@ -24,7 +24,9 @@ class TopDoctorAdapter(
         val txtDoctorSpecialization: TextView = itemView.findViewById(R.id.txtDoctorSpecialization)
         init {
             itemView.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToFragmentDoctorDetail()
+                val action = HomeFragmentDirections.actionHomeFragmentToFragmentDoctorDetail(
+                    topDoctor[adapterPosition].id
+                )
                 itemView.findNavController().navigate(action)
             }
         }
