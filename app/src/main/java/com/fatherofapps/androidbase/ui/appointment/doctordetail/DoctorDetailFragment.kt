@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.response.DoctorInfo
 import com.fatherofapps.androidbase.databinding.FragmentDoctorDetailBinding
@@ -26,6 +27,7 @@ class DoctorDetailFragment  @Inject constructor(): BaseFragment() {
     private val viewModel by viewModels<DoctorDetailViewModel>()
     private lateinit var doctorInfo: DoctorInfo
     private lateinit var adapter: ScheduleAdapter
+    private var selectedDate: String = ""
 
     companion object {
         private const val TAG = "DoctorDetailFragment"
@@ -45,6 +47,10 @@ class DoctorDetailFragment  @Inject constructor(): BaseFragment() {
         dataBinding = FragmentDoctorDetailBinding.inflate(inflater, container, false)
         dataBinding.lifecycleOwner = viewLifecycleOwner
         adapter = ScheduleAdapter()
+        adapter.onItemClickListener = { selectedDate ->
+            // Gán selectedDate vào biến trong Fragment
+            this.selectedDate = selectedDate
+        }
         dataBinding.rvSchedule.apply {
             layoutManager = LinearLayoutManager(context,
                 LinearLayoutManager.HORIZONTAL,
@@ -58,15 +64,14 @@ class DoctorDetailFragment  @Inject constructor(): BaseFragment() {
         hideOpenNavigation(false)
         setupObservers()
         dataBinding.bookAppointmentButton.setOnClickListener {
-            val selectedDate = adapter?.selectedDate
-            if (!selectedDate.isNullOrEmpty()) {
-                // Xử lý khi nút được click và có ngày tháng được chọn từ Adapter
-                // Ví dụ: Chuyển đến Fragment đặt lịch và gửi ngày tháng năm
-                val action = DoctorDetailFragmentDirections.actionFragmentDoctorDetailToFragmentBookingAppointment(selectedDate)
-                findNavController().navigate(action)
+            if (selectedDate.isEmpty()) {
+                Toast.makeText(context, "Vui lòng chọn ngày hẹn", Toast.LENGTH_SHORT).show()
             } else {
-                // Xử lý khi không có ngày tháng được chọn
-                Toast.makeText(requireContext(), "Vui lòng chọn ngày trước khi đặt lịch", Toast.LENGTH_SHORT).show()
+                val action = DoctorDetailFragmentDirections.actionFragmentDoctorDetailToFragmentBookingAppointment(
+                    doctorInfo.id,
+                    selectedDate
+                )
+                findNavController().navigate(action)
             }
         }
     }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -11,47 +11,48 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.google.android.material.card.MaterialCardView
+        <TextView
+            android:id="@+id/TxtDateSchedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:text="Thứ 2, 20/12/2021"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/TxtChooseTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="70dp"
             android:layout_marginEnd="24dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp">
+            android:text="Chọn thời gian"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
-            <CalendarView
-                android:id="@+id/calendarView"
-                android:layout_width="match_parent"
-                android:layout_height="290dp"
-                android:background="@color/md_theme_light_primaryContainer" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTimeSlot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:padding="16dp" />
 
-        </com.google.android.material.card.MaterialCardView>
-        <!-- Text "Select a time" -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select a time"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            android:text="Chọn hình thức khám"
             android:textSize="19dp"
-            android:textStyle="bold"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp" />
-
-        <!-- RecyclerView để hiển thị danh sách thời gian -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/timeRecyclerView"
-            android:layout_width="360dp"
-            android:layout_height="81dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp" />
+            android:textStyle="bold" />
 
         <!-- CardView chứa thông tin đặt lịch -->
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/OfflineCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-
             android:layout_marginEnd="24dp"
             app:cardCornerRadius="8dp">
 
@@ -100,6 +101,7 @@
 
                 <!-- Phần giá tiền -->
                 <TextView
+                    android:id="@+id/tvPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -112,6 +114,7 @@
         </com.google.android.material.card.MaterialCardView>
         <!-- CardView chứa thông tin đặt lịch -->
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/VideoCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -164,6 +167,7 @@
 
                 <!-- Phần giá tiền -->
                 <TextView
+                    android:id="@+id/txtPriceOnline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"

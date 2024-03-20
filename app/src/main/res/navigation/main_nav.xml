@@ -109,6 +109,10 @@
         tools:layout="@layout/fragment_book_appointment_step_2"
         >
         <argument
+            android:name= "doctorId"
+            app:argType= "string"
+            />
+        <argument
             android:name= "day"
             app:argType= "string"
             />

@@ -11,9 +11,12 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class ScheduleAdapter: RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder>() {
-    var selectedDate: String? = null
-    private var selectedPosition = RecyclerView.NO_POSITION
+class ScheduleAdapter(
+): RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder>() {
+    var selectedPosition = RecyclerView.NO_POSITION
+
+    var onItemClickListener: ((String) -> Unit)? = null
+
 
     inner class ScheduleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val cardView: MaterialCardView = itemView.findViewById(R.id.cardSchedule)
@@ -49,12 +52,14 @@ class ScheduleAdapter: RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder>(
         holder.itemView.setOnClickListener {
             // Cập nhật vị trí item được chọn
             selectedPosition = holder.adapterPosition
+            notifyDataSetChanged()
             // Lấy năm hiện tại
             val currentYear = Calendar.getInstance().get(Calendar.YEAR)
             // Tạo full date từ ngày đã chọn và năm hiện tại
             val selectedDate = "$date/$currentYear"
-            // Cập nhật lại giao diện sau khi item được chọn
-            notifyDataSetChanged()
+            // Gọi hàm callback và truyền ngày đã chọn
+            onItemClickListener?.invoke(selectedDate)
+
         }
     }
     private fun updateColor(holder: ScheduleViewHolder, isSelected: Boolean) {
@@ -76,4 +81,5 @@ class ScheduleAdapter: RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder>(
         holder.dayTextView.setTextColor(textColor)
         holder.DateTextView.setTextColor(textColor)
     }
+
 }
