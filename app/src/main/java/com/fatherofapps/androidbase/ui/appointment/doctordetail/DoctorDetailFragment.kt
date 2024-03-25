@@ -49,7 +49,7 @@ class DoctorDetailFragment  @Inject constructor(): BaseFragment() {
         adapter = ScheduleAdapter()
         adapter.onItemClickListener = { selectedDate ->
             // Gán selectedDate vào biến trong Fragment
-            this.selectedDate = selectedDate
+            this.selectedDate = convertDateFormat(selectedDate)
         }
         dataBinding.rvSchedule.apply {
             layoutManager = LinearLayoutManager(context,

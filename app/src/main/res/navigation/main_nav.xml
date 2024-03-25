@@ -102,9 +102,9 @@
             android:id="@+id/action_fragmentDoctorDetail_to_fragmentBookingAppointment"
             app:destination="@id/fragmentBookingAppointment" />
     </fragment>
-    <fragment
+     <fragment
         android:id="@+id/fragmentBookingAppointment"
-        android:name="com.fatherofapps.androidbase.ui.appointment.booking.FragmentBookingAppointment"
+        android:name="com.fatherofapps.androidbase.ui.appointment.booking.BookingAppointmentFragment"
         android:label="FragmentBookingAppointment"
         tools:layout="@layout/fragment_book_appointment_step_2"
         >

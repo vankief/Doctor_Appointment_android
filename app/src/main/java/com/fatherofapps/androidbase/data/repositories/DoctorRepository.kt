@@ -39,4 +39,18 @@ class DoctorRepository @Inject constructor(
             }
         }
     }
+
+    suspend fun getDoctorTimeSlot(id: String, day: String) = withContext(dispatcher) {
+        val result = doctorRemoteService.getDoctorTimeSlot(id, day)
+
+        when (result) {
+            is NetworkResult.Success -> {
+                return@withContext result.data
+            }
+            is NetworkResult.Error -> {
+                Log.e("Error", "getPosts: ${result.exception ?: "Error"}")
+                return@withContext null
+            }
+        }
+    }
 }

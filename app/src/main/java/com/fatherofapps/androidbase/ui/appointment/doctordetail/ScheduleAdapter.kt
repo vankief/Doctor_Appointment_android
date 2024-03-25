@@ -6,6 +6,8 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.fatherofapps.androidbase.R
+import com.fatherofapps.androidbase.utils.DayOfWeek
+import com.fatherofapps.androidbase.utils.convertToVietnameseDayOfWeek
 import com.google.android.material.card.MaterialCardView
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -21,7 +23,7 @@ class ScheduleAdapter(
     inner class ScheduleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val cardView: MaterialCardView = itemView.findViewById(R.id.cardSchedule)
         val dayTextView: TextView = itemView.findViewById(R.id.tvDay)
-        val DateTextView: TextView = itemView.findViewById(R.id.tvDate)
+        val dateTextView: TextView = itemView.findViewById(R.id.tvDate)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
@@ -35,15 +37,15 @@ class ScheduleAdapter(
 
     override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {
         val calendar = Calendar.getInstance() // Lấy thời điểm hiện tại
-        val sdfDay = SimpleDateFormat("EEEE", Locale.getDefault()) // Định dạng ngày trong tuần
         val sdfDate = SimpleDateFormat("dd/MM", Locale.getDefault()) // Định dạng ngày/tháng
 
         calendar.add(Calendar.DAY_OF_MONTH, position)
 
-        val dayOfWeek = sdfDay.format(calendar.time)
+        val dayOfWeek = DayOfWeek.values()[calendar.get(Calendar.DAY_OF_WEEK) - 1] // Lấy ngày trong tuần dưới dạng enum
         val date = sdfDate.format(calendar.time)
-        holder.dayTextView.text = dayOfWeek
-        holder.DateTextView.text = date
+
+        holder.dayTextView.text = convertToVietnameseDayOfWeek(dayOfWeek) // Chuyển đổi ngày trong tuần sang tiếng Việt
+        holder.dateTextView.text = date
 
         val isSelected = position == selectedPosition
 
@@ -66,7 +68,7 @@ class ScheduleAdapter(
         val context = holder.itemView.context
         // Cập nhật màu sắc cho nền của MaterialCardView
         val cardBackgroundColor = if (isSelected) {
-            ContextCompat.getColor(context, R.color.md_theme_light_onPrimary) // Màu nền khi item được chọn
+            ContextCompat.getColor(context, R.color.color_card_selected) // Màu nền khi item được chọn
         } else {
             ContextCompat.getColor(context, android.R.color.transparent) // Màu nền mặc định khi item không được chọn
         }
@@ -74,12 +76,12 @@ class ScheduleAdapter(
 
         // Cập nhật màu sắc cho văn bản của TextView
         val textColor = if (isSelected) {
-            ContextCompat.getColor(context, R.color.white) // Màu văn bản khi item được chọn
+            ContextCompat.getColor(context, R.color.color_text_selected) // Màu văn bản khi item được chọn
         } else {
-            ContextCompat.getColor(context, R.color.md_theme_light_onPrimary) // Màu văn bản mặc định khi item không được chọn
+            ContextCompat.getColor(context, R.color.color_text_unselected) // Màu văn bản mặc định khi item không được chọn
         }
         holder.dayTextView.setTextColor(textColor)
-        holder.DateTextView.setTextColor(textColor)
+        holder.dateTextView.setTextColor(textColor)
     }
 
 }

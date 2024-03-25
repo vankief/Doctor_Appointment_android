@@ -9,7 +9,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="50dp"
+        >
 
         <TextView
             android:id="@+id/TxtDateSchedule"
@@ -19,6 +21,57 @@
             android:text="Thứ 2, 20/12/2021"
             android:textSize="20dp"
             android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:orientation="horizontal">
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardOnline"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="12dp"
+                app:cardCornerRadius="25dp"
+                app:strokeColor="@color/md_theme_light_onPrimary"
+                app:strokeWidth="1dp">
+                <TextView
+                    android:id="@+id/txtOnline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Online"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:textColor="@color/md_theme_light_onPrimary"
+                    android:textSize="18sp" />
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardOffline"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="12dp"
+                app:cardCornerRadius="25dp"
+                app:strokeColor="@color/md_theme_light_onPrimary"
+                app:strokeWidth="1dp">
+                <TextView
+                    android:id="@+id/txtOffline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Offline"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:textColor="@color/md_theme_light_onPrimary"
+                    android:textSize="18sp" />
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/TxtChooseTime"
@@ -64,13 +117,22 @@
                 android:padding="8dp">
 
                 <!-- Icon -->
-                <ImageView
-                    android:id="@+id/offlineIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_mess" />
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:background="@drawable/rounded_corner"
+                   >
+                   <ImageView
+                       android:id="@+id/offlineIcon"
+                       android:layout_width="36dp"
+                       android:layout_height="36dp"
+                       android:layout_margin="16dp"
+                       android:scaleType="centerCrop"
+                       android:src="@drawable/chat_rounded"
+                       android:backgroundTint="@color/white"
+                       android:background="@drawable/rounded_corner"
+                       app:tint="@color/md_theme_light_onPrimary" />
+               </LinearLayout>
 
                 <!-- Layout chứa mô tả và giá tiền -->
                 <LinearLayout
@@ -81,7 +143,7 @@
 
                     <!-- Tiêu đề -->
                     <TextView
-                        android:id="@+id/tvoffline"
+                        android:id="@+id/tvOffline"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
@@ -91,7 +153,7 @@
 
                     <!-- Mô tả -->
                     <TextView
-                        android:id="@+id/tvdescription"
+                        android:id="@+id/tvDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Gặp bác sĩ tại phòng khám"
@@ -122,23 +184,31 @@
             android:layout_marginEnd="24dp"
             app:cardCornerRadius="8dp">
 
-            <!-- Layout ngang chứa Icon và thông tin đặt lịch -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="8dp">
 
-                <!-- Icon -->
-                <ImageView
-                    android:id="@+id/videoIcon"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_videocall" />
+                    android:background="@drawable/rounded_corner"
+                    >
+                    <ImageView
+                        android:id="@+id/videoIcon"
+                        android:layout_width="36dp"
+                        android:layout_height="24dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginVertical="22dp"
+                        android:background="@drawable/rounded_corner"
+                        android:backgroundTint="@color/white"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_videocall"
+                        app:tint="@color/md_theme_light_onPrimary"
+                        />
+                </LinearLayout>
 
-                <!-- Layout chứa mô tả và giá tiền -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -147,7 +217,7 @@
 
                     <!-- Tiêu đề -->
                     <TextView
-                        android:id="@+id/tvvideo"
+                        android:id="@+id/txtVideo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
@@ -157,7 +227,7 @@
 
                     <!-- Mô tả -->
                     <TextView
-                        android:id="@+id/tvdescription1"
+                        android:id="@+id/txtDescription1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Gặp bác sĩ qua video call"

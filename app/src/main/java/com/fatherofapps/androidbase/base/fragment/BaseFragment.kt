@@ -31,7 +31,7 @@ open class BaseFragment : Fragment() {
 
     protected fun convertDateFormat(inputDate: String): String {
         val inputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val outputFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val date: Date = inputFormat.parse(inputDate) ?: Date()
         return outputFormat.format(date)
     }
