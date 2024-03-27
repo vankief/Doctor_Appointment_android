@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.fatherofapps.androidbase.R
+import com.fatherofapps.androidbase.data.models.TimeSlotInfo
 import com.fatherofapps.androidbase.data.response.ListTime
 import com.fatherofapps.androidbase.ui.appointment.doctordetail.ScheduleAdapter
 import com.fatherofapps.androidbase.utils.convertToNormalTime
@@ -15,12 +16,11 @@ import com.google.android.material.card.MaterialCardView
 
 
 class TimeSlotAdapter(
-    var listTimeSlot: List<ListTime>,
-    private val recyclerView: RecyclerView
+    var listTimeSlot: List<ListTime>
 ): RecyclerView.Adapter<TimeSlotAdapter.TimeSlotViewHolder>() {
     var selectedPosition = RecyclerView.NO_POSITION
 
-    var onItemClickListener: ((String) -> Unit)? = null
+    var onItemClickListener: ((TimeSlotInfo) -> Unit)? = null
 
     private var isCardOnlineSelected: Boolean = false
     private var isCardOfflineSelected: Boolean = false
@@ -28,7 +28,8 @@ class TimeSlotAdapter(
     inner class TimeSlotViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val cardTimeSlot : MaterialCardView = itemView.findViewById(R.id.cardTimeSlot)
         val txtTimeSlot: TextView = itemView.findViewById(R.id.txtTimeSlot)
-        val itemTimeSlot: LinearLayout = itemView.findViewById(R.id.itemTimeSlot)
+
+
     }
 
 
@@ -47,26 +48,29 @@ class TimeSlotAdapter(
         val timeSlot = listTimeSlot[position]
         val normalTime = convertToNormalTime(timeSlot.timeSlot)
         holder.txtTimeSlot.text = normalTime
+        val timeSlotInfo = TimeSlotInfo(normalTime, timeSlot.service)
         val isSelected = position == selectedPosition
 
         if (isCardOfflineSelected && timeSlot.service == "online") {
             holder.itemView.alpha = 0.5f
-            holder.itemTimeSlot.isEnabled = false
+            holder.itemView.isEnabled = false
         } else if (isCardOnlineSelected && timeSlot.service == "offline") {
             holder.itemView.alpha = 0.5f
-            holder.itemTimeSlot.isEnabled = false
+            holder.itemView.isEnabled = false
+
         } else {
             // Kích hoạt lại item nếu không phù hợp với điều kiện vô hiệu hóa
             holder.itemView.alpha = 1.0f
-            holder.itemTimeSlot.isEnabled = true
+            holder.itemView.isEnabled = true
         }
         updateColor(holder, isSelected)
         holder.itemView.setOnClickListener {
             // Cập nhật vị trí item được chọn
             selectedPosition = holder.adapterPosition
             notifyDataSetChanged()
+
             // Gọi hàm callback và truyền ngày đã chọn
-            onItemClickListener?.invoke(normalTime)
+            onItemClickListener?.invoke(timeSlotInfo)
         }
     }
 
@@ -99,5 +103,10 @@ class TimeSlotAdapter(
         isCardOfflineSelected = isSelected
         notifyDataSetChanged() // Cập nhật giao diện RecyclerView
     }
+    fun resetItemStatus() {
+        selectedPosition = RecyclerView.NO_POSITION // Đặt lại vị trí item được chọn
+        notifyDataSetChanged() // Cập nhật giao diện RecyclerView
+    }
+
 
 }

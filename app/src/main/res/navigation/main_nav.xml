@@ -116,16 +116,12 @@
             android:name= "day"
             app:argType= "string"
             />
-        <action
-            android:id="@+id/action_fragmentBookingAppointment_to_fragmentBookingAppointmentStep3"
-            app:destination="@id/fragmentBookingAppointmentStep3" />
-    </fragment>
-    <fragment
-        android:id="@+id/fragmentBookingAppointmentStep3"
-        android:name="com.fatherofapps.androidbase.ui.appointment.booking_step3.FragmentBookingAppointmentStep3"
-        android:label="FragmentBookingAppointmentStep3"
-        tools:layout="@layout/fragment_book_appointment_step_03"
-        />
+         <action
+             android:id="@+id/action_fragmentBookingAppointment_to_patientDetailFragment"
+             app:destination="@id/patientDetailFragment" />
+
+     </fragment>
+
     <fragment
         android:id="@+id/createProfilefragment"
         android:name="com.fatherofapps.androidbase.ui.authencation.profile.CreateProfileFragement"
@@ -142,5 +138,16 @@
         android:label="VideocallFragment"
         tools:layout="@layout/fragment_callvideo"
         />
+    <fragment
+        android:id="@+id/patientDetailFragment"
+        android:name="com.fatherofapps.androidbase.ui.appointment.patientdetail.PatientDetailFragment"
+        android:label="PatientDetailFragment"
+        tools:layout="@layout/fragment_patient_detail"
+        >
+        <argument
+            android:name="appointmentInfo"
+            app:argType="com.fatherofapps.androidbase.data.models.AppointmentInfo" />
+    </fragment>
+
 
 </navigation>

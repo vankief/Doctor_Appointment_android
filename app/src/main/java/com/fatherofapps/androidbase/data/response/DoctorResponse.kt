@@ -29,3 +29,8 @@ data class ListTime(
     val service: String,
     val maximumPatient: Int,
 )
+
+data class doctorPrice(
+    val id: String,
+    val price: Int,
+)

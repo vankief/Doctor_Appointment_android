@@ -36,13 +36,25 @@ class ScheduleAdapter(
     }
 
     override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {
-        val calendar = Calendar.getInstance() // Lấy thời điểm hiện tại
-        val sdfDate = SimpleDateFormat("dd/MM", Locale.getDefault()) // Định dạng ngày/tháng
-
+        val calendar = Calendar.getInstance()
         calendar.add(Calendar.DAY_OF_MONTH, position)
 
-        val dayOfWeek = DayOfWeek.values()[calendar.get(Calendar.DAY_OF_WEEK) - 1] // Lấy ngày trong tuần dưới dạng enum
-        val date = sdfDate.format(calendar.time)
+        val dayOfWeekInt = calendar.get(Calendar.DAY_OF_WEEK)
+        val dayOfWeek = when (dayOfWeekInt) {
+            Calendar.SUNDAY -> DayOfWeek.SUNDAY
+            Calendar.MONDAY -> DayOfWeek.MONDAY
+            Calendar.TUESDAY -> DayOfWeek.TUESDAY
+            Calendar.WEDNESDAY -> DayOfWeek.WEDNESDAY
+            Calendar.THURSDAY -> DayOfWeek.THURSDAY
+            Calendar.FRIDAY -> DayOfWeek.FRIDAY
+            Calendar.SATURDAY -> DayOfWeek.SATURDAY
+            else -> throw IllegalArgumentException("Ngày trong tuần không hợp lệ: $dayOfWeekInt")
+        }
+
+        val date = SimpleDateFormat("dd/MM", Locale.getDefault()).format(calendar.time)
+
+        holder.dayTextView.text = convertToVietnameseDayOfWeek(dayOfWeek)
+        holder.dateTextView.text = date
 
         holder.dayTextView.text = convertToVietnameseDayOfWeek(dayOfWeek) // Chuyển đổi ngày trong tuần sang tiếng Việt
         holder.dateTextView.text = date

@@ -1,5 +1,3 @@
 package com.fatherofapps.androidbase.data.models
 
-data class TimeSlot(
-    val timeRange: String
-)
+data class TimeSlotInfo(val normalTime: String, val service: String)

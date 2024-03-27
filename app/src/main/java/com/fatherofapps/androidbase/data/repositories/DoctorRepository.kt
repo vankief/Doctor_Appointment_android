@@ -53,4 +53,18 @@ class DoctorRepository @Inject constructor(
             }
         }
     }
+
+    suspend fun getDoctorPrice(id: String) = withContext(dispatcher) {
+        val result = doctorRemoteService.getDoctorPrice(id)
+
+        when (result) {
+            is NetworkResult.Success -> {
+                return@withContext result.data
+            }
+            is NetworkResult.Error -> {
+                Log.e("Error", "getPosts: ${result.exception ?: "Error"}")
+                return@withContext null
+            }
+        }
+    }
 }

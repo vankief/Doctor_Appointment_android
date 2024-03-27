@@ -7,6 +7,7 @@ import com.fatherofapps.androidbase.data.response.ConfigResponse
 import com.fatherofapps.androidbase.data.response.DoctorInfo
 import com.fatherofapps.androidbase.data.response.ListTime
 import com.fatherofapps.androidbase.data.response.TopDoctor
+import com.fatherofapps.androidbase.data.response.doctorPrice
 import javax.inject.Inject
 
 class DoctorRemoteService @Inject constructor(private val doctorAPI: DoctorAPI) : BaseRemoteService() {
@@ -23,6 +24,11 @@ class DoctorRemoteService @Inject constructor(private val doctorAPI: DoctorAPI) 
     suspend fun getDoctorTimeSlot(id: String, day: String): NetworkResult<ConfigResponse<List<ListTime>>>
     {
         return callApi { doctorAPI.getDoctorTimeSlot(id, day) }
+    }
+
+    suspend fun getDoctorPrice(id: String): NetworkResult<ConfigResponse<doctorPrice>>
+    {
+        return callApi { doctorAPI.getDoctorPrice(id) }
     }
 
 }

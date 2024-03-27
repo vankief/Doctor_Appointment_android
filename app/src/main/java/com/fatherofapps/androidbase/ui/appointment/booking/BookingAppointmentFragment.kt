@@ -14,7 +14,10 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
+import com.fatherofapps.androidbase.data.models.AppointmentInfo
+import com.fatherofapps.androidbase.data.models.TimeSlotInfo
 import com.fatherofapps.androidbase.data.response.ListTime
+import com.fatherofapps.androidbase.data.response.doctorPrice
 import com.fatherofapps.androidbase.databinding.FragmentBookAppointmentStep2Binding
 import com.fatherofapps.androidbase.utils.convertToVietNamDate
 import com.google.android.material.card.MaterialCardView
@@ -25,12 +28,11 @@ class BookingAppointmentFragment @Inject constructor(): BaseFragment() {
     private lateinit var dataBinding: FragmentBookAppointmentStep2Binding
     private var timeSlotAdapter: TimeSlotAdapter? = null
     private val args by navArgs<BookingAppointmentFragmentArgs>()
-
     private val viewModel by viewModels<BookingAppointmentViewModel>()
-
     private var timeSlot: List<ListTime> = emptyList()
 
-    private var selectedTime: String = ""
+    private var timeSlotInfo: TimeSlotInfo? = null
+    private var appointmentInfo: AppointmentInfo? = null
     companion object {
         private const val TAG = "BookingAppointmentFragment"
     }
@@ -39,6 +41,7 @@ class BookingAppointmentFragment @Inject constructor(): BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getDoctorTimeSlot(args.doctorId, args.day)
+        viewModel.getDoctorPrice(args.doctorId)
     }
 
     override fun onCreateView(
@@ -55,29 +58,38 @@ class BookingAppointmentFragment @Inject constructor(): BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         hideOpenNavigation(false)
         setupObservers()
+        setupPrice()
         setupCardOnline()
         setupCardOffline()
-        dataBinding.TxtDateSchedule.text = convertToVietNamDate(args.day)
-        timeSlotAdapter?.onItemClickListener = { selectedTime ->
-            this.selectedTime = selectedTime
-            Log.d(TAG, "Selected time: $selectedTime")
-        }
 
+        dataBinding.TxtDateSchedule.text = convertToVietNamDate(args.day)
         dataBinding.nextButton.setOnClickListener {
-            if (selectedTime.isNotEmpty()) {
-            Toast.makeText(context, "Selected time: $selectedTime", Toast.LENGTH_SHORT).show()
+            if (timeSlotInfo == null) {
+                Toast.makeText(context, "Please select time slot", Toast.LENGTH_SHORT).show()
             } else {
-                showErrorMessage("Vui lòng chọn thời gian hẹn")
+                appointmentInfo = AppointmentInfo(
+                    doctorId = args.doctorId,
+                    day = args.day,
+                    time = timeSlotInfo!!.normalTime,
+                    price = dataBinding.tvPrice.text.toString().replace(" VND", "").toInt(),
+                    service = timeSlotInfo!!.service
+                )
+                val action = BookingAppointmentFragmentDirections.actionFragmentBookingAppointmentToPatientDetailFragment(appointmentInfo!!)
+                navigateToPage(action)
             }
         }
     }
 
     private fun setupRecyclerView() {
-        timeSlotAdapter = TimeSlotAdapter(timeSlot, dataBinding.rvTimeSlot)
+        timeSlotAdapter = TimeSlotAdapter(timeSlot)
+        timeSlotAdapter?.onItemClickListener = { timeSlotInfo ->
+            this.timeSlotInfo = timeSlotInfo
+        }
         dataBinding.rvTimeSlot.apply {
             layoutManager = GridLayoutManager(context, 2)
         }
         dataBinding.rvTimeSlot.adapter = timeSlotAdapter
+
     }
     @SuppressLint("FragmentLiveDataObserve")
     private fun setupObservers() {
@@ -103,6 +115,7 @@ class BookingAppointmentFragment @Inject constructor(): BaseFragment() {
         dataBinding.cardOnline.setOnClickListener {
             timeSlotAdapter?.updateCardOnlineStatus(true)
             timeSlotAdapter?.updateCardOfflineStatus(false)
+            timeSlotAdapter?.resetItemStatus()
             selectCard(dataBinding.cardOnline)
             selectText(dataBinding.txtOnline)
             deselectCard(dataBinding.cardOffline)
@@ -121,6 +134,7 @@ class BookingAppointmentFragment @Inject constructor(): BaseFragment() {
         dataBinding.cardOffline.setOnClickListener{
             timeSlotAdapter?.updateCardOfflineStatus(true)
             timeSlotAdapter?.updateCardOnlineStatus(false)
+            timeSlotAdapter?.resetItemStatus()
             selectCard(dataBinding.cardOffline)
             selectText(dataBinding.txtOffline)
             deselectCard(dataBinding.cardOnline)
@@ -154,5 +168,24 @@ class BookingAppointmentFragment @Inject constructor(): BaseFragment() {
 
     private fun blackText(textView: TextView) {
         textView.setTextColor(resources.getColor(R.color.black))
+    }
+
+    @SuppressLint("FragmentLiveDataObserve")
+    private fun setupPrice() {
+        viewModel.doctorPriceResponse.observe(viewLifecycleOwner, Observer { response ->
+            if (response == null) {
+                showErrorMessage("Network error")
+            } else {
+                if (response.isSuccess()) {
+                    Log.d(TAG, "DoctorPrice: ${response.data} ")
+                    response.data?.let { data ->
+                        dataBinding.tvPrice.text = "${data.price} VND"
+                        dataBinding.txtPriceOnline.text = "${data.price} VND"
+                    }
+                } else {
+                    showErrorMessage(response.checkTypeErr())
+                }
+            }
+        })
     }
 }

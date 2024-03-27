@@ -124,8 +124,8 @@
                    >
                    <ImageView
                        android:id="@+id/offlineIcon"
-                       android:layout_width="36dp"
-                       android:layout_height="36dp"
+                       android:layout_width="20dp"
+                       android:layout_height="20dp"
                        android:layout_margin="16dp"
                        android:scaleType="centerCrop"
                        android:src="@drawable/chat_rounded"
@@ -139,7 +139,9 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginStart="4dp"
+                    >
 
                     <!-- Tiêu đề -->
                     <TextView
@@ -197,10 +199,10 @@
                     >
                     <ImageView
                         android:id="@+id/videoIcon"
-                        android:layout_width="36dp"
-                        android:layout_height="24dp"
-                        android:layout_marginHorizontal="16dp"
-                        android:layout_marginVertical="22dp"
+                        android:layout_width="21dp"
+                        android:layout_height="14dp"
+                        android:layout_marginHorizontal="15.5dp"
+                        android:layout_marginVertical="19dp"
                         android:background="@drawable/rounded_corner"
                         android:backgroundTint="@color/white"
                         android:scaleType="centerCrop"
@@ -213,7 +215,9 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginStart="4dp"
+                    >
 
                     <!-- Tiêu đề -->
                     <TextView
