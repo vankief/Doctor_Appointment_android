@@ -15,3 +15,9 @@ data class AppointmentResponse(
     val paymentType: String,
     val status: String,
 )
+data class PaymentDetailResponse(
+    val paymentIntent: String,
+    val ephemeralKey: String,
+    val customer:   String,
+    val publishableKey: String
+)

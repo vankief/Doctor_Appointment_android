@@ -8,13 +8,17 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.databinding.FragmentPatientDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class PatientDetailFragment: BaseFragment() {
+@AndroidEntryPoint
+class PatientDetailFragment @Inject constructor() : BaseFragment() {
     private lateinit var dataBinding: FragmentPatientDetailBinding
     private val viewModel by viewModels<PatientDetailViewModel>()
-    private val ageRangeAdapter = AgeRangeAdapter(listOf("10+", "20+", "30+", "40+", "50+", "60+", "70+"))
+    private lateinit var ageRangeAdapter: AgeRangeAdapter
     private var ageRange : String = ""
     private val args by navArgs<PatientDetailFragmentArgs>()
+    private val AgeRangeList = listOf("10+", "20+", "30+", "40+", "50+", "60+")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +32,8 @@ class PatientDetailFragment: BaseFragment() {
     ): View? {
         dataBinding = FragmentPatientDetailBinding.inflate(inflater, container, false)
         dataBinding.lifecycleOwner = viewLifecycleOwner
-        dataBinding.rvAgeRange.adapter = ageRangeAdapter
+        ageRangeAdapter = AgeRangeAdapter(AgeRangeList)
+        dataBinding.recyclerAge.adapter = ageRangeAdapter
         ageRangeAdapter.onItemClickListener = {ageRange ->
             this.ageRange = ageRange
         }

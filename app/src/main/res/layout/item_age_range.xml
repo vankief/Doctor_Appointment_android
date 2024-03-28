@@ -13,7 +13,7 @@
         android:layout_marginEnd="4dp"
         app:cardCornerRadius="20dp"
         app:strokeColor="@color/md_theme_light_onPrimary"
-        app:strokeWidth="1dp">
+        app:strokeWidth="2dp">
         <TextView
             android:id="@+id/txtAgeRange"
             android:layout_width="wrap_content"
