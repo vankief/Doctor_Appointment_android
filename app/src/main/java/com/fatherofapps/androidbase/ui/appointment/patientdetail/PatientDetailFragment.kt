@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.request.AppointmentRequest
+import com.fatherofapps.androidbase.data.response.PaymentDetailOnlineResponse
 import com.fatherofapps.androidbase.databinding.FragmentPatientDetailBinding
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
@@ -23,7 +24,7 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
     private lateinit var dataBinding: FragmentPatientDetailBinding
     private val viewModel by viewModels<PatientDetailViewModel>()
     private lateinit var ageRangeAdapter: AgeRangeAdapter
-    private var ageRange : String = ""
+    private var ageRange: String = ""
     private val args by navArgs<PatientDetailFragmentArgs>()
     lateinit var paymentSheet: PaymentSheet
     lateinit var customerConfig: PaymentSheet.CustomerConfiguration
@@ -42,10 +43,12 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
         dataBinding = FragmentPatientDetailBinding.inflate(inflater, container, false)
         dataBinding.lifecycleOwner = viewLifecycleOwner
         ageRangeAdapter = AgeRangeAdapter()
-        ageRangeAdapter.onItemClickListener = {ageRange ->
+        ageRangeAdapter.onItemClickListener = { ageRange ->
             this.ageRange = ageRange
         }
-        dataBinding.recyclerAge.apply { layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false) }
+        dataBinding.recyclerAge.apply {
+            layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        }
         dataBinding.recyclerAge.adapter = ageRangeAdapter
 
         return dataBinding.root
@@ -82,60 +85,68 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
         val scheduledDate = args.appointmentInfo.day
         val service = args.appointmentInfo.service
         return dataBinding.run {
-            AppointmentRequest( doctorId, scheduledDate, scheduledTime, patientName,
-                patientPhone, patientAge, patientGender, reason, fee, service)
+            AppointmentRequest(
+                doctorId, scheduledDate, scheduledTime, patientName,
+                patientPhone, patientAge, patientGender, reason, fee, service
+            )
         }
     }
 
     private fun validatePatientDetail(): Pair<Boolean, String> {
         var result = Pair(true, "")
-        if( ageRange.isEmpty()||
-            dataBinding.edtName.text.toString().isEmpty()||
-            dataBinding.edtPhone.text.toString().isEmpty()||
-            dataBinding.radioGroupGender.checkedRadioButtonId == -1||
-            dataBinding.edtReason.text.toString().isEmpty())
-        {
+        if (ageRange.isEmpty() ||
+            dataBinding.edtName.text.toString().isEmpty() ||
+            dataBinding.edtPhone.text.toString().isEmpty() ||
+            dataBinding.radioGroupGender.checkedRadioButtonId == -1 ||
+            dataBinding.edtReason.text.toString().isEmpty()
+        ) {
             result = Pair(false, "Vui lòng điền đầy đủ thông tin")
         }
         return result
     }
 
-   private fun fetchPaymentIntent(){
-       viewModel.createAppointmentResponse.observe(viewLifecycleOwner, {
-           if (it.isSuccess() && it.data != null) {
-               val paymentIntent = it.data.paymentIntent
-               val customer = it.data.customer
-               val ephemeralKey = it.data.ephemeralKey
-               val publishableKeyFromServer = it.data.publishableKey
-               paymentIntentClientSecret = paymentIntent
-               customerConfig = PaymentSheet.CustomerConfiguration(
-                   customer,
-                   ephemeralKey
-               )
-               val publishableKey = publishableKeyFromServer
-               PaymentConfiguration.init(requireContext(), publishableKey)
-               // Kiểm tra giá trị không phải là null trước khi gọi hàm
-               if (paymentIntentClientSecret != null) {
-                   presentPaymentSheet()
-               } else {
-                     Toast.makeText(context, "Lỗi: Không thể tạo phiếu thanh toán", Toast.LENGTH_LONG).show()
-               }
-           } else {
-                Toast.makeText(context, "Lỗi: Không thể tạo phiếu thanh toán", Toast.LENGTH_LONG).show()
-           }
-         })
-   }
-    fun onPaymentSheetResult(paymentSheetResult: PaymentSheetResult) {
-        when(paymentSheetResult) {
+    private fun fetchPaymentIntent() {
+        viewModel.createAppointmentResponse.observe(viewLifecycleOwner) { response ->
+            if (response.isSuccess() && response.data != null) {
+                if (response.getMess() == "ONLINE") {
+                    (response.data as? PaymentDetailOnlineResponse)?.let { data ->
+                        paymentIntentClientSecret = data.paymentIntent
+                        customerConfig = PaymentSheet.CustomerConfiguration(
+                            data.customer,
+                            data.ephemeralKey
+                        )
+                        PaymentConfiguration.init(requireContext(), data.publishableKey)
+
+                        presentPaymentSheet()
+                    }
+                } else if (response.getMess() == "OFFLINE") {
+                    showToast("Đặt lịch OFFLINE thành công")
+                } else {
+                    showToast("Lỗi: Không thể tạo phiếu thanh toán")
+                }
+            } else {
+                showToast("Lỗi: Không thể tạo phiếu thanh toán")
+            }
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+    }
+
+    private fun onPaymentSheetResult(paymentSheetResult: PaymentSheetResult) {
+        when (paymentSheetResult) {
             is PaymentSheetResult.Canceled -> {
                 print("Canceled")
-                Toast.makeText(context,"Thanh toán bị hủy", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Thanh toán bị hủy", Toast.LENGTH_LONG).show()
             }
+
             is PaymentSheetResult.Failed -> {
                 print("Error: ${paymentSheetResult.error}")
                 Toast.makeText(context, "Thanh toán thất bại", Toast.LENGTH_LONG).show()
 
             }
+
             is PaymentSheetResult.Completed -> {
                 // Display for example, an order confirmation screen
                 print("Completed")
@@ -143,7 +154,8 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
             }
         }
     }
-    fun presentPaymentSheet() {
+
+    private fun presentPaymentSheet() {
         paymentSheet.presentWithPaymentIntent(
             paymentIntentClientSecret!!,
             PaymentSheet.Configuration(
@@ -154,3 +166,5 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
     }
 
 }
+
+
