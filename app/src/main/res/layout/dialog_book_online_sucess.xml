@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_online"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:id="@+id/successful"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thành Công"
+        android:textAppearance="@style/successful"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/your_appointment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/your_appoin"
+        android:textAppearance="@style/your_appoin"
+        android:gravity="center_horizontal"/>
+
+</LinearLayout>

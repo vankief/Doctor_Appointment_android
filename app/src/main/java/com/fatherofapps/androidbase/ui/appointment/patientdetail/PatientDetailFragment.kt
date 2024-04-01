@@ -1,6 +1,8 @@
 package com.fatherofapps.androidbase.ui.appointment.patientdetail
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +11,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.request.AppointmentRequest
 import com.fatherofapps.androidbase.databinding.FragmentPatientDetailBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
@@ -29,6 +33,9 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
     lateinit var customerConfig: PaymentSheet.CustomerConfiguration
     lateinit var paymentIntentClientSecret: String
 
+    companion object{
+        const val TAG = "PatientDetailFragment"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,32 +107,53 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
         return result
     }
 
-   private fun fetchPaymentIntent(){
-       viewModel.createAppointmentResponse.observe(viewLifecycleOwner, {
-           if (it.isSuccess() && it.data != null) {
-               val paymentIntent = it.data.paymentIntent
-               val customer = it.data.customer
-               val ephemeralKey = it.data.ephemeralKey
-               val publishableKeyFromServer = it.data.publishableKey
-               paymentIntentClientSecret = paymentIntent
-               customerConfig = PaymentSheet.CustomerConfiguration(
-                   customer,
-                   ephemeralKey
-               )
-               val publishableKey = publishableKeyFromServer
-               PaymentConfiguration.init(requireContext(), publishableKey)
-               // Kiểm tra giá trị không phải là null trước khi gọi hàm
-               if (paymentIntentClientSecret != null) {
-                   presentPaymentSheet()
-               } else {
-                     Toast.makeText(context, "Lỗi: Không thể tạo phiếu thanh toán", Toast.LENGTH_LONG).show()
-               }
-           } else {
-                Toast.makeText(context, "Lỗi: Không thể tạo phiếu thanh toán", Toast.LENGTH_LONG).show()
-           }
-         })
-   }
-    fun onPaymentSheetResult(paymentSheetResult: PaymentSheetResult) {
+    private fun fetchPaymentIntent() {
+        viewModel.createAppointmentResponse.observe(viewLifecycleOwner) { response ->
+            if (response.isSuccess() && response.data != null) {
+                val appointmentPaymentDetail = response.data
+                Log.d(TAG, "fetchPaymentIntent: $appointmentPaymentDetail")
+                when {
+                    appointmentPaymentDetail.paymentDetailOnlineResponse != null -> {
+                        val paymentOnline = appointmentPaymentDetail.paymentDetailOnlineResponse
+                        val paymentIntent = paymentOnline.paymentIntent
+                        val customer = paymentOnline.customer
+                        val ephemeralKey = paymentOnline.ephemeralKey
+                        val publishableKeyFromServer = paymentOnline.publishableKey
+                        paymentIntentClientSecret = paymentIntent
+                        customerConfig = PaymentSheet.CustomerConfiguration(customer, ephemeralKey)
+                        val publishableKey = publishableKeyFromServer
+                        PaymentConfiguration.init(requireContext(), publishableKey)
+                        if (paymentIntentClientSecret != null) {
+                            presentPaymentSheet()
+                        } else {
+                            Toast.makeText(
+                                context,
+                                "Lỗi: Không thể tạo phiếu thanh toán",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+
+                    appointmentPaymentDetail.paymentDetailOfflineResponse != null -> {
+                        showDialogOffline()
+                    }
+
+                    else -> {
+                        Toast.makeText(
+                            context,
+                            "Lỗi: Không thể tạo phiếu thanh toán",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+            } else {
+                Toast.makeText(context, "Lỗi: Không thể tạo phiếu thanh toán", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun onPaymentSheetResult(paymentSheetResult: PaymentSheetResult) {
         when(paymentSheetResult) {
             is PaymentSheetResult.Canceled -> {
                 print("Canceled")
@@ -139,11 +167,11 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
             is PaymentSheetResult.Completed -> {
                 // Display for example, an order confirmation screen
                 print("Completed")
-                Toast.makeText(context, "Thanh toán thành công", Toast.LENGTH_LONG).show()
+                showDialogOnline()
             }
         }
     }
-    fun presentPaymentSheet() {
+    private fun presentPaymentSheet() {
         paymentSheet.presentWithPaymentIntent(
             paymentIntentClientSecret!!,
             PaymentSheet.Configuration(
@@ -152,5 +180,31 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
             )
         )
     }
+    private fun showDialogOnline(){
+        val dialogBuilder = MaterialAlertDialogBuilder(requireContext())
+         val inflater = this.layoutInflater
+            val dialogView = inflater.inflate(R.layout.dialog_book_online_sucess, null)
+            dialogBuilder.setView(dialogView)
+                .setPositiveButton("Xác Nhận") { dialog, _ ->
+                    dialog.dismiss()
+                    val action = PatientDetailFragmentDirections.actionPatientDetailFragmentToHomeFragment()
+                    navigateToPage(action)
+                }
+                .show()
+    }
+
+    private fun showDialogOffline(){
+        val dialogBuilder = MaterialAlertDialogBuilder(requireContext())
+        val inflater = this.layoutInflater
+        val dialogView = inflater.inflate(R.layout.dialog_book_offline_sucess, null)
+        dialogBuilder.setView(dialogView)
+            .setPositiveButton("Xác Nhận") { dialog, _ ->
+                dialog.dismiss()
+                val action = PatientDetailFragmentDirections.actionPatientDetailFragmentToHomeFragment()
+                navigateToPage(action)
+            }
+            .show()
+    }
+
 
 }

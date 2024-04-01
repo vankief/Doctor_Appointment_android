@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.fatherofapps.androidbase.base.viewmodel.BaseViewModel
 import com.fatherofapps.androidbase.data.repositories.AppointmentRepository
 import com.fatherofapps.androidbase.data.request.AppointmentRequest
+import com.fatherofapps.androidbase.data.response.AppointmentResponse
 import com.fatherofapps.androidbase.data.response.ConfigResponse
-import com.fatherofapps.androidbase.data.response.PaymentDetailResponse
 import com.fatherofapps.androidbase.helper.preferences.PreferenceManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -17,8 +17,8 @@ class PatientDetailViewModel @Inject constructor(
     private val preferenceManager: PreferenceManager
 ): BaseViewModel(){
 
-    private var _createAppointmentResponse = MutableLiveData<ConfigResponse<PaymentDetailResponse>>()
-    val createAppointmentResponse: MutableLiveData<ConfigResponse<PaymentDetailResponse>>
+    private var _createAppointmentResponse = MutableLiveData<ConfigResponse<AppointmentResponse>>()
+    val createAppointmentResponse: MutableLiveData<ConfigResponse<AppointmentResponse>>
         get() = _createAppointmentResponse
 
         fun createAppointment(appointmentRequest: AppointmentRequest) {

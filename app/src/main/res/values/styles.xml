@@ -267,4 +267,12 @@
     <style name="RoundedImageView">
         <item name="cornerSize">50%</item>
     </style>
+    <style name="successful">
+        <item name="android:textSize">29sp</item>
+        <item name="android:textColor">#2972FE</item>
+    </style>
+    <style name="your_appoin">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#09101D</item>
+    </style>
 </resources>

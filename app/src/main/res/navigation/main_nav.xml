@@ -148,15 +148,9 @@
             android:name="appointmentInfo"
             app:argType="com.fatherofapps.androidbase.data.models.AppointmentInfo" />
         <action
-            android:id="@+id/action_patientDetailFragment_to_selectPaymentFragment"
-            app:destination="@id/selectPaymentFragment" />
+            android:id="@+id/action_patientDetailFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/selectPaymentFragment"
-        android:name="com.fatherofapps.androidbase.ui.appointment.selectpayment.SelectPaymentFragment"
-        android:label="SelectPaymentFragment"
-        tools:layout="@layout/fragment_select_payment_method"
-        />
 
 
 </navigation>
