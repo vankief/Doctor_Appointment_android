@@ -7,9 +7,8 @@ data class AppointmentRequest (
     val patientName: String,
     val patientPhone: String,
     val patientAge: String,
-    val patientGender: String,
+    val patientGender: Boolean,
     val reason: String,
     val fee: Int,
     val service: String,
-    val paymentType: String,
 )

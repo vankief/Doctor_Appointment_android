@@ -10,8 +10,8 @@ import com.fatherofapps.androidbase.R
 import com.google.android.material.card.MaterialCardView
 
 class AgeRangeAdapter(
-    private val ageRange: List<String>,
 ) : RecyclerView.Adapter<AgeRangeAdapter.AgeRangeViewHolder>() {
+    private val ageRange = listOf("10+", "20+", "30+", "40+", "50+", "60+")
     var selectedPosition = RecyclerView.NO_POSITION
 
     var onItemClickListener: ((String) -> Unit)? = null

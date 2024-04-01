@@ -48,8 +48,8 @@ class NetworkModule {
     }
 
     @Provides
-    fun providerPaymentAPI(@Named("MainSite") retrofit: Retrofit): PaymentAPI {
-        return retrofit.create(PaymentAPI::class.java)
+    fun providerPaymentAPI(@Named("MainSite") retrofit: Retrofit): AppointmentAPI {
+        return retrofit.create(AppointmentAPI::class.java)
     }
 
 

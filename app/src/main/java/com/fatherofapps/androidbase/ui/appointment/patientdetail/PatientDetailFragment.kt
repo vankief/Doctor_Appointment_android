@@ -4,10 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
+import com.fatherofapps.androidbase.data.request.AppointmentRequest
 import com.fatherofapps.androidbase.databinding.FragmentPatientDetailBinding
+import com.stripe.android.PaymentConfiguration
+import com.stripe.android.paymentsheet.PaymentSheet
+import com.stripe.android.paymentsheet.PaymentSheetResult
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -18,7 +25,9 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
     private lateinit var ageRangeAdapter: AgeRangeAdapter
     private var ageRange : String = ""
     private val args by navArgs<PatientDetailFragmentArgs>()
-    private val AgeRangeList = listOf("10+", "20+", "30+", "40+", "50+", "60+")
+    lateinit var paymentSheet: PaymentSheet
+    lateinit var customerConfig: PaymentSheet.CustomerConfiguration
+    lateinit var paymentIntentClientSecret: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,22 +41,53 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
     ): View? {
         dataBinding = FragmentPatientDetailBinding.inflate(inflater, container, false)
         dataBinding.lifecycleOwner = viewLifecycleOwner
-        ageRangeAdapter = AgeRangeAdapter(AgeRangeList)
-        dataBinding.recyclerAge.adapter = ageRangeAdapter
+        ageRangeAdapter = AgeRangeAdapter()
         ageRangeAdapter.onItemClickListener = {ageRange ->
             this.ageRange = ageRange
         }
+        dataBinding.recyclerAge.apply { layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false) }
+        dataBinding.recyclerAge.adapter = ageRangeAdapter
+
         return dataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         hideOpenNavigation(false)
+        registerAllExceptionEvent(viewModel, viewLifecycleOwner)
+        registerObserverLoadingEvent(viewModel, viewLifecycleOwner)
         validatePatientDetail()
+        paymentSheet = PaymentSheet(this, ::onPaymentSheetResult)
+        dataBinding.btnContinue.setOnClickListener {
+            val validationResult = validatePatientDetail()
+            if (validationResult.first) {
+                viewModel.createAppointment(getAppointmentRequest())
+            } else {
+                showErrorMessage(validationResult.second)
+            }
+            fetchPaymentIntent()
+        }
 
     }
 
-    fun validatePatientDetail(): Pair<Boolean, String> {
+    private fun getAppointmentRequest(): AppointmentRequest {
+        val doctorId = args.appointmentInfo.doctorId
+        val patientName = dataBinding.edtName.text.toString()
+        val patientPhone = dataBinding.edtPhone.text.toString()
+        val patientGender = dataBinding.radioButtonMale.isChecked
+        val patientAge = ageRange
+        val reason = dataBinding.edtReason.text.toString()
+        val fee = args.appointmentInfo.price
+        val scheduledTime = args.appointmentInfo.time
+        val scheduledDate = args.appointmentInfo.day
+        val service = args.appointmentInfo.service
+        return dataBinding.run {
+            AppointmentRequest( doctorId, scheduledDate, scheduledTime, patientName,
+                patientPhone, patientAge, patientGender, reason, fee, service)
+        }
+    }
+
+    private fun validatePatientDetail(): Pair<Boolean, String> {
         var result = Pair(true, "")
         if( ageRange.isEmpty()||
             dataBinding.edtName.text.toString().isEmpty()||
@@ -58,6 +98,59 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
             result = Pair(false, "Vui lòng điền đầy đủ thông tin")
         }
         return result
+    }
+
+   private fun fetchPaymentIntent(){
+       viewModel.createAppointmentResponse.observe(viewLifecycleOwner, {
+           if (it.isSuccess() && it.data != null) {
+               val paymentIntent = it.data.paymentIntent
+               val customer = it.data.customer
+               val ephemeralKey = it.data.ephemeralKey
+               val publishableKeyFromServer = it.data.publishableKey
+               paymentIntentClientSecret = paymentIntent
+               customerConfig = PaymentSheet.CustomerConfiguration(
+                   customer,
+                   ephemeralKey
+               )
+               val publishableKey = publishableKeyFromServer
+               PaymentConfiguration.init(requireContext(), publishableKey)
+               // Kiểm tra giá trị không phải là null trước khi gọi hàm
+               if (paymentIntentClientSecret != null) {
+                   presentPaymentSheet()
+               } else {
+                     Toast.makeText(context, "Lỗi: Không thể tạo phiếu thanh toán", Toast.LENGTH_LONG).show()
+               }
+           } else {
+                Toast.makeText(context, "Lỗi: Không thể tạo phiếu thanh toán", Toast.LENGTH_LONG).show()
+           }
+         })
+   }
+    fun onPaymentSheetResult(paymentSheetResult: PaymentSheetResult) {
+        when(paymentSheetResult) {
+            is PaymentSheetResult.Canceled -> {
+                print("Canceled")
+                Toast.makeText(context,"Thanh toán bị hủy", Toast.LENGTH_LONG).show()
+            }
+            is PaymentSheetResult.Failed -> {
+                print("Error: ${paymentSheetResult.error}")
+                Toast.makeText(context, "Thanh toán thất bại", Toast.LENGTH_LONG).show()
+
+            }
+            is PaymentSheetResult.Completed -> {
+                // Display for example, an order confirmation screen
+                print("Completed")
+                Toast.makeText(context, "Thanh toán thành công", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+    fun presentPaymentSheet() {
+        paymentSheet.presentWithPaymentIntent(
+            paymentIntentClientSecret!!,
+            PaymentSheet.Configuration(
+                merchantDisplayName = "Example",
+                customer = customerConfig,
+            )
+        )
     }
 
 }
