@@ -11,4 +11,5 @@ interface AppointmentAPI {
     @POST("/appointment/create")
     suspend fun createAppointment(@Body data: AppointmentRequest): Response<ConfigResponse<AppointmentResponse>>
 
+
 }

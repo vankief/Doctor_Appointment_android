@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.request.AppointmentRequest
+import com.fatherofapps.androidbase.data.response.PaymentDetailOnlineResponse
 import com.fatherofapps.androidbase.databinding.FragmentPatientDetailBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.stripe.android.PaymentConfiguration
@@ -27,7 +28,7 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
     private lateinit var dataBinding: FragmentPatientDetailBinding
     private val viewModel by viewModels<PatientDetailViewModel>()
     private lateinit var ageRangeAdapter: AgeRangeAdapter
-    private var ageRange : String = ""
+    private var ageRange: String = ""
     private val args by navArgs<PatientDetailFragmentArgs>()
     lateinit var paymentSheet: PaymentSheet
     lateinit var customerConfig: PaymentSheet.CustomerConfiguration
@@ -49,10 +50,12 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
         dataBinding = FragmentPatientDetailBinding.inflate(inflater, container, false)
         dataBinding.lifecycleOwner = viewLifecycleOwner
         ageRangeAdapter = AgeRangeAdapter()
-        ageRangeAdapter.onItemClickListener = {ageRange ->
+        ageRangeAdapter.onItemClickListener = { ageRange ->
             this.ageRange = ageRange
         }
-        dataBinding.recyclerAge.apply { layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false) }
+        dataBinding.recyclerAge.apply {
+            layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        }
         dataBinding.recyclerAge.adapter = ageRangeAdapter
 
         return dataBinding.root
@@ -89,19 +92,21 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
         val scheduledDate = args.appointmentInfo.day
         val service = args.appointmentInfo.service
         return dataBinding.run {
-            AppointmentRequest( doctorId, scheduledDate, scheduledTime, patientName,
-                patientPhone, patientAge, patientGender, reason, fee, service)
+            AppointmentRequest(
+                doctorId, scheduledDate, scheduledTime, patientName,
+                patientPhone, patientAge, patientGender, reason, fee, service
+            )
         }
     }
 
     private fun validatePatientDetail(): Pair<Boolean, String> {
         var result = Pair(true, "")
-        if( ageRange.isEmpty()||
-            dataBinding.edtName.text.toString().isEmpty()||
-            dataBinding.edtPhone.text.toString().isEmpty()||
-            dataBinding.radioGroupGender.checkedRadioButtonId == -1||
-            dataBinding.edtReason.text.toString().isEmpty())
-        {
+        if (ageRange.isEmpty() ||
+            dataBinding.edtName.text.toString().isEmpty() ||
+            dataBinding.edtPhone.text.toString().isEmpty() ||
+            dataBinding.radioGroupGender.checkedRadioButtonId == -1 ||
+            dataBinding.edtReason.text.toString().isEmpty()
+        ) {
             result = Pair(false, "Vui lòng điền đầy đủ thông tin")
         }
         return result
@@ -157,13 +162,15 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
         when(paymentSheetResult) {
             is PaymentSheetResult.Canceled -> {
                 print("Canceled")
-                Toast.makeText(context,"Thanh toán bị hủy", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Thanh toán bị hủy", Toast.LENGTH_LONG).show()
             }
+
             is PaymentSheetResult.Failed -> {
                 print("Error: ${paymentSheetResult.error}")
                 Toast.makeText(context, "Thanh toán thất bại", Toast.LENGTH_LONG).show()
 
             }
+
             is PaymentSheetResult.Completed -> {
                 // Display for example, an order confirmation screen
                 print("Completed")
@@ -208,3 +215,5 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
 
 
 }
+
+

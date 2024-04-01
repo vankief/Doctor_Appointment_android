@@ -11,24 +11,26 @@ import com.fatherofapps.androidbase.helper.preferences.PreferenceManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 @HiltViewModel
 class PatientDetailViewModel @Inject constructor(
     private val appointmentRepository: AppointmentRepository,
     private val preferenceManager: PreferenceManager
-): BaseViewModel(){
+) : BaseViewModel() {
 
     private var _createAppointmentResponse = MutableLiveData<ConfigResponse<AppointmentResponse>>()
     val createAppointmentResponse: MutableLiveData<ConfigResponse<AppointmentResponse>>
         get() = _createAppointmentResponse
 
-        fun createAppointment(appointmentRequest: AppointmentRequest) {
-            showLoading(true)
-            parentJob = viewModelScope.launch {
-                val response = appointmentRepository.createAppointment(appointmentRequest)
-                _createAppointmentResponse.postValue(response!!)
-            }
-            registerJobFinish()
+    fun createAppointment(appointmentRequest: AppointmentRequest) {
+        showLoading(true)
+        parentJob = viewModelScope.launch {
+            val response = appointmentRepository.createAppointment(appointmentRequest)
+            val message = response!!.getMess()
+            _createAppointmentResponse.postValue(response!!)
         }
+        registerJobFinish()
+    }
 
 
 
