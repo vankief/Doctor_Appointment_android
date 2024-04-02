@@ -5,12 +5,17 @@ import com.fatherofapps.androidbase.base.network.NetworkResult
 import com.fatherofapps.androidbase.data.apis.DoctorAPI
 import com.fatherofapps.androidbase.data.apis.SpecialistAPI
 import com.fatherofapps.androidbase.data.response.ConfigResponse
+import com.fatherofapps.androidbase.data.response.Specialist
 import com.fatherofapps.androidbase.data.response.SpecialistDoctor
 import javax.inject.Inject
 
 class SpecialistRemoteService @Inject constructor(private val specialistAPI: SpecialistAPI): BaseRemoteService() {
     suspend fun getDoctorsBySpecialist(): NetworkResult<ConfigResponse<List<SpecialistDoctor>>> {
         return callApi { specialistAPI.getDoctorsBySpecialist() }
+    }
+
+    suspend fun getSpecialists(): NetworkResult<ConfigResponse<List<Specialist>>> {
+        return callApi { specialistAPI.getSpecialists() }
     }
 
 

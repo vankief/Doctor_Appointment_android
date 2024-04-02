@@ -5,6 +5,7 @@ import com.fatherofapps.androidbase.data.response.ConfigResponse
 import com.fatherofapps.androidbase.data.response.DoctorInfo
 import com.fatherofapps.androidbase.data.response.ListTime
 import com.fatherofapps.androidbase.data.response.TopDoctor
+import com.fatherofapps.androidbase.data.response.TopDoctorBySpecialist
 import com.fatherofapps.androidbase.data.response.doctorPrice
 import retrofit2.Response
 import retrofit2.http.Body
@@ -20,7 +21,7 @@ interface DoctorAPI {
     @GET("/doctors")
     suspend fun getAllDoctors(@Body data: DoctorFilter): Response<ConfigResponse<Any>>
 
-    @GET("/doctors/top")
+    @GET("/doctors/top/")
     suspend fun getTopDoctors(): Response<ConfigResponse<List<TopDoctor>>>
 
     @GET("/doctorTimeSlot/appointment-time/{DoctorPath}")
@@ -28,4 +29,7 @@ interface DoctorAPI {
 
     @GET("doctors/price/{DoctorPath}")
     suspend fun getDoctorPrice(@Path("DoctorPath") id: String): Response<ConfigResponse<doctorPrice>>
+
+    @GET("/doctors/specialist/{SpecialistPath}")
+    suspend fun getDoctorBySpecialist(@Path("SpecialistPath") specialistId: String?): Response<ConfigResponse<List<TopDoctorBySpecialist>>>
 }

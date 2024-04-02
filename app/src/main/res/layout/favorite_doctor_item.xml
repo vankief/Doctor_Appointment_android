@@ -14,7 +14,7 @@
 
         <!-- Phần 1: Ảnh đại diện -->
         <ImageView
-            android:id="@+id/doctorImageView"
+            android:id="@+id/doctorAvatar"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/ic_img_doctor"
@@ -29,7 +29,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/doctorNameTextView"
+                android:id="@+id/txtDoctorName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Bác Sĩ Nguyễn Văn A"
@@ -59,18 +59,25 @@
 
                 <!-- Text đánh giá -->
                 <TextView
-                    android:id="@+id/reviewTextView"
+                    android:id="@+id/txtTotalRating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5.0 (20 reviews)"
+                    android:text="5.0 "
                     android:textSize="14sp"
-
+                    android:gravity="center_vertical"
+                    />
+                <TextView
+                    android:id="@+id/txtTotalReview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(20 reviews)"
+                    android:textSize="14sp"
                     android:gravity="center_vertical"
                     />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/specializationTextView"
+                android:id="@+id/txtSpecialistName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Chuyên Khoa: Nội Tiêu Hóa"
@@ -83,7 +90,7 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_margin="8dp"
-        app:cardBackgroundColor="@color/background_color"
+        app:cardBackgroundColor="@color/md_theme_light_primaryContainer"
         app:cardCornerRadius="8dp"
         android:layout_gravity="center_vertical"
         >

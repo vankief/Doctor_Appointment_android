@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.fatherofapps.androidbase.R
+import com.fatherofapps.androidbase.data.models.TimeSlotInfo
 import com.fatherofapps.androidbase.data.response.SpecialistDoctor
 import com.google.android.material.card.MaterialCardView
 import java.lang.Integer.min
@@ -17,6 +18,7 @@ import java.lang.Integer.min
 class SpecialistAdapter(
     private val specialists: List<SpecialistDoctor>
 ): RecyclerView.Adapter<SpecialistAdapter.SpecialistViewHolder>() {
+
 
     private val itemColors = listOf(
         R.color.color_specialist_01,
@@ -30,12 +32,6 @@ class SpecialistAdapter(
         val txtSpecialistName: TextView = itemView.findViewById(R.id.txtSpecializationName)
         val txtDoctorCount: TextView = itemView.findViewById(R.id.txtDoctorCount)
 
-        init {
-            itemView.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToSpecialistFragment()
-                itemView.findNavController().navigate(action)
-            }
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpecialistViewHolder {
@@ -58,6 +54,12 @@ class SpecialistAdapter(
         //holder.imgSpecialist.setImageResource(specialist.imageUrl)
         holder.txtSpecialistName.text = specialist.name
         holder.txtDoctorCount.text = specialist.numberOfDoctors.toString()
+
+        holder.itemView.setOnClickListener() {
+            val specialistId = specialist.id
+            val action = HomeFragmentDirections.actionHomeFragmentToFragmentTopDoctor(specialistId)
+            holder.itemView.findNavController().navigate(action)
+        }
     }
 
 }

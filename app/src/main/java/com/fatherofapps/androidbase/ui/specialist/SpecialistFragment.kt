@@ -9,12 +9,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.response.SpecialistDoctor
-import com.fatherofapps.androidbase.databinding.FragmentSpecialistListDoctorBinding
-import com.fatherofapps.androidbase.ui.home.HomeFragment
-import com.fatherofapps.androidbase.ui.home.SpecialistAdapter
+import com.fatherofapps.androidbase.databinding.FragmentSpecialistDoctorBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -22,7 +19,7 @@ import javax.inject.Inject
 class SpecialistFragment @Inject constructor(
 ) : BaseFragment() {
 
-    private lateinit var dataBinding: FragmentSpecialistListDoctorBinding
+    private lateinit var dataBinding: FragmentSpecialistDoctorBinding
     private var  specialistDoctor: List<SpecialistDoctor> = emptyList()
     private val viewModel by viewModels<SpecialistViewModel>()
     private var specialistAdapter: SpecialistAdapter? = null
@@ -41,7 +38,7 @@ class SpecialistFragment @Inject constructor(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dataBinding = FragmentSpecialistListDoctorBinding.inflate(inflater, container, false)
+        dataBinding = FragmentSpecialistDoctorBinding.inflate(inflater, container, false)
         dataBinding.lifecycleOwner = viewLifecycleOwner
         return dataBinding.root
     }
@@ -56,11 +53,11 @@ class SpecialistFragment @Inject constructor(
     }
     private fun setupSpecialistRecyclerView() {
         specialistAdapter = SpecialistAdapter(specialistDoctor)
-        dataBinding.resultRecyclerView.apply {
-            layoutManager = GridLayoutManager(context, 2)}
-        dataBinding.resultRecyclerView.adapter = specialistAdapter
+        dataBinding.rvSpecialistDoctor.apply {
+            layoutManager = GridLayoutManager(context, 2)
+            adapter = specialistAdapter
         }
-
+    }
 
     @SuppressLint("FragmentLiveDataObserve")
     private fun setupObservers() {

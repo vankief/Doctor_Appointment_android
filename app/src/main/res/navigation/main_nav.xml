@@ -82,11 +82,15 @@
         android:id="@+id/fragmentTopDoctor"
         android:name="com.fatherofapps.androidbase.ui.doctor.topdoctor.TopDoctorFragment"
         android:label="FragmentTopDoctor"
-        tools:layout="@layout/fragment_specialist_list_top_doctor"
+        tools:layout="@layout/fragment_top_doctor"
         >
         <action
             android:id="@+id/action_fragmentTopDoctor_to_doctorDetailfragment"
             app:destination="@id/doctorDetailfragment" />
+        <argument
+            android:name="specialistId"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/doctorDetailfragment"

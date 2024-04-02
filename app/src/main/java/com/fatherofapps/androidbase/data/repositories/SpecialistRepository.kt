@@ -28,4 +28,19 @@ class SpecialistRepository @Inject constructor(
             }
         }
 
+    suspend fun getSpecialists() =
+        withContext(dispatcher) {
+            when (val result = specialistRemoteService.getSpecialists()) {
+                is NetworkResult.Success -> {
+                    Log.d(TAG, "getSpecialists: ${result.data}")
+                    return@withContext result.data
+                }
+
+                is NetworkResult.Error -> {
+                    Log.d(TAG, "getSpecialists: ${result.exception.message}")
+                    return@withContext null
+                }
+            }
+        }
+
 }

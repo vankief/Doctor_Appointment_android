@@ -9,6 +9,11 @@ data class SpecialistDoctor(
     val numberOfDoctors: Int,
 )
 
+data class Specialist(
+    val id: String,
+    val name: String,
+)
+
 data class DoctorofSpecialist(
     val name: String,
     val email: String,

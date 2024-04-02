@@ -10,6 +10,16 @@ data class TopDoctor(
     val specialist: String,
 )
 
+data class TopDoctorBySpecialist(
+    val id: String,
+    val name: String,
+    val img: String,
+    val specialist: String,
+    val averageRating: Double,
+    val totalReviews: Int,
+    val isFavorite: Boolean
+)
+
 data class DoctorInfo(
     val id: String,
     val name: String,
