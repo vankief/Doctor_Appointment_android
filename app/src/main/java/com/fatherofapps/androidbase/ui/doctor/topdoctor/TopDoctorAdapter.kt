@@ -6,13 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.data.response.TopDoctorBySpecialist
-import com.google.android.material.card.MaterialCardView
+import com.giphy.sdk.analytics.GiphyPingbacks.context
 
 class TopDoctorAdapter(
     private val topDoctorList: List<TopDoctorBySpecialist>,
@@ -53,7 +55,14 @@ class TopDoctorAdapter(
         holder.txtDoctorRating.text = currentItem.averageRating.toString()
         holder.txtDoctorReview.text = currentItem.totalReviews.toString()
         if (currentItem.isFavorite) {
-        } else {
+            holder.favorite.setImageTintList(ContextCompat.getColorStateList(context, R.color.md_theme_light_primary))
         }
+
+        holder.itemView.setOnClickListener(View.OnClickListener {
+            val doctorId = currentItem.id
+            // Navigate to doctor detail fragment
+            val action = TopDoctorFragmentDirections.actionFragmentTopDoctorToDoctorDetailfragment(doctorId)
+            holder.itemView.findNavController().navigate(action)
+        })
     }
 }

@@ -30,7 +30,6 @@ class SpecialistFragment @Inject constructor(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getDoctorsBySpecialist()
-
     }
 
     override fun onCreateView(

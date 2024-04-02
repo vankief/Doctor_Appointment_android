@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/itemSpecialist"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardSpecialist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:cardCornerRadius="20dp"
+        app:strokeColor="@color/md_theme_light_onPrimary"
+        app:strokeWidth="2dp">
+        <TextView
+            android:id="@+id/txtSpecialist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Nhi Khoa"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="6dp"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:textColor="@color/md_theme_light_onPrimary"
+            android:textSize="16sp" />
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>
