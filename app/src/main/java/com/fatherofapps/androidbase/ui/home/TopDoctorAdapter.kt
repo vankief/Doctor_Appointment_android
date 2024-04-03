@@ -12,6 +12,7 @@ import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.data.response.TopDoctor
+import com.fatherofapps.androidbase.utils.convertImagePath
 import java.lang.Math.min
 
 class TopDoctorAdapter(
@@ -45,7 +46,7 @@ class TopDoctorAdapter(
         val doctor = topDoctor[position]
         // Sử dụng Glide để preload hình ảnh từ đường dẫn URL
         val preloadRequest: RequestBuilder<Drawable> = Glide.with(holder.itemView.context)
-            .load(doctor.img)
+            .load(convertImagePath(doctor.img))
             .diskCacheStrategy(DiskCacheStrategy.DATA)
             .override(160, 160)
             .centerCrop()
@@ -53,7 +54,7 @@ class TopDoctorAdapter(
 
         // Sau khi preload, hiển thị hình ảnh trong onBindViewHolder
         Glide.with(holder.itemView.context)
-            .load(doctor.img)
+            .load(convertImagePath(doctor.img))
             .override(160, 160)
             .centerCrop()
             .into(holder.imgDoctor)

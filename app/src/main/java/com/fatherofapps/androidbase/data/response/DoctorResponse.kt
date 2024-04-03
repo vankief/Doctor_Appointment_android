@@ -15,7 +15,7 @@ data class TopDoctorBySpecialist(
     val name: String,
     val img: String,
     val specialist: String,
-    val averageRating: Double,
+    val averageRating: Float,
     val totalReviews: Int,
     val isFavorite: Boolean
 )
@@ -25,7 +25,7 @@ data class DoctorInfo(
     val name: String,
     val img: String,
     val specialist: String,
-    val averageRating: Double,
+    val averageRating: Float,
     val totalRatings: Int,
     val totalPatients: Int,
     val totalReviews: Int,

@@ -11,7 +11,7 @@ import com.google.android.material.card.MaterialCardView
 
 class SpecialistAdapter(
     private val specialist: List<Specialist>,
-    private val specialistId: String?
+    private var specialistId: String?
 ): RecyclerView.Adapter<SpecialistAdapter.SpecialistViewHolder>() {
 
     var selectedPosition = RecyclerView.NO_POSITION
@@ -34,12 +34,11 @@ class SpecialistAdapter(
     override fun onBindViewHolder(holder: SpecialistViewHolder, position: Int) {
         val specialist = specialist[position]
         holder.txtSpecialistName.text = specialist.name
-        if (specialist.id == specialistId) {
-            selectedPosition = position
-        }
-        val isSelected = position == selectedPosition
+        val isSelected = specialist.id == specialistId // Kiểm tra xem chuyên khoa hiện tại có phải là chuyên khoa được chọn không
         updateColor(holder, isSelected)
         holder.itemView.setOnClickListener {
+            specialistId = specialist.id // Cập nhật ID của chuyên khoa được chọn
+            notifyDataSetChanged() // Cập nhật giao diện người dùng
             onItemClickListener?.invoke(specialist.id)
         }
     }

@@ -99,13 +99,7 @@ class TopDoctorFragment @Inject constructor(): BaseFragment() {
         }
         // Xử lý sự kiện khi chọn một chuyên gia
         specialistAdapter?.onItemClickListener = { selectedSpecialistId ->
-            if (selectedSpecialistId == "all") {
-                // Nếu chọn "All", gọi API với specialistId là null
-                viewModel.getTopDoctorBySpecialist(null)
-            } else {
-                // Ngược lại, gọi API với specialistId được chọn
-                viewModel.getTopDoctorBySpecialist(selectedSpecialistId)
-            }
+            viewModel.getTopDoctorBySpecialist(selectedSpecialistId)
         }
         dataBinding.rvSpecialty.adapter = specialistAdapter
     }

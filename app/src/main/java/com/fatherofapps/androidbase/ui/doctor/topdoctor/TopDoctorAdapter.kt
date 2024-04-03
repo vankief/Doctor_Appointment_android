@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -14,7 +13,7 @@ import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.data.response.TopDoctorBySpecialist
-import com.giphy.sdk.analytics.GiphyPingbacks.context
+import com.fatherofapps.androidbase.utils.convertImagePath
 
 class TopDoctorAdapter(
     private val topDoctorList: List<TopDoctorBySpecialist>,
@@ -47,15 +46,17 @@ class TopDoctorAdapter(
 
         // Sau khi preload, hiển thị hình ảnh trong onBindViewHolder
         Glide.with(holder.itemView.context)
-            .load(currentItem.img)
+            .load(convertImagePath(currentItem.img))
             .override(80, 80)
             .centerCrop()
             .into(holder.avtarDoctor)
         holder.txtDoctorSpecialist.text = currentItem.specialist
-        holder.txtDoctorRating.text = currentItem.averageRating.toString()
-        holder.txtDoctorReview.text = currentItem.totalReviews.toString()
+        holder.txtDoctorRating.text = String.format("%.1f", currentItem.averageRating)
+        holder.txtDoctorReview.text = "(${currentItem.totalReviews} reviews)"
         if (currentItem.isFavorite) {
-            holder.favorite.setImageTintList(ContextCompat.getColorStateList(context, R.color.md_theme_light_primary))
+            holder.favorite.setImageResource(R.drawable.ic_heart_full)
+        } else {
+            holder.favorite.setImageResource(R.drawable.ic_heart_empty)
         }
 
         holder.itemView.setOnClickListener(View.OnClickListener {

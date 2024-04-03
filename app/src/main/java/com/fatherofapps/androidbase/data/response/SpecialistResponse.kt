@@ -6,6 +6,7 @@ class SpecialistResponse {
 data class SpecialistDoctor(
     val id: String,
     val name: String,
+    val img: String,
     val numberOfDoctors: Int,
 )
 

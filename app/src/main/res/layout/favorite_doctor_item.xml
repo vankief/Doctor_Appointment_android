@@ -100,9 +100,10 @@
         android:id="@+id/favoriteIcon"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/ic_favheart"
+        android:src="@drawable/ic_heart_full"
         android:layout_gravity="center"
-        app:tint="@color/md_theme_light_primary" />
+        app:tint="@color/md_theme_light_primary"
+        />
 </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>

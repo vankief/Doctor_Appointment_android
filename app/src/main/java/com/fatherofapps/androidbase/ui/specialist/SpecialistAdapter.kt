@@ -9,9 +9,11 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.data.models.TimeSlotInfo
 import com.fatherofapps.androidbase.data.response.SpecialistDoctor
+import com.fatherofapps.androidbase.utils.convertImagePath
 import com.google.android.material.card.MaterialCardView
 import java.lang.Integer.min
 
@@ -51,7 +53,10 @@ class SpecialistAdapter(
         val colorResId = itemColors[position % itemColors.size]
         val color = holder.itemView.context.getColor(colorResId)
         holder.materialCardView.setCardBackgroundColor(color)
-        //holder.imgSpecialist.setImageResource(specialist.imageUrl)
+        Glide.with(holder.itemView.context)
+            .load(convertImagePath(specialist.img))
+            .override(90,90)
+            .into(holder.imgSpecialist)
         holder.txtSpecialistName.text = specialist.name
         holder.txtDoctorCount.text = specialist.numberOfDoctors.toString()
 

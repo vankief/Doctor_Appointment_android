@@ -13,10 +13,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.response.DoctorInfo
 import com.fatherofapps.androidbase.databinding.FragmentDoctorDetailBinding
 import com.fatherofapps.androidbase.ui.home.HomeFragment
+import com.fatherofapps.androidbase.utils.convertImagePath
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -82,9 +85,17 @@ class DoctorDetailFragment  @Inject constructor(): BaseFragment() {
         dataBinding.specializationTextView.text = doctorInfo.specialist
         dataBinding.doctorDescriptionTextView.text = doctorInfo.description
         dataBinding.appointmentCountTextView.text = doctorInfo.totalPatients.toString()
-        dataBinding.reviewTextView.text = "${doctorInfo.averageRating} (${doctorInfo.totalReviews})"
+        var totalRating = String.format("%.1f", doctorInfo.averageRating)
+        dataBinding.reviewTextView.text = "$totalRating (${doctorInfo.totalReviews})"
         dataBinding.experienceCountTextView.text = doctorInfo.experience
         dataBinding.reviewCountTextView.text = doctorInfo.totalReviews.toString()
+        // Load image using Glide
+        Glide.with(this)
+            .load(convertImagePath(doctorInfo.img)) // Đường dẫn của ảnh
+            .centerCrop() // Hiển thị ảnh theo tỉ lệ ảnh gốc
+            .placeholder(R.drawable.ic_avt_doctor) // Ảnh placeholder
+            .error(R.drawable.ic_avt_doctor) // Ảnh khi load lỗi
+            .into(dataBinding.doctorImageView) // ImageView để hiển thị ảnh
     }
 
     @SuppressLint("FragmentLiveDataObserve")

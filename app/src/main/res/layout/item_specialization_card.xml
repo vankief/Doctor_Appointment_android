@@ -22,8 +22,8 @@
         <!-- Icon đại diện cho chuyên khoa -->
         <ImageView
             android:id="@+id/imgSpecializationIcon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
             android:src="@drawable/ic_heart"
             android:scaleType="centerCrop"
             android:contentDescription="@null"
