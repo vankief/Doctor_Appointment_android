@@ -1,23 +1,32 @@
 package com.fatherofapps.androidbase.ui.authencation.profile
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.request.updatePatient
 import com.fatherofapps.androidbase.databinding.FragmentProfileBinding
 import com.fatherofapps.androidbase.helper.preferences.PreferenceManager
+import com.fatherofapps.androidbase.utils.ReadPathUtil
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.TimeZone
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class CreateProfileFragement @Inject constructor(): BaseFragment() {
@@ -27,6 +36,18 @@ class CreateProfileFragement @Inject constructor(): BaseFragment() {
 
     @Inject
     lateinit var preferenceManager: PreferenceManager
+    private var imageUri: Uri? = null
+
+    private val imageContract = registerForActivityResult(ActivityResultContracts.GetContent()) {
+        it?.let {
+            imageUri = it
+            Log.d(TAG, "onActivityResult: $it")
+            dataBinding.imgAvatar.setImageURI(it)
+        }
+    }
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -49,6 +70,10 @@ class CreateProfileFragement @Inject constructor(): BaseFragment() {
         hideOpenNavigation(false)
         registerAllExceptionEvent(viewModel, viewLifecycleOwner)
         registerObserverLoadingEvent(viewModel, viewLifecycleOwner)
+
+        dataBinding.tvUploadPhotoProfile.setOnClickListener {
+            imageContract.launch("image/*")
+        }
         dataBinding.inputDoB.setStartIconOnClickListener(View.OnClickListener {
             showDatePickerDialog()
         })
@@ -78,14 +103,19 @@ class CreateProfileFragement @Inject constructor(): BaseFragment() {
 
     private fun getUserRequest(): updatePatient {
         val name = dataBinding.edtName.text.toString()
-        val dob = convertDateFormat(dataBinding.edtDoB.text.toString())
-        val img = ""
-        val gender = dataBinding.radioButtonMale.isChecked
         val phone = dataBinding.edtPhone.text.toString()
         val address = dataBinding.edtAdress.text.toString()
-        return dataBinding.run {
-            updatePatient(img, name, phone, gender, dob, address)
+        val dob = convertDateFormat(dataBinding.edtDoB.text.toString())
+        val gender = dataBinding.radioButtonMale.isChecked.toString()
+        val image: File? = if (imageUri != null) {
+            val path = ReadPathUtil.getPath(requireContext(), imageUri!!)
+            File(path)
+        } else {
+            null
         }
+        val updatePatient = updatePatient(name, phone, gender, dob, address, image)
+        return updatePatient
+
     }
     @SuppressLint("SimpleDateFormat")
     private fun showDatePickerDialog() {

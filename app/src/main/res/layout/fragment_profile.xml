@@ -34,11 +34,12 @@
                     android:src="@drawable/ic_upload" />
 
                 <TextView
+                    android:id="@+id/tvUploadPhotoProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="8dp"
-                    android:text="Upload Photo Profile" />
+                    android:text="Chọn Ảnh" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

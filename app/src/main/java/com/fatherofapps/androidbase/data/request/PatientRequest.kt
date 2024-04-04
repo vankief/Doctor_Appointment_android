@@ -1,13 +1,15 @@
 package com.fatherofapps.androidbase.data.request
 
+import java.io.File
+
 class PatientRequest {
 }
 
 data class updatePatient(
-    val img: String,
     val name: String,
     val phone: String,
-    val gender: Boolean,
+    val gender: String,
     val dob: String, //"yyyy-MM-dd"
     val address: String,
+    val img: File?,
 )
