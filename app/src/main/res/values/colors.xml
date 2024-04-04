@@ -30,7 +30,7 @@
     <color name="md_theme_light_onPrimary">#2972FE</color>
 
 
-    <color name="md_theme_light_primaryContainer">#DAE2FF</color>
+    <color name="md_theme_light_primaryContainer">#FFFF</color>
     <color name="md_theme_light_onPrimaryContainer">#001848</color>
     <color name="md_theme_light_secondary">#7C5800</color>
     <color name="md_theme_light_onSecondary">#FFFFFF</color>

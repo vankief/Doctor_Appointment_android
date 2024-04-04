@@ -158,6 +158,30 @@
             android:id="@+id/action_patientDetailFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/appointmentFragment"
+        android:name="com.fatherofapps.androidbase.ui.appointment.scheduleappointment.AppointmentFragment"
+        android:label="AppointmentFragment"
+        tools:layout="@layout/fragment_my_appointment"
+        />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.fatherofapps.androidbase.ui.setting.SettingFragment"
+        android:label="SettingFragment"
+        tools:layout="@layout/fragment_setting"
+        />
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.fatherofapps.androidbase.ui.notification.NotificationFragment"
+        android:label="NotificationFragment"
+        tools:layout="@layout/fragment_notification"
+        />
+    <fragment
+        android:id="@+id/favoriteDoctorFragment"
+        android:name="com.fatherofapps.androidbase.ui.doctor.favoritedoctor.FavoriteDoctorFragment"
+        android:label="FavoriteDoctorFragment"
+        tools:layout="@layout/fragment_favorite_doctor"
+        />
 
 
 </navigation>

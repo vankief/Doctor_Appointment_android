@@ -13,9 +13,9 @@
         android:icon="@drawable/baseline_today_24"
         />
     <item
-        android:id="@+id/historyFragment"
-        android:title="Lịch sử"
-        android:icon="@drawable/list"
+        android:id="@+id/notificationFragment"
+        android:title="Thông báo"
+        android:icon="@drawable/ic_noti1"
         />
     <item
         android:id="@+id/settingFragment"
