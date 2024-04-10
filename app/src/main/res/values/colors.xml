@@ -24,10 +24,10 @@
     <color name="icon_color_bottom_selected">@color/primaryColor</color>
 
 
-    <color name="seed">#2972FE</color>
-    <color name="md_theme_light_primary">#2972FE</color>
+    <color name="seed">#CC2972FE</color>
+    <color name="md_theme_light_primary">#CC2972FE</color>
 
-    <color name="md_theme_light_onPrimary">#2972FE</color>
+    <color name="md_theme_light_onPrimary">#CC2972FE</color>
 
 
     <color name="md_theme_light_primaryContainer">#FFFF</color>
@@ -91,11 +91,11 @@
     <color name="md_theme_dark_outlineVariant">#45464F</color>
     <color name="md_theme_dark_scrim">#000000</color>
 
-    <color name="color_specialist_01">#E6FF5E7C</color>
-    <color name="color_specialist_02">#2972FE</color>
-    <color name="color_specialist_03">#FFB800</color>
+    <color name="color_specialist_01">#CCFF5E7C</color>
+    <color name="color_specialist_02">#CC2972FE</color>
+    <color name="color_specialist_03">#CCFFB800</color>
 
-    <color name="color_card_selected">#2972FE</color>
+    <color name="color_card_selected">#CC2972FE</color>
     <color name="color_text_selected">#FFFFFF</color>
-    <color name="color_text_unselected">#2972FE</color>
+    <color name="color_text_unselected">#CC2972FE</color>
 </resources>

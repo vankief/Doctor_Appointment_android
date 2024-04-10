@@ -26,7 +26,6 @@ class PatientDetailViewModel @Inject constructor(
         showLoading(true)
         parentJob = viewModelScope.launch {
             val response = appointmentRepository.createAppointment(appointmentRequest)
-            val message = response!!.getMess()
             _createAppointmentResponse.postValue(response!!)
         }
         registerJobFinish()

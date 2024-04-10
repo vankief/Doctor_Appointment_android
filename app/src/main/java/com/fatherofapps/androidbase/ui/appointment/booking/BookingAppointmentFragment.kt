@@ -19,9 +19,14 @@ import com.fatherofapps.androidbase.data.models.TimeSlotInfo
 import com.fatherofapps.androidbase.data.response.ListTime
 import com.fatherofapps.androidbase.data.response.doctorPrice
 import com.fatherofapps.androidbase.databinding.FragmentBookAppointmentStep2Binding
+import com.fatherofapps.androidbase.utils.convertToNormalTime
 import com.fatherofapps.androidbase.utils.convertToVietNamDate
 import com.google.android.material.card.MaterialCardView
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 @AndroidEntryPoint
 class BookingAppointmentFragment @Inject constructor(): BaseFragment() {
@@ -100,7 +105,7 @@ class BookingAppointmentFragment @Inject constructor(): BaseFragment() {
                 if (response.isSuccess()) {
                     Log.d(TAG, "ListTime: ${response.data} ")
                     response.data?.let { data ->
-                        timeSlot = data
+                        timeSlot = filterTimeSlots(args.day, data)
                         setupRecyclerView()
                     }
 
@@ -187,5 +192,44 @@ class BookingAppointmentFragment @Inject constructor(): BaseFragment() {
                 }
             }
         })
+    }
+    private fun isToday(day: String): Boolean {
+        val calendar = Calendar.getInstance()
+        val today = calendar.get(Calendar.DAY_OF_MONTH)
+        val month = calendar.get(Calendar.MONTH)
+        val year = calendar.get(Calendar.YEAR)
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val inputDate = dateFormat.parse(day)
+        calendar.time = inputDate
+        val inputDay = calendar.get(Calendar.DAY_OF_MONTH)
+        val inputMonth = calendar.get(Calendar.MONTH)
+        val inputYear = calendar.get(Calendar.YEAR)
+        return today == inputDay && month == inputMonth && year == inputYear
+    }
+    private fun getTimeSlotEndTime(timeRange: String): Date {
+        val startTimeStr = timeRange.split(" - ")[0] // Lấy phần cuối của chuỗi thời gian (thời gian kết thúc)
+        val sdf = SimpleDateFormat("hh:mma", Locale.getDefault())
+        val startTime = sdf.parse(startTimeStr)
+        return startTime
+    }
+
+    private fun filterTimeSlots(day: String, listTime: List<ListTime>): List<ListTime> {
+        val filteredList = mutableListOf<ListTime>()
+        val isToday = isToday(day)
+
+        if (isToday) {
+            val currentTime = Calendar.getInstance().time
+
+            for (timeSlot in listTime) {
+                val endTime = getTimeSlotEndTime(convertToNormalTime(timeSlot.timeSlot))
+                if (currentTime.before(endTime)) {
+                    filteredList.add(timeSlot)
+                }
+            }
+        } else {
+            filteredList.addAll(listTime)
+        }
+
+        return filteredList
     }
 }

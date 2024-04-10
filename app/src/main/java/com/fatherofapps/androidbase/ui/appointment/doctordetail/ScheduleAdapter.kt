@@ -10,10 +10,14 @@ import com.fatherofapps.androidbase.utils.DayOfWeek
 import com.fatherofapps.androidbase.utils.convertToVietnameseDayOfWeek
 import com.google.android.material.card.MaterialCardView
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.TextStyle
 import java.util.Calendar
 import java.util.Locale
 
 class ScheduleAdapter(
+    private val doctorScheduleDay : List<String>
 ): RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder>() {
     var selectedPosition = RecyclerView.NO_POSITION
 
@@ -36,28 +40,13 @@ class ScheduleAdapter(
     }
 
     override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {
-        val calendar = Calendar.getInstance()
-        calendar.add(Calendar.DAY_OF_MONTH, position)
-
-        val dayOfWeekInt = calendar.get(Calendar.DAY_OF_WEEK)
-        val dayOfWeek = when (dayOfWeekInt) {
-            Calendar.SUNDAY -> DayOfWeek.SUNDAY
-            Calendar.MONDAY -> DayOfWeek.MONDAY
-            Calendar.TUESDAY -> DayOfWeek.TUESDAY
-            Calendar.WEDNESDAY -> DayOfWeek.WEDNESDAY
-            Calendar.THURSDAY -> DayOfWeek.THURSDAY
-            Calendar.FRIDAY -> DayOfWeek.FRIDAY
-            Calendar.SATURDAY -> DayOfWeek.SATURDAY
-            else -> throw IllegalArgumentException("Ngày trong tuần không hợp lệ: $dayOfWeekInt")
-        }
-
-        val date = SimpleDateFormat("dd/MM", Locale.getDefault()).format(calendar.time)
-
-        holder.dayTextView.text = convertToVietnameseDayOfWeek(dayOfWeek)
-        holder.dateTextView.text = date
-
-        holder.dayTextView.text = convertToVietnameseDayOfWeek(dayOfWeek) // Chuyển đổi ngày trong tuần sang tiếng Việt
-        holder.dateTextView.text = date
+        val dateString = doctorScheduleDay[position]
+        val date = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy/MM/dd"))
+        val dayOfWeek = date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale("vi"))
+        val dayofWeekString = convertToVietnameseDayOfWeek(DayOfWeek.valueOf(dayOfWeek.toUpperCase()))
+        val formattedDate = date.format(DateTimeFormatter.ofPattern("dd/MM"))
+        holder.dayTextView.text = dayofWeekString
+        holder.dateTextView.text = formattedDate
 
         val isSelected = position == selectedPosition
 

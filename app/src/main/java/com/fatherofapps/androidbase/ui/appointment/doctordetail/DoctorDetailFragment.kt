@@ -30,6 +30,7 @@ class DoctorDetailFragment  @Inject constructor(): BaseFragment() {
     private val viewModel by viewModels<DoctorDetailViewModel>()
     private lateinit var doctorInfo: DoctorInfo
     private lateinit var adapter: ScheduleAdapter
+    private var doctorScheduleList: List<String> = emptyList()
     private var selectedDate: String = ""
 
     companion object {
@@ -39,7 +40,7 @@ class DoctorDetailFragment  @Inject constructor(): BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getDoctorDetail(args.doctorId)
-
+        viewModel.getDoctorScheduleDay(args.doctorId)
     }
 
     override fun onCreateView(
@@ -49,16 +50,7 @@ class DoctorDetailFragment  @Inject constructor(): BaseFragment() {
     ): View? {
         dataBinding = FragmentDoctorDetailBinding.inflate(inflater, container, false)
         dataBinding.lifecycleOwner = viewLifecycleOwner
-        adapter = ScheduleAdapter()
-        adapter.onItemClickListener = { selectedDate ->
-            // Gán selectedDate vào biến trong Fragment
-            this.selectedDate = convertDateFormat(selectedDate)
-        }
-        dataBinding.rvSchedule.apply {
-            layoutManager = LinearLayoutManager(context,
-                LinearLayoutManager.HORIZONTAL,
-                false) }
-        dataBinding.rvSchedule.adapter = adapter
+
         return dataBinding.root
     }
 
@@ -77,6 +69,19 @@ class DoctorDetailFragment  @Inject constructor(): BaseFragment() {
                 findNavController().navigate(action)
             }
         }
+    }
+
+    private fun setupRecyclerView() {
+        adapter = ScheduleAdapter(doctorScheduleList)
+        adapter.onItemClickListener = { selectedDate ->
+            // Gán selectedDate vào biến trong Fragment
+            this.selectedDate = convertDateFormat(selectedDate)
+        }
+        dataBinding.rvSchedule.apply {
+            layoutManager = LinearLayoutManager(context,
+                LinearLayoutManager.HORIZONTAL,
+                false) }
+        dataBinding.rvSchedule.adapter = adapter
     }
 
     private fun setupDoctorInfo(doctorInfo: DoctorInfo) {
@@ -110,6 +115,22 @@ class DoctorDetailFragment  @Inject constructor(): BaseFragment() {
                         setupDoctorInfo(data)
                     }
 
+                } else {
+                    showErrorMessage(response.checkTypeErr())
+                }
+            }
+        })
+
+        viewModel.doctorScheduleDay.observe(viewLifecycleOwner, Observer { response ->
+            if (response == null) {
+                showErrorMessage("Network error")
+            } else {
+                if (response.isSuccess()) {
+                    Log.d(TAG, "DoctorScheduleDay: ${response.data} ")
+                    response.data?.let { data ->
+                        doctorScheduleList = data
+                        setupRecyclerView()
+                    }
                 } else {
                     showErrorMessage(response.checkTypeErr())
                 }

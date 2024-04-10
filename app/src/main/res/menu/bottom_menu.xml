@@ -13,11 +13,6 @@
         android:icon="@drawable/baseline_today_24"
         />
     <item
-        android:id="@+id/notificationFragment"
-        android:title="Thông báo"
-        android:icon="@drawable/ic_noti1"
-        />
-    <item
         android:id="@+id/settingFragment"
         android:title="Cài đặt"
         android:icon="@drawable/person"

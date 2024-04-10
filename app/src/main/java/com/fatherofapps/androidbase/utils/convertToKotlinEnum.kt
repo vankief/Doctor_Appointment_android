@@ -13,12 +13,12 @@ enum class TimeSlot {
 }
 fun convertToNormalTime(timeSlot: TimeSlot): String {
     return when (timeSlot) {
-        TimeSlot.T1 -> "8:00 - 9:00"
-        TimeSlot.T2 -> "9:00 - 10:00"
-        TimeSlot.T3 -> "10:00 - 11:00"
-        TimeSlot.T4 -> "13:00 - 14:00"
-        TimeSlot.T5 -> "14:00 - 15:00"
-        TimeSlot.T6 -> "15:00 - 16:00"
+        TimeSlot.T1 -> "9:00AM - 10:00AM"
+        TimeSlot.T2 -> "10:00AM - 11:00AM"
+        TimeSlot.T3 -> "11:00AM - 12:00PM"
+        TimeSlot.T4 -> "1:30PM - 2:30PM"
+        TimeSlot.T5 -> "2:30PM - 3:30PM"
+        TimeSlot.T6 -> "3:30PM - 4:30PM"
     }
 }
 enum class DayOfWeek {

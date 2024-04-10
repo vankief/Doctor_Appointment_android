@@ -37,4 +37,9 @@ class DoctorRemoteService @Inject constructor(private val doctorAPI: DoctorAPI) 
         return callApi { doctorAPI.getDoctorBySpecialist(specialistId) }
     }
 
+    suspend fun getDoctorScheduleDay(id: String): NetworkResult<ConfigResponse<List<String>>>
+    {
+        return callApi { doctorAPI.getDoctorScheduleDay(id) }
+    }
+
 }

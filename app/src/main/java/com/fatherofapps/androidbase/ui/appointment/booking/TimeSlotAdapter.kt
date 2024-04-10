@@ -13,6 +13,10 @@ import com.fatherofapps.androidbase.data.response.ListTime
 import com.fatherofapps.androidbase.ui.appointment.doctordetail.ScheduleAdapter
 import com.fatherofapps.androidbase.utils.convertToNormalTime
 import com.google.android.material.card.MaterialCardView
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 
 class TimeSlotAdapter(
@@ -28,8 +32,6 @@ class TimeSlotAdapter(
     inner class TimeSlotViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val cardTimeSlot : MaterialCardView = itemView.findViewById(R.id.cardTimeSlot)
         val txtTimeSlot: TextView = itemView.findViewById(R.id.txtTimeSlot)
-
-
     }
 
 
@@ -107,6 +109,5 @@ class TimeSlotAdapter(
         selectedPosition = RecyclerView.NO_POSITION // Đặt lại vị trí item được chọn
         notifyDataSetChanged() // Cập nhật giao diện RecyclerView
     }
-
 
 }

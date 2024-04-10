@@ -30,6 +30,9 @@ interface DoctorAPI {
     @GET("doctors/price/{DoctorPath}")
     suspend fun getDoctorPrice(@Path("DoctorPath") id: String): Response<ConfigResponse<doctorPrice>>
 
+    @GET("/doctors/scheduleDay/{DoctorPath}")
+    suspend fun getDoctorScheduleDay(@Path("DoctorPath") id: String): Response<ConfigResponse<List<String>>>
+
     @GET("/doctors/specialist/{SpecialistPath}")
     suspend fun getDoctorBySpecialist(@Path("SpecialistPath") specialistId: String?): Response<ConfigResponse<List<TopDoctorBySpecialist>>>
 }

@@ -28,5 +28,9 @@ class SettingFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         hideOpenTopAppBar(true)
         hideOpenNavigation(true)
+        dataBinding.cardViewInvite.setOnClickListener {
+            val action = SettingFragmentDirections.actionSettingFragmentToCreatCardFragment()
+            navigateToPage(action)
+        }
     }
 }

@@ -169,7 +169,11 @@
         android:name="com.fatherofapps.androidbase.ui.setting.SettingFragment"
         android:label="SettingFragment"
         tools:layout="@layout/fragment_setting"
-        />
+        >
+        <action
+            android:id="@+id/action_settingFragment_to_creatCardFragment"
+            app:destination="@id/creatCardFragment" />
+    </fragment>
     <fragment
         android:id="@+id/notificationFragment"
         android:name="com.fatherofapps.androidbase.ui.notification.NotificationFragment"
@@ -181,6 +185,12 @@
         android:name="com.fatherofapps.androidbase.ui.doctor.favoritedoctor.FavoriteDoctorFragment"
         android:label="FavoriteDoctorFragment"
         tools:layout="@layout/fragment_favorite_doctor"
+        />
+    <fragment
+        android:id="@+id/creatCardFragment"
+        android:name="com.fatherofapps.androidbase.ui.card.CreatCardFragment"
+        android:label="CreatCardFragment"
+        tools:layout="@layout/fragment_create_smart_card"
         />
 
 

@@ -22,11 +22,24 @@ class DoctorDetailViewModel @Inject constructor(
     val doctorDetailResponse: LiveData<ConfigResponse<DoctorInfo>?>
         get() = _doctorDetailResponse
 
+    private  val _doctorScheduleDay = MutableLiveData<ConfigResponse<List<String>>?>()
+    val doctorScheduleDay: LiveData<ConfigResponse<List<String>>?>
+        get() = _doctorScheduleDay
+
     fun getDoctorDetail(doctorId: String?) {
         showLoading(true)
         parentJob = viewModelScope.launch(handler) {
             val data = repository.getDoctorById(doctorId ?: "")
             _doctorDetailResponse.postValue(data)
+        }
+        registerJobFinish()
+    }
+
+    fun getDoctorScheduleDay(doctorId: String?) {
+        showLoading(true)
+        parentJob = viewModelScope.launch(handler) {
+            val data = repository.getDoctorScheduleDay(doctorId ?: "")
+            _doctorScheduleDay.postValue(data)
         }
         registerJobFinish()
     }

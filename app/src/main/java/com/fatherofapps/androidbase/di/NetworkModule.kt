@@ -52,6 +52,11 @@ class NetworkModule {
         return retrofit.create(AppointmentAPI::class.java)
     }
 
+    @Provides
+    fun providerSmartCardAPI(@Named("MainSite") retrofit: Retrofit): SmartCardAPI {
+        return retrofit.create(SmartCardAPI::class.java)
+    }
+
 
 
     @Provides
