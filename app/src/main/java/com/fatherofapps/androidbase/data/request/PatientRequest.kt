@@ -2,8 +2,6 @@ package com.fatherofapps.androidbase.data.request
 
 import java.io.File
 
-class PatientRequest {
-}
 
 data class updatePatient(
     val name: String,
@@ -13,3 +11,4 @@ data class updatePatient(
     val address: String,
     val img: File?,
 )
+

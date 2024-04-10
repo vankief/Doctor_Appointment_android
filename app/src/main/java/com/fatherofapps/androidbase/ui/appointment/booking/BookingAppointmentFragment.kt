@@ -208,7 +208,7 @@ class BookingAppointmentFragment @Inject constructor(): BaseFragment() {
     }
     private fun getTimeSlotEndTime(timeRange: String): Date {
         val startTimeStr = timeRange.split(" - ")[0] // Lấy phần cuối của chuỗi thời gian (thời gian kết thúc)
-        val sdf = SimpleDateFormat("hh:mma", Locale.getDefault())
+        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
         val startTime = sdf.parse(startTimeStr)
         return startTime
     }

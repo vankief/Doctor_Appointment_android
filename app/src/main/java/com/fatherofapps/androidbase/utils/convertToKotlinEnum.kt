@@ -1,7 +1,9 @@
 package com.fatherofapps.androidbase.utils
 
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 enum class TimeSlot {
     T1,
@@ -9,16 +11,20 @@ enum class TimeSlot {
     T3,
     T4,
     T5,
-    T6
+    T6,
+    T7,
+    T8,
 }
 fun convertToNormalTime(timeSlot: TimeSlot): String {
     return when (timeSlot) {
-        TimeSlot.T1 -> "9:00AM - 10:00AM"
-        TimeSlot.T2 -> "10:00AM - 11:00AM"
-        TimeSlot.T3 -> "11:00AM - 12:00PM"
-        TimeSlot.T4 -> "1:30PM - 2:30PM"
-        TimeSlot.T5 -> "2:30PM - 3:30PM"
-        TimeSlot.T6 -> "3:30PM - 4:30PM"
+        TimeSlot.T1 -> "9:00 - 10:00"
+        TimeSlot.T2 -> "10:00 - 11:00"
+        TimeSlot.T3 -> "11:00 - 12:00"
+        TimeSlot.T4 -> "13:00 - 14:00"
+        TimeSlot.T5 -> "14:00 - 15:00"
+        TimeSlot.T6 -> "15:00 - 16:00"
+        TimeSlot.T7 -> "16:00 - 17:00"
+        TimeSlot.T8 -> "17:00 - 18:00"
     }
 }
 enum class DayOfWeek {
@@ -43,13 +49,25 @@ fun convertToVietnameseDayOfWeek(dayOfWeek: DayOfWeek): String {
     }
 }
 fun convertToVietNamDate(dayString: String): String {
-    // Phân tích ngày từ chuỗi
     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     val date = LocalDate.parse(dayString, formatter)
-    // Định dạng ngày theo kiểu "Thứ x, ngày dd/MM/yyyy"
     val dayOfWeek = date.dayOfWeek
     val dayOfWeekString = convertToVietnameseDayOfWeek(DayOfWeek.valueOf(dayOfWeek.toString()))
-    // Định dạng lại chuỗi ngày theo định dạng yêu cầu
     val formattedDate = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
     return "$dayOfWeekString, $formattedDate"
+}
+
+fun convertToNormalDate(dayString: String): String {
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    val date = LocalDate.parse(dayString, formatter)
+    return date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+}
+
+fun convertDateFormatAndDayOfWeek(dateString: String): Pair<String, String> {
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    val outputFormat = SimpleDateFormat("dd/MM", Locale.getDefault())
+    val date = inputFormat.parse(dateString)
+    val formattedDate = outputFormat.format(date)
+    val dayOfWeek = SimpleDateFormat("EEEE", Locale.getDefault()).format(date)
+    return Pair(formattedDate, dayOfWeek)
 }

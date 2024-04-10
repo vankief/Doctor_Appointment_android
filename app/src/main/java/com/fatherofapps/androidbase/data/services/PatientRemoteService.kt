@@ -7,6 +7,7 @@ import com.fatherofapps.androidbase.data.apis.PatientAPI
 import com.fatherofapps.androidbase.data.models.Patient
 import com.fatherofapps.androidbase.data.request.updatePatient
 import com.fatherofapps.androidbase.data.response.ConfigResponse
+import com.fatherofapps.androidbase.data.response.PatientInfo
 import com.fatherofapps.androidbase.utils.createPartFromString
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -31,5 +32,9 @@ class PatientRemoteService @Inject constructor(private val patientAPI: PatientAP
         }!!
         val imagePart: MultipartBody.Part = MultipartBody.Part.createFormData("image",updatePatient.img.name, imageRequestBody)
         return callApi { patientAPI.updatePatient(nameRequestBody, phoneRequestBody, addressRequestBody, dobRequestBody, genderRequestBody, imagePart) }
+    }
+
+    suspend fun getPatientById(): NetworkResult<ConfigResponse<PatientInfo>> {
+        return callApi { patientAPI.getPatientById() }
     }
 }

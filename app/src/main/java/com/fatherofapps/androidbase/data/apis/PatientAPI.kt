@@ -7,6 +7,7 @@ import com.fatherofapps.androidbase.common.Constants.KEY_NAME
 import com.fatherofapps.androidbase.common.Constants.KEY_PHONE
 import com.fatherofapps.androidbase.data.models.Patient
 import com.fatherofapps.androidbase.data.response.ConfigResponse
+import com.fatherofapps.androidbase.data.response.PatientInfo
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -18,8 +19,8 @@ import retrofit2.http.Part
 
 interface PatientAPI {
 
-   @GET("/patient/:id")
-    suspend fun getPatientById(@Body id: String): Response<ConfigResponse<Any>>
+   @GET("/patient/profile")
+    suspend fun getPatientById(): Response<ConfigResponse<PatientInfo>>
 
     @Multipart
     @POST("/patient/update")

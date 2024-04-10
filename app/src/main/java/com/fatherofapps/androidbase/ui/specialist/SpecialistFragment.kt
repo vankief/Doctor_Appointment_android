@@ -16,8 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SpecialistFragment @Inject constructor(
-) : BaseFragment() {
+class SpecialistFragment @Inject constructor() : BaseFragment() {
 
     private lateinit var dataBinding: FragmentSpecialistDoctorBinding
     private var  specialistDoctor: List<SpecialistDoctor> = emptyList()

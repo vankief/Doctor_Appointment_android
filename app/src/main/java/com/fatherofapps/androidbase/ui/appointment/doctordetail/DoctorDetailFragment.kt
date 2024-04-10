@@ -75,7 +75,7 @@ class DoctorDetailFragment  @Inject constructor(): BaseFragment() {
         adapter = ScheduleAdapter(doctorScheduleList)
         adapter.onItemClickListener = { selectedDate ->
             // Gán selectedDate vào biến trong Fragment
-            this.selectedDate = convertDateFormat(selectedDate)
+            this.selectedDate = selectedDate
         }
         dataBinding.rvSchedule.apply {
             layoutManager = LinearLayoutManager(context,

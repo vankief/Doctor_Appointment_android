@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.utils.DayOfWeek
+import com.fatherofapps.androidbase.utils.convertDateFormatAndDayOfWeek
 import com.fatherofapps.androidbase.utils.convertToVietnameseDayOfWeek
 import com.google.android.material.card.MaterialCardView
 import java.text.SimpleDateFormat
@@ -41,8 +42,8 @@ class ScheduleAdapter(
 
     override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {
         val dateString = doctorScheduleDay[position]
-        val date = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy/MM/dd"))
-        val dayOfWeek = date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale("vi"))
+        val date = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        val dayOfWeek = date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.ENGLISH)
         val dayofWeekString = convertToVietnameseDayOfWeek(DayOfWeek.valueOf(dayOfWeek.toUpperCase()))
         val formattedDate = date.format(DateTimeFormatter.ofPattern("dd/MM"))
         holder.dayTextView.text = dayofWeekString
@@ -56,11 +57,8 @@ class ScheduleAdapter(
             // Cập nhật vị trí item được chọn
             selectedPosition = holder.adapterPosition
             notifyDataSetChanged()
-            // Lấy năm hiện tại
-            val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-            // Tạo full date từ ngày đã chọn và năm hiện tại
-            val selectedDate = "$date/$currentYear"
             // Gọi hàm callback và truyền ngày đã chọn
+            val selectedDate = doctorScheduleDay[selectedPosition]
             onItemClickListener?.invoke(selectedDate)
 
         }
