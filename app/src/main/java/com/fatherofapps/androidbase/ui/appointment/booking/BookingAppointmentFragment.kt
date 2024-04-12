@@ -24,6 +24,8 @@ import com.fatherofapps.androidbase.utils.convertToVietNamDate
 import com.google.android.material.card.MaterialCardView
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -206,30 +208,31 @@ class BookingAppointmentFragment @Inject constructor(): BaseFragment() {
         val inputYear = calendar.get(Calendar.YEAR)
         return today == inputDay && month == inputMonth && year == inputYear
     }
-    private fun getTimeSlotEndTime(timeRange: String): Date {
-        val startTimeStr = timeRange.split(" - ")[0] // Lấy phần cuối của chuỗi thời gian (thời gian kết thúc)
-        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
-        val startTime = sdf.parse(startTimeStr)
-        return startTime
+    private fun getTimeSlotEndTime(timeRange: String): LocalTime {
+        val startTimeStr = timeRange.split(" - ")[0]
+        val formatter = DateTimeFormatter.ofPattern("HH:mm")
+        return LocalTime.parse(startTimeStr, formatter)
     }
 
     private fun filterTimeSlots(day: String, listTime: List<ListTime>): List<ListTime> {
         val filteredList = mutableListOf<ListTime>()
         val isToday = isToday(day)
+        Log.d(TAG, "isToday: $isToday")
 
         if (isToday) {
-            val currentTime = Calendar.getInstance().time
-
+            val currentTime = LocalTime.now()
             for (timeSlot in listTime) {
-                val endTime = getTimeSlotEndTime(convertToNormalTime(timeSlot.timeSlot))
-                if (currentTime.before(endTime)) {
+                val startTime = getTimeSlotEndTime(convertToNormalTime(timeSlot.timeSlot))
+                Log.d(TAG, "startTime: $startTime")
+                if (currentTime.isBefore(startTime)) {
                     filteredList.add(timeSlot)
                 }
             }
         } else {
             filteredList.addAll(listTime)
         }
-
+        Log.d(TAG, "filteredList: $filteredList")
         return filteredList
     }
+
 }
