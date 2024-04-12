@@ -106,15 +106,14 @@ class DoctorDetailFragment  @Inject constructor(): BaseFragment() {
     @SuppressLint("FragmentLiveDataObserve")
     private fun setupObservers() {
         viewModel.doctorDetailResponse.observe(viewLifecycleOwner, Observer { response ->
-            if (response == null) {
-                showErrorMessage("Network error")
+            if (response !== null && response.isSuccess()) {
+                Log.d(TAG, "DoctorDetail: ${response.data} ")
+                response.data?.let { data ->
+                    setupDoctorInfo(data)
+                }
             } else {
-                if (response.isSuccess()) {
-                    Log.d(TAG, "DoctorInfo: ${response.data} ")
-                    response.data?.let { data ->
-                        setupDoctorInfo(data)
-                    }
-
+                if (response == null) {
+                    showErrorMessage("Lỗi mạng")
                 } else {
                     showErrorMessage(response.checkTypeErr())
                 }
@@ -122,15 +121,15 @@ class DoctorDetailFragment  @Inject constructor(): BaseFragment() {
         })
 
         viewModel.doctorScheduleDay.observe(viewLifecycleOwner, Observer { response ->
-            if (response == null) {
-                showErrorMessage("Network error")
+            if (response !== null && response.isSuccess()) {
+                Log.d(TAG, "DoctorScheduleDay: ${response.data} ")
+                response.data?.let { data ->
+                    doctorScheduleList = data
+                    setupRecyclerView()
+                }
             } else {
-                if (response.isSuccess()) {
-                    Log.d(TAG, "DoctorScheduleDay: ${response.data} ")
-                    response.data?.let { data ->
-                        doctorScheduleList = data
-                        setupRecyclerView()
-                    }
+                if (response == null) {
+                    showErrorMessage("Lỗi mạng")
                 } else {
                     showErrorMessage(response.checkTypeErr())
                 }

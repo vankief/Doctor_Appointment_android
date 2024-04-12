@@ -58,35 +58,29 @@ class TopDoctorFragment @Inject constructor(): BaseFragment() {
     @SuppressLint("FragmentLiveDataObserve")
     private fun setupObservers() {
         viewModel.specialist.observe(viewLifecycleOwner, Observer { response ->
-            if (response == null) {
-                showErrorMessage("Network error")
-            } else {
-                if (response.isSuccess()) {
+                if (response!= null && response.isSuccess()) {
                     Log.d(TAG, "Specialist: ${response.data}}")
                     response.data?.let { data ->
                         specialist = data
                         setupSpecialistRecyclerView()
-                    }
 
-                } else {
-                    showErrorMessage(response.checkTypeErr())
-                }
+                }}
+                else {
+                    if (response == null) showErrorMessage("Lỗi mạng")
+                    else showErrorMessage(response.checkTypeErr())
             }
         })
         viewModel.topDoctorList.observe(viewLifecycleOwner, Observer { response ->
-            if (response == null) {
-                showErrorMessage("Network error")
-            } else {
-                if (response.isSuccess()) {
-                    Log.d(TAG, "TopDoctor: ${response.data}}")
-                    response.data?.let { data ->
-                        topDoctorList = data
-                        setupTopDoctorRecyclerView()
-                    }
-
-                } else {
-                    showErrorMessage(response.checkTypeErr())
+            if (response!= null && response.isSuccess()) {
+                Log.d(TAG, "TopDoctor: ${response.data}}")
+                response.data?.let { data ->
+                    topDoctorList = data
+                    setupTopDoctorRecyclerView()
                 }
+            }
+            else {
+                if (response == null) showErrorMessage("Lỗi mạng")
+                else showErrorMessage(response.checkTypeErr())
             }
         })
 

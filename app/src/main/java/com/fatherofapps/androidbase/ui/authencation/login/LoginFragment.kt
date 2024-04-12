@@ -114,7 +114,7 @@ class LoginFragment @Inject constructor()  : BaseFragment() {
                     }
                 }
             } else {
-                if(it == null) showErrorMessage("Error network")
+                if(it == null) showErrorMessage("Lỗi mạng")
                 else showErrorMessage(it.checkTypeErr())
 
             }

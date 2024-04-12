@@ -47,9 +47,9 @@ data class ConfigResponse<T>(
 
     fun checkTypeErr(): String {
         return when (statusCode) {
-            401 -> "Unauthorized error"
-            403 -> "Forbidden error"
-            500 -> "Server error"
+            401 -> "Không có quyền truy cập"
+            403 -> "Không được phép truy cập"
+            500 -> "Lỗi server"
             else -> message!!
         }
     }

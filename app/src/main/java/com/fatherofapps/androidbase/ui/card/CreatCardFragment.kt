@@ -125,11 +125,11 @@ class CreatCardFragment @Inject constructor(): BaseFragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                Toast.makeText(
-                    requireContext(),
-                    "Đã có lỗi xảy ra, vui lòng thử lại",
-                    Toast.LENGTH_SHORT
-                ).show()
+                if (it?.message != null) {
+                    showErrorMessage(it.message)
+                } else {
+                    showErrorMessage("Lỗi không xác định")
+                }
             }
         }
     }

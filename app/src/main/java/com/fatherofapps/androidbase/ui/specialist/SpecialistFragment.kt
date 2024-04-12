@@ -60,19 +60,14 @@ class SpecialistFragment @Inject constructor() : BaseFragment() {
     @SuppressLint("FragmentLiveDataObserve")
     private fun setupObservers() {
         viewModel.specialistResponse.observe(viewLifecycleOwner, Observer { response ->
-            if (response == null) {
-                showErrorMessage("Network error")
-            } else {
-                if (response.isSuccess()) {
-                    Log.d(TAG, "Specialist: ${response.data}}")
-                    response.data?.let { data ->
-                        specialistDoctor = data
-                        setupSpecialistRecyclerView()
-                    }
-
-                } else {
-                    showErrorMessage(response.checkTypeErr())
+            if (response != null && response.isSuccess()){
+                response.data?.let { data ->
+                    specialistDoctor = data
+                    setupSpecialistRecyclerView()
                 }
+            } else {
+                if (response==null) showErrorMessage("Lỗi Mạng")
+                else showErrorMessage(response.checkTypeErr())
             }
         })
     }

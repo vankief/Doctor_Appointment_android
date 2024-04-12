@@ -82,7 +82,7 @@ class RegisterFragment : BaseFragment() {
                 if(it?.message != null) {
                     showErrorMessage(it.message)
                 } else {
-                    showErrorMessage("Network error")
+                    showErrorMessage("Lỗi không xác định")
                 }
             }
         })

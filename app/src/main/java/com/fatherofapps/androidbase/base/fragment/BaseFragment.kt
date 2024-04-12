@@ -12,6 +12,8 @@ import com.fatherofapps.androidbase.base.viewmodel.BaseViewModel
 import com.fatherofapps.androidbase.common.EventObserver
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -79,32 +81,37 @@ open class BaseFragment : Fragment() {
     }
 
     protected fun showErrorMessage(e: BaseNetworkException) {
-     showErrorMessage(e.mainMessage)
+        showDialogMaterial("Lỗi từ mạng", e.mainMessage)
     }
 
-    protected fun showErrorMessage(messageId: Int){
+    protected fun showErrorMessage(messageId: Int) {
         val message = requireContext().getString(messageId)
-        showErrorMessage(message)
+//        showErrorMessage(message)
+        showDialogMaterial("Thông báo lỗi", message)
     }
 
-    protected fun showErrorMessage(message: String){
+    protected fun showErrorMessage(message: String) {
         val activity = requireActivity()
         if (activity is BaseActivity) {
-            activity.showErrorDialog(message)
+//            activity.showErrorDialog(message)
+            showDialogMaterial("Thông báo lỗi", message)
         }
     }
+
 
     protected fun showNotify(title: String?, message: String) {
         val activity = requireActivity()
         if (activity is BaseActivity) {
-            activity.showNotifyDialog(title ?: getDefaultNotifyTitle(), message)
+//            activity.showNotifyDialog(title ?: getDefaultNotifyTitle(), message)
+            showDialogMaterial(title ?: getDefaultNotifyTitle(), message)
         }
     }
 
     protected fun showNotify(titleId: Int = R.string.default_notify_title, messageId: Int) {
         val activity = requireActivity()
         if (activity is BaseActivity) {
-            activity.showNotifyDialog(titleId, messageId)
+//            activity.showNotifyDialog(titleId, messageId)
+            showDialogMaterial(getString(titleId), getString(messageId))
         }
     }
 
@@ -122,7 +129,7 @@ open class BaseFragment : Fragment() {
         viewLifecycleOwner: LifecycleOwner
     ) {
         viewModel.networkException.observe(viewLifecycleOwner, EventObserver {
-            showNotify(getDefaultNotifyTitle(), it.message ?: "Network error")
+            showNotify(getDefaultNotifyTitle(), it.message ?: "Lỗi mạng")
         })
     }
 
@@ -164,6 +171,22 @@ open class BaseFragment : Fragment() {
                 isShow ->
             showLoading(isShow)
         })
+    }
+
+    protected fun showDialogMaterial(title: String, message: String) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("Chấp nhận") { dialog, which ->
+                // hide dialog
+                dialog.cancel()
+            }
+            .show()
+    }
+
+    fun convertToCurrencyFormat(number: Int): String {
+        val format = NumberFormat.getCurrencyInstance(Locale("vi", "VN"))
+        return format.format(number.toLong())
     }
 
 }

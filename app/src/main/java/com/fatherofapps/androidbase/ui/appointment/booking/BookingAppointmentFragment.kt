@@ -72,7 +72,7 @@ class BookingAppointmentFragment @Inject constructor(): BaseFragment() {
         dataBinding.TxtDateSchedule.text = convertToVietNamDate(args.day)
         dataBinding.nextButton.setOnClickListener {
             if (timeSlotInfo == null) {
-                Toast.makeText(context, "Please select time slot", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Vui lòng chọn thời gian", Toast.LENGTH_SHORT).show()
             } else {
                 appointmentInfo = AppointmentInfo(
                     doctorId = args.doctorId,
@@ -101,16 +101,15 @@ class BookingAppointmentFragment @Inject constructor(): BaseFragment() {
     @SuppressLint("FragmentLiveDataObserve")
     private fun setupObservers() {
         viewModel.doctorTimeSlottResponse.observe(viewLifecycleOwner, Observer { response ->
-            if (response == null) {
-                showErrorMessage("Network error")
+            if (response != null && response.isSuccess()) {
+                Log.d(TAG, "DoctorTimeSlot: ${response.data} ")
+                response.data?.let { data ->
+                    timeSlot = filterTimeSlots(args.day, data)
+                    setupRecyclerView()
+                }
             } else {
-                if (response.isSuccess()) {
-                    Log.d(TAG, "ListTime: ${response.data} ")
-                    response.data?.let { data ->
-                        timeSlot = filterTimeSlots(args.day, data)
-                        setupRecyclerView()
-                    }
-
+                if (response == null) {
+                    showErrorMessage("Lỗi mạng")
                 } else {
                     showErrorMessage(response.checkTypeErr())
                 }
@@ -180,15 +179,15 @@ class BookingAppointmentFragment @Inject constructor(): BaseFragment() {
     @SuppressLint("FragmentLiveDataObserve")
     private fun setupPrice() {
         viewModel.doctorPriceResponse.observe(viewLifecycleOwner, Observer { response ->
-            if (response == null) {
-                showErrorMessage("Network error")
+            if (response != null && response.isSuccess()) {
+                Log.d(TAG, "DoctorPrice: ${response.data} ")
+                response.data?.let { data ->
+                    dataBinding.tvPrice.text = convertToCurrencyFormat(data.price)+" VND"
+                    dataBinding.txtPriceOnline.text = convertToCurrencyFormat(data.price)+" VND"
+                }
             } else {
-                if (response.isSuccess()) {
-                    Log.d(TAG, "DoctorPrice: ${response.data} ")
-                    response.data?.let { data ->
-                        dataBinding.tvPrice.text = "${data.price} VND"
-                        dataBinding.txtPriceOnline.text = "${data.price} VND"
-                    }
+                if (response == null) {
+                    showErrorMessage("Lỗi mạng")
                 } else {
                     showErrorMessage(response.checkTypeErr())
                 }

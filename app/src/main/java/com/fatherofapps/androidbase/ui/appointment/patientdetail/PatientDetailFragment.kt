@@ -114,7 +114,7 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
 
     private fun fetchPaymentIntent() {
         viewModel.createAppointmentResponse.observe(viewLifecycleOwner) { response ->
-            if (response.isSuccess() && response.data != null) {
+            if ( response.data != null && response.isSuccess()) {
                 val appointmentPaymentDetail = response.data
                 Log.d(TAG, "fetchPaymentIntent: $appointmentPaymentDetail")
                 when {
@@ -152,8 +152,11 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
                     }
                 }
             } else {
-                Toast.makeText(context, "Lỗi: Không thể tạo phiếu thanh toán", Toast.LENGTH_LONG)
-                    .show()
+                if (response == null) {
+                    showErrorMessage("Lỗi mạng")
+                } else {
+                    showErrorMessage(response.checkTypeErr())
+                }
             }
         }
     }

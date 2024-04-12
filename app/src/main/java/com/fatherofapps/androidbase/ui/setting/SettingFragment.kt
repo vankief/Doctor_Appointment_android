@@ -53,17 +53,16 @@ class SettingFragment @Inject constructor(): BaseFragment() {
 
     private fun setupObservers() {
         viewModel.patientResponse.observe(viewLifecycleOwner, Observer { response ->
-            if (response == null) {
-                showErrorMessage("Network error")
-            } else {
-                if (response.isSuccess()) {
+            if (response != null && response.isSuccess()) {
                     Log.d(TAG, "Specialist: ${response.data}}")
                     response.data?.let { data ->
                         setupInfo(data)
                     }
 
                 } else {
-                    showErrorMessage(response.checkTypeErr())
+                    if (response == null) showErrorMessage("Lỗi mạng")
+                    else {
+                        showErrorMessage(response.checkTypeErr())
                 }
             }
         })
