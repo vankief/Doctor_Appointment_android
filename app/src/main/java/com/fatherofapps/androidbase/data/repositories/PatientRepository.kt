@@ -4,6 +4,7 @@ import android.util.Log
 import com.fatherofapps.androidbase.base.network.BaseRemoteService.Companion.TAG
 import com.fatherofapps.androidbase.base.network.NetworkResult
 import com.fatherofapps.androidbase.data.models.Patient
+import com.fatherofapps.androidbase.data.request.registerNotification
 import com.fatherofapps.androidbase.data.request.updatePatient
 import com.fatherofapps.androidbase.data.response.ConfigResponse
 import com.fatherofapps.androidbase.data.services.PatientRemoteService
@@ -45,6 +46,22 @@ class PatientRepository @Inject constructor(
 
                 is NetworkResult.Error -> {
                     Log.d(TAG, "getPatientById: ${result.exception.message}")
+                    return@withContext null
+                }
+            }
+        }
+
+    suspend fun registerNotification(token: registerNotification) =
+        withContext(dispatcher) {
+            when (val result =
+                patientRemoteService.registerNotification(token)) {
+                is NetworkResult.Success -> {
+                    Log.d(TAG, "registerNotification: ${result.data}")
+                    return@withContext result.data
+                }
+
+                is NetworkResult.Error -> {
+                    Log.d(TAG, "registerNotification: ${result.exception.message}")
                     return@withContext null
                 }
             }

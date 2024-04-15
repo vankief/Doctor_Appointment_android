@@ -12,3 +12,7 @@ data class updatePatient(
     val img: File?,
 )
 
+data class registerNotification(
+    val token: String
+)
+

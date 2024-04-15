@@ -14,6 +14,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.text.NumberFormat
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -187,6 +188,16 @@ open class BaseFragment : Fragment() {
     fun convertToCurrencyFormat(number: Int): String {
         val format = NumberFormat.getCurrencyInstance(Locale("vi", "VN"))
         return format.format(number.toLong())
+    }
+    fun convertCurrencyStringToInteger(currencyString: String): Int {
+        val format = NumberFormat.getCurrencyInstance(Locale("vi", "VN"))
+        try {
+            val number = format.parse(currencyString)
+            return number.toInt()
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return 0
     }
 
 }

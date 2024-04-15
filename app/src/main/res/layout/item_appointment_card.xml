@@ -1,0 +1,97 @@
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <!-- Phần 1: Ảnh đại diện -->
+        <ImageView
+            android:id="@+id/doctorAvatar"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:src="@drawable/ic_img_doctor"
+            android:scaleType="centerCrop"
+            android:layout_marginEnd="16dp"/>
+
+        <!-- Phần 2: Thông tin bác sĩ -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtDoctorName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bác Sĩ Nguyễn Văn A"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp"/>
+
+            <!-- Số lượng sao và đánh giá -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp"
+                >
+
+                <TextView
+                    android:id="@+id/txtService"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Online"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    />
+                <TextView
+                    android:id="@+id/txtStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" - Đã kết thúc"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtScheduleTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="09:00 - 10:00"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+        <!-- Phần 3: Icon trái tim đánh dấu -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            app:cardBackgroundColor="@color/md_theme_light_primaryContainer"
+            app:cardCornerRadius="8dp"
+            android:layout_gravity="center_vertical"
+            >
+
+            <!-- Icon trái tim -->
+            <ImageView
+                android:id="@+id/imgService"
+                android:layout_width="35dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:src="@drawable/chat_rounded"
+                app:tint="@color/md_theme_light_primary" />
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

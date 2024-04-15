@@ -74,11 +74,12 @@ class BookingAppointmentFragment @Inject constructor(): BaseFragment() {
             if (timeSlotInfo == null) {
                 Toast.makeText(context, "Vui lòng chọn thời gian", Toast.LENGTH_SHORT).show()
             } else {
+                val price = convertCurrencyStringToInteger(dataBinding.tvPrice.text.toString().replace(" VND", ""))
                 appointmentInfo = AppointmentInfo(
                     doctorId = args.doctorId,
                     day = args.day,
                     time = timeSlotInfo!!.normalTime,
-                    price = dataBinding.tvPrice.text.toString().replace(" VND", "").toInt(),
+                    price = price,
                     service = timeSlotInfo!!.service
                 )
                 val action = BookingAppointmentFragmentDirections.actionFragmentBookingAppointmentToPatientDetailFragment(appointmentInfo!!)

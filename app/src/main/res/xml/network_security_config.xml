@@ -3,12 +3,11 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">10.0.60.71</domain>
         <domain includeSubdomains="true">192.168.88.109</domain>
-        <domain includeSubdomains="true">192.168.100.5</domain>
-        <domain includeSubdomains="true">192.168.100.3</domain>
+        <domain includeSubdomains="true">192.168.100.6</domain>
         <domain includeSubdomains="true">192.168.88.131</domain>
         <domain includeSubdomains="true">192.168.170.121</domain>
         <domain includeSubdomains="true">192.168.100.7</domain>
         <domain includeSubdomains="true">192.168.88.135</domain>
-        <domain includeSubdomains="true">192.168.95.121</domain>
+        <domain includeSubdomains="true">192.168.100.3</domain>
     </domain-config>
 </network-security-config>

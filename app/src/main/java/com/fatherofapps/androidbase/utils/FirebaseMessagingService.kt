@@ -13,10 +13,16 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.activities.MainActivity
+import com.fatherofapps.androidbase.data.repositories.PatientRepository
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class FirebaseMessagingService : FirebaseMessagingService() {
+
 
     /**
      * Called when message is received.
@@ -24,6 +30,8 @@ class FirebaseMessagingService : FirebaseMessagingService() {
      * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
      */
     // [START receive_message]
+
+
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         // [START_EXCLUDE]
         // There are two types of messages data messages and notification messages. Data messages are handled
@@ -78,7 +86,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         // If you want to send messages to this application instance or
         // manage this apps subscriptions on the server side, send the
         // FCM registration token to your app server.
-        sendRegistrationToServer(token)
+        //sendRegistrationToServer(token)
     }
     // [END on_new_token]
 
@@ -108,10 +116,18 @@ class FirebaseMessagingService : FirebaseMessagingService() {
      *
      * @param token The new token.
      */
-    private fun sendRegistrationToServer(token: String?) {
-        // TODO: Implement this method to send token to your app server.
-        Log.d(TAG, "sendRegistrationTokenToServer($token)")
-    }
+//    private fun sendRegistrationToServer(token: String?) {
+//        CoroutineScope(Dispatchers.IO).launch {
+//            token?.let {
+//                patientRepository.registerNotification(token)?.let { response ->
+//                    // Xử lý kết quả nếu cần
+//                    Log.d(TAG, "sendRegistrationToServer: Đăng ký token thành công")
+//                } ?: run {
+//                    Log.d(TAG, "sendRegistrationToServer: Đăng ký token thất bại")
+//                }
+//            }
+//        }
+//    }
 
 
 

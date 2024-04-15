@@ -6,6 +6,7 @@ import com.fatherofapps.androidbase.common.Constants.KEY_GENDER
 import com.fatherofapps.androidbase.common.Constants.KEY_NAME
 import com.fatherofapps.androidbase.common.Constants.KEY_PHONE
 import com.fatherofapps.androidbase.data.models.Patient
+import com.fatherofapps.androidbase.data.request.registerNotification
 import com.fatherofapps.androidbase.data.response.ConfigResponse
 import com.fatherofapps.androidbase.data.response.PatientInfo
 import okhttp3.MultipartBody
@@ -32,4 +33,7 @@ interface PatientAPI {
         @Part(KEY_GENDER) gender: RequestBody,
         @Part image: MultipartBody.Part
     ): Response<ConfigResponse<Patient>>
+
+    @POST("/register")
+    suspend fun registerNotification(@Body token: registerNotification): Response<ConfigResponse<Any>>
 }

@@ -160,10 +160,14 @@
     </fragment>
     <fragment
         android:id="@+id/appointmentFragment"
-        android:name="com.fatherofapps.androidbase.ui.appointment.scheduleappointment.AppointmentFragment"
+        android:name="com.fatherofapps.androidbase.ui.appointment.myappointment.AppointmentFragment"
         android:label="AppointmentFragment"
         tools:layout="@layout/fragment_my_appointment"
-        />
+        >
+        <action
+            android:id="@+id/action_appointmentFragment_to_myAppointmentDetailFragment"
+            app:destination="@id/myAppointmentDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.fatherofapps.androidbase.ui.setting.SettingFragment"
@@ -191,6 +195,12 @@
         android:name="com.fatherofapps.androidbase.ui.card.CreatCardFragment"
         android:label="CreatCardFragment"
         tools:layout="@layout/fragment_create_smart_card"
+        />
+    <fragment
+        android:id="@+id/myAppointmentDetailFragment"
+        android:name="com.fatherofapps.androidbase.ui.appointment.myappointmentdetail.MyAppointmentDetailFragment"
+        android:label="MyAppointmentDetailFragment"
+        tools:layout="@layout/fragment_my_appointment_detail"
         />
 
 

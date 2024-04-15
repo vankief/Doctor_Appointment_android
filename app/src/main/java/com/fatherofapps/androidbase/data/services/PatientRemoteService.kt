@@ -5,6 +5,7 @@ import com.fatherofapps.androidbase.base.network.NetworkResult
 import com.fatherofapps.androidbase.common.Constants
 import com.fatherofapps.androidbase.data.apis.PatientAPI
 import com.fatherofapps.androidbase.data.models.Patient
+import com.fatherofapps.androidbase.data.request.registerNotification
 import com.fatherofapps.androidbase.data.request.updatePatient
 import com.fatherofapps.androidbase.data.response.ConfigResponse
 import com.fatherofapps.androidbase.data.response.PatientInfo
@@ -36,5 +37,9 @@ class PatientRemoteService @Inject constructor(private val patientAPI: PatientAP
 
     suspend fun getPatientById(): NetworkResult<ConfigResponse<PatientInfo>> {
         return callApi { patientAPI.getPatientById() }
+    }
+
+    suspend fun registerNotification(token: registerNotification): NetworkResult<ConfigResponse<Any>> {
+        return callApi { patientAPI.registerNotification(token) }
     }
 }

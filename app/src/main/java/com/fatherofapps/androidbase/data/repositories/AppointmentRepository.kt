@@ -27,4 +27,19 @@ class AppointmentRepository @Inject constructor(
         }
 
     }
+
+    suspend fun getAppointments() = withContext(dispatcher) {
+        val result = appointmentRemoteService.getAppointments()
+
+        when (result) {
+            is NetworkResult.Success -> {
+                return@withContext result.data
+            }
+            is NetworkResult.Error -> {
+                Log.e("Error", "getPosts: ${result.exception ?: "Error"}")
+                return@withContext null
+            }
+        }
+
+    }
 }

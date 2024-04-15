@@ -5,6 +5,7 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
     id 'kotlin-parcelize'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
 }
 
 def apikeyPropertiesFile = rootProject.file("apikey.properties")
@@ -179,7 +180,7 @@ dependencies {
     //circle image
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     //jitsi
-    implementation('org.jitsi.react:jitsi-meet-sdk:8.1.2') { transitive = true }
+    implementation('org.jitsi.react:jitsi-meet-sdk:9.2.0') { transitive = true }
 
     // Stripe Android SDK
     implementation 'com.stripe:stripe-android:20.37.2'

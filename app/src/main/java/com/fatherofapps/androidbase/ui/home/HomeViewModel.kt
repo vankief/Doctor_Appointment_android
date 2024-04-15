@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.fatherofapps.androidbase.base.viewmodel.BaseViewModel
 import com.fatherofapps.androidbase.data.repositories.DoctorRepository
+import com.fatherofapps.androidbase.data.repositories.PatientRepository
 import com.fatherofapps.androidbase.data.repositories.SpecialistRepository
+import com.fatherofapps.androidbase.data.request.registerNotification
 import com.fatherofapps.androidbase.data.response.ConfigResponse
 import com.fatherofapps.androidbase.data.response.SpecialistDoctor
 import com.fatherofapps.androidbase.data.response.TopDoctor
@@ -19,6 +21,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val specialistRepository: SpecialistRepository,
     private val doctorRepository: DoctorRepository,
+    private val patientRepository: PatientRepository,
     private val preferenceManager: PreferenceManager
 ) : BaseViewModel() {
 
@@ -29,6 +32,10 @@ class HomeViewModel @Inject constructor(
     private var _topDoctorResponse = MutableLiveData<ConfigResponse<List<TopDoctor>>?>()
     val topDoctorResponse: MutableLiveData<ConfigResponse<List<TopDoctor>>?>
         get() = _topDoctorResponse
+
+    private var _notificationResponse = MutableLiveData<ConfigResponse<Any>>()
+    val notificationResponse: MutableLiveData<ConfigResponse<Any>>
+        get() = _notificationResponse
 
 
     fun getDoctorsBySpecialist() {
@@ -46,6 +53,16 @@ class HomeViewModel @Inject constructor(
             val data = doctorRepository.getTopDoctors()
             Log.d("HomeViewModel", "getTopDoctors: $data")
             _topDoctorResponse.postValue(data)
+        }
+        registerJobFinish()
+    }
+
+    fun registerNotification(token: registerNotification) {
+        showLoading(true)
+        Log.d("HomeViewModel", "registerNotificationToken: $token")
+        parentJob = viewModelScope.launch(handler) {
+            val data = patientRepository.registerNotification(token)
+            Log.d("HomeViewModel", "registerNotificationToken: $data")
         }
         registerJobFinish()
     }
