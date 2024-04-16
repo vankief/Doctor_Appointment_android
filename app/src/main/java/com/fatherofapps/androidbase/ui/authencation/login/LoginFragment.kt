@@ -29,7 +29,11 @@ class LoginFragment @Inject constructor()  : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isLogin = viewModel.checkLogin()
-        Log.d("LoginFragment", "onCreate: $isLogin")
+        isFirstTime = viewModel.checkIsFirstTime()
+
+        if (isFirstTime) {
+            navigateToCreateProfile()
+        }
         if (isLogin) {
             navigateToHome()
         }
@@ -111,6 +115,7 @@ class LoginFragment @Inject constructor()  : BaseFragment() {
                         navigateToCreateProfile()
                     } else {
                         navigateToHome()
+
                     }
                 }
             } else {

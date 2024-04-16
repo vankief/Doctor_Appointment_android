@@ -66,4 +66,20 @@ class PatientRepository @Inject constructor(
                 }
             }
         }
+
+    suspend fun getPatientDetail() =
+        withContext(dispatcher) {
+            when (val result =
+                patientRemoteService.getPatientDetail()) {
+                is NetworkResult.Success -> {
+                    Log.d(TAG, "getPatientDetail: ${result.data}")
+                    return@withContext result.data
+                }
+
+                is NetworkResult.Error -> {
+                    Log.d(TAG, "getPatientDetail: ${result.exception.message}")
+                    return@withContext null
+                }
+            }
+        }
 }

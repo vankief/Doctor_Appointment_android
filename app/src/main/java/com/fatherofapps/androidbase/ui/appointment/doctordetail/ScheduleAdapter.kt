@@ -37,7 +37,7 @@ class ScheduleAdapter(
     }
 
     override fun getItemCount(): Int {
-       return 6
+        return minOf(doctorScheduleDay.size, 6)
     }
 
     override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {

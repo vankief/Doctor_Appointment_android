@@ -145,7 +145,7 @@ class CreateProfileFragement @Inject constructor(): BaseFragment() {
     }
 
     private fun bindObservers() {
-        viewModel.createProfileResponse.observe(viewLifecycleOwner, {
+        viewModel.createProfileResponse.observe(viewLifecycleOwner) {
             if (it != null && it.isSuccess()) {
                 viewModel.clearIsFirstTime()
                 navigateToHome()
@@ -153,7 +153,7 @@ class CreateProfileFragement @Inject constructor(): BaseFragment() {
                 if (it == null) showErrorMessage("Error network")
                 else showErrorMessage(it.checkTypeErr())
             }
-        })
+        }
     }
 
 }

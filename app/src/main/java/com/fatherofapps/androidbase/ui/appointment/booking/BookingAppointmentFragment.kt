@@ -74,7 +74,7 @@ class BookingAppointmentFragment @Inject constructor(): BaseFragment() {
             if (timeSlotInfo == null) {
                 Toast.makeText(context, "Vui lòng chọn thời gian", Toast.LENGTH_SHORT).show()
             } else {
-                val price = convertCurrencyStringToInteger(dataBinding.tvPrice.text.toString().replace(" VND", ""))
+                val price = convertCurrencyStringToInteger(dataBinding.tvPrice.text.toString())
                 appointmentInfo = AppointmentInfo(
                     doctorId = args.doctorId,
                     day = args.day,
@@ -183,8 +183,8 @@ class BookingAppointmentFragment @Inject constructor(): BaseFragment() {
             if (response != null && response.isSuccess()) {
                 Log.d(TAG, "DoctorPrice: ${response.data} ")
                 response.data?.let { data ->
-                    dataBinding.tvPrice.text = convertToCurrencyFormat(data.price)+" VND"
-                    dataBinding.txtPriceOnline.text = convertToCurrencyFormat(data.price)+" VND"
+                    dataBinding.tvPrice.text = convertToCurrencyFormat(data.price)
+                    dataBinding.txtPriceOnline.text = convertToCurrencyFormat(data.price)
                 }
             } else {
                 if (response == null) {

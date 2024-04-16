@@ -55,5 +55,6 @@ class RegisterViewModel @Inject constructor(
         preferenceManager.save(ACCESS_TOKEN, accessToken)
         preferenceManager.save(REFRESH_TOKEN, refreshToken)
         preferenceManager.save(IS_FIRST_TIME, true)
+        preferenceManager.save(IS_LOGGED_IN, true)
     }
 }

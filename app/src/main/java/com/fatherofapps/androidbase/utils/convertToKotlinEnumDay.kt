@@ -2,6 +2,7 @@ package com.fatherofapps.androidbase.utils
 
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
@@ -70,4 +71,20 @@ fun convertDateFormatAndDayOfWeek(dateString: String): Pair<String, String> {
     val formattedDate = outputFormat.format(date)
     val dayOfWeek = SimpleDateFormat("EEEE", Locale.getDefault()).format(date)
     return Pair(formattedDate, dayOfWeek)
+}
+fun tinhDoTuoi(ngaySinh: String): String {
+    // Chuyển đổi ngày sinh thành đối tượng LocalDate
+    val ngaySinhLocalDate = LocalDate.parse(ngaySinh)
+
+    // Lấy ngày hiện tại
+    val ngayHienTai = LocalDate.now()
+
+    // Tính tuổi bằng cách lấy khoảng thời gian giữa ngày hiện tại và ngày sinh
+    val tuoi = Period.between(ngaySinhLocalDate, ngayHienTai).years
+
+    // Chuyển đổi tuổi thành độ tuổi dạng "10+", "20+", ...
+    val doTuoi = (tuoi / 10) * 10
+
+    // Trả về kết quả dưới dạng "10+", "20+", ...
+    return "$doTuoi+"
 }

@@ -10,6 +10,7 @@ import com.fatherofapps.androidbase.R
 import com.google.android.material.card.MaterialCardView
 
 class AgeRangeAdapter(
+    private var age : String
 ) : RecyclerView.Adapter<AgeRangeAdapter.AgeRangeViewHolder>() {
     private val ageRange = listOf("10+", "20+", "30+", "40+", "50+", "60+")
     var selectedPosition = RecyclerView.NO_POSITION
@@ -32,11 +33,12 @@ class AgeRangeAdapter(
 
     override fun onBindViewHolder(holder: AgeRangeViewHolder, position: Int) {
         holder.tvAgeRange.text = ageRange[position]
-        val isSelected = position == selectedPosition
+
+        val isSelected = position == ageRange.indexOf(age)
         updateColor(holder, isSelected)
 
         holder.itemView.setOnClickListener() {
-            selectedPosition = holder.adapterPosition
+            age = ageRange[position]
             notifyDataSetChanged()
             onItemClickListener?.invoke(ageRange[position])
         }

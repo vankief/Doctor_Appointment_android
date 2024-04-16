@@ -23,7 +23,6 @@ class AppointmentFragment: BaseFragment() {
     private var appointmentPastList: List<DateAppointment> = emptyList()
     private var appointmentUpComingList: List<DateAppointment> = emptyList()
     private var scheduleDayAdapter: ScheduleDayAdapter? = null
-    private val selecUpComing = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getAppointments()

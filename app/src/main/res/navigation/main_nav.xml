@@ -180,6 +180,9 @@
         <action
             android:id="@+id/action_settingFragment_to_creatCardFragment"
             app:destination="@id/creatCardFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"

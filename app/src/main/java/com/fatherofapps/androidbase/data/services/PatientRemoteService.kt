@@ -8,6 +8,7 @@ import com.fatherofapps.androidbase.data.models.Patient
 import com.fatherofapps.androidbase.data.request.registerNotification
 import com.fatherofapps.androidbase.data.request.updatePatient
 import com.fatherofapps.androidbase.data.response.ConfigResponse
+import com.fatherofapps.androidbase.data.response.PatientDetail
 import com.fatherofapps.androidbase.data.response.PatientInfo
 import com.fatherofapps.androidbase.utils.createPartFromString
 import okhttp3.MediaType
@@ -41,5 +42,9 @@ class PatientRemoteService @Inject constructor(private val patientAPI: PatientAP
 
     suspend fun registerNotification(token: registerNotification): NetworkResult<ConfigResponse<Any>> {
         return callApi { patientAPI.registerNotification(token) }
+    }
+
+    suspend fun getPatientDetail(): NetworkResult<ConfigResponse<PatientDetail>> {
+        return callApi { patientAPI.getPatientDetail() }
     }
 }

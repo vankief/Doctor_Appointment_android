@@ -8,6 +8,7 @@ import com.fatherofapps.androidbase.common.Constants.KEY_PHONE
 import com.fatherofapps.androidbase.data.models.Patient
 import com.fatherofapps.androidbase.data.request.registerNotification
 import com.fatherofapps.androidbase.data.response.ConfigResponse
+import com.fatherofapps.androidbase.data.response.PatientDetail
 import com.fatherofapps.androidbase.data.response.PatientInfo
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -36,4 +37,7 @@ interface PatientAPI {
 
     @POST("/register")
     suspend fun registerNotification(@Body token: registerNotification): Response<ConfigResponse<Any>>
+
+    @GET("/patient/detail")
+    suspend fun getPatientDetail(): Response<ConfigResponse<PatientDetail>>
 }

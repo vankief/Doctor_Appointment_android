@@ -18,6 +18,7 @@ import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.response.AppointmentDetail
 import com.fatherofapps.androidbase.databinding.FragmentMyAppointmentDetailBinding
 import com.fatherofapps.androidbase.utils.EStatus
+import com.fatherofapps.androidbase.utils.EStatus.*
 import com.fatherofapps.androidbase.utils.convertImagePath
 import com.fatherofapps.androidbase.utils.convertStatusToVietnamese
 import com.fatherofapps.androidbase.utils.convertToVietNamDate
@@ -109,14 +110,18 @@ class MyAppointmentDetailFragment:BaseFragment() {
             dataBinding.txtPatientName.text = appointmentDetail.patientName
             dataBinding.txtPatientPhone.text = appointmentDetail.patientPhone
             dataBinding.txtPatientAge.text = appointmentDetail.patientAge
-            if (appointmentDetail.status == EStatus.AWAITING_PAYMENT)
-                dataBinding.txtPayment.text = "" + convertToCurrencyFormat(appointmentDetail.fee) + " VNĐ" + " - Chờ thanh toán"
-            if (appointmentDetail.status == EStatus.COMPLETED || appointmentDetail.status == EStatus.APPROVED)
-                dataBinding.txtPayment.text = "" + convertToCurrencyFormat(appointmentDetail.fee) + " VNĐ" + " - Đã thanh toán"
+            if (appointmentDetail.status == AWAITING_PAYMENT)
+                dataBinding.txtPayment.text = "" + convertToCurrencyFormat(appointmentDetail.fee) + " - Chờ thanh toán"
+            if ( appointmentDetail.status == APPROVED)
+                dataBinding.txtPayment.text = "" + convertToCurrencyFormat(appointmentDetail.fee) + " - Đã thanh toán"
                 dataBinding.btnCallVideo.setText("Gọi video ngay (Bắt đầu lúc ${appointmentDetail.scheduleTime.split(" - ")[0]})")
-        if(checkTime(appointmentDetail.scheduleTime, appointmentDetail.scheduleDate)){
-            dataBinding.btnCallVideo.visibility = View.VISIBLE
-            setupVideoCallButton()
+        if (checkTime(appointmentDetail.scheduleTime, appointmentDetail.scheduleDate)) {
+            if (appointmentDetail.status != COMPLETED) {
+                dataBinding.btnCallVideo.visibility = View.VISIBLE
+                setupVideoCallButton()
+            } else {
+                dataBinding.btnCallVideo.visibility = View.GONE
+            }
         } else {
             dataBinding.btnCallVideo.visibility = View.GONE
         }

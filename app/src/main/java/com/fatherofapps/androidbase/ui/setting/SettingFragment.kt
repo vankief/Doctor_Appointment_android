@@ -48,6 +48,11 @@ class SettingFragment @Inject constructor(): BaseFragment() {
             val action = SettingFragmentDirections.actionSettingFragmentToCreatCardFragment()
             navigateToPage(action)
         }
+        dataBinding.cardViewLogOut.setOnClickListener {
+            viewModel.clearToken()
+            val action = SettingFragmentDirections.actionSettingFragmentToLoginFragment()
+            navigateToPage(action)
+        }
         setupObservers()
     }
 

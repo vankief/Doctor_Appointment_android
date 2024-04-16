@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -14,8 +15,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.request.AppointmentRequest
+import com.fatherofapps.androidbase.data.response.PatientDetail
 import com.fatherofapps.androidbase.data.response.PaymentDetailOnlineResponse
 import com.fatherofapps.androidbase.databinding.FragmentPatientDetailBinding
+import com.fatherofapps.androidbase.utils.tinhDoTuoi
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
@@ -33,6 +37,7 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
     lateinit var paymentSheet: PaymentSheet
     lateinit var customerConfig: PaymentSheet.CustomerConfiguration
     lateinit var paymentIntentClientSecret: String
+    private var patientDetail: PatientDetail? = null
 
     companion object{
         const val TAG = "PatientDetailFragment"
@@ -40,6 +45,7 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.getPatientDetail()
     }
 
     override fun onCreateView(
@@ -49,15 +55,6 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
     ): View? {
         dataBinding = FragmentPatientDetailBinding.inflate(inflater, container, false)
         dataBinding.lifecycleOwner = viewLifecycleOwner
-        ageRangeAdapter = AgeRangeAdapter()
-        ageRangeAdapter.onItemClickListener = { ageRange ->
-            this.ageRange = ageRange
-        }
-        dataBinding.recyclerAge.apply {
-            layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        }
-        dataBinding.recyclerAge.adapter = ageRangeAdapter
-
         return dataBinding.root
     }
 
@@ -66,7 +63,8 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
         hideOpenNavigation(false)
         registerAllExceptionEvent(viewModel, viewLifecycleOwner)
         registerObserverLoadingEvent(viewModel, viewLifecycleOwner)
-        validatePatientDetail()
+        setupObserver()
+//        validatePatientDetail()
         paymentSheet = PaymentSheet(this, ::onPaymentSheetResult)
         dataBinding.btnContinue.setOnClickListener {
             val validationResult = validatePatientDetail()
@@ -78,6 +76,18 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
             fetchPaymentIntent()
         }
 
+    }
+
+    private fun setupRecyclerView() {
+        val age = tinhDoTuoi(patientDetail?.dob!!)
+        ageRangeAdapter = AgeRangeAdapter(age)
+        ageRangeAdapter.onItemClickListener = { ageRange ->
+            this.ageRange = ageRange
+        }
+        dataBinding.recyclerAge.apply {
+            layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        }
+        dataBinding.recyclerAge.adapter = ageRangeAdapter
     }
 
     private fun getAppointmentRequest(): AppointmentRequest {
@@ -216,7 +226,36 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
             .show()
     }
 
+    private fun setPatientDetail(patientDetail: PatientDetail) {
 
+        dataBinding.edtName.setText(patientDetail.name)
+        dataBinding.edtPhone.setText(patientDetail.phone)
+        if (patientDetail.gender) dataBinding.radioButtonMale.isChecked = true
+        else dataBinding.radioButtonFemale.isChecked = true
+
+        if(args.appointmentInfo.service == "online"){
+            dataBinding.cardViewOnline.visibility = View.VISIBLE
+            dataBinding.radioButtonOnline.isChecked = true
+            dataBinding.cardViewSmartcard.visibility = View.GONE
+        } else {
+            dataBinding.cardViewOnline.visibility = View.GONE
+            dataBinding.radioButtonSmartcard.isChecked = true
+            dataBinding.cardViewSmartcard.visibility = View.VISIBLE
+        }
+        setupRecyclerView()
+    }
+
+    private fun setupObserver() {
+        viewModel.patientDetailResponse.observe(viewLifecycleOwner) { response ->
+            if (response.data != null && response.isSuccess()) {
+                patientDetail = response.data
+                setPatientDetail(patientDetail!!)
+            } else {
+                if (response == null) showErrorMessage("Lỗi mạng")
+                else showErrorMessage(response.checkTypeErr())
+            }
+        }
+    }
 }
 
 

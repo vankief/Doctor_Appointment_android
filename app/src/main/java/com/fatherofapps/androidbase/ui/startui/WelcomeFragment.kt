@@ -36,10 +36,10 @@ class WelcomeFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        isLogin = viewModel.checkLogin()
-//        if(isLogin){
-//            navigateToHome()
-//        }
+        isLogin = viewModel.checkLogin()
+        if(isLogin){
+            navigateToHome()
+        }
     }
 
     override fun onCreateView(
