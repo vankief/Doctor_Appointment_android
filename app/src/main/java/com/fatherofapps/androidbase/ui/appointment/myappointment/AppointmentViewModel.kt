@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AppointmentViewModel@Inject constructor(
+class AppointmentViewModel @Inject constructor(
     private val appointmentRepository: AppointmentRepository,
     private val preferenceManager: PreferenceManager
 ): BaseViewModel() {

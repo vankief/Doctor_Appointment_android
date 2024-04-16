@@ -49,16 +49,10 @@ class AppointmentFragment: BaseFragment() {
         setupCardPast()
             selectCard(dataBinding.cardUpComing)
             selectText(dataBinding.txtUpComing)
-            deselectCard(dataBinding.cardPast)
-            deselectText(dataBinding.txtPast)
-            if (appointmentUpComingList.isNotEmpty()) {
-                dataBinding.recyclerView.visibility = View.VISIBLE
-                dataBinding.layoutnoAppointment.visibility = View.GONE
-                setupRecyclerView(appointmentUpComingList)
-            } else {
-                dataBinding.recyclerView.visibility = View.GONE
-                dataBinding.layoutnoAppointment.visibility = View.VISIBLE
-            }
+        dataBinding.btnBookNow.setOnClickListener {
+            val action = AppointmentFragmentDirections.actionAppointmentFragmentToFragmentTopDoctor("all")
+            navigateToPage(action)
+        }
     }
 
     private fun setupObservers() {
@@ -66,12 +60,16 @@ class AppointmentFragment: BaseFragment() {
             response?.let { appointmentResponse ->
                 if (appointmentResponse.data != null && appointmentResponse.isSuccess()) {
                     val appointmentData = appointmentResponse.data
-
-                    if (appointmentData.past.isNotEmpty()) appointmentPastList = appointmentData.past
-                    else appointmentPastList = emptyList()
-
-                    if (appointmentData.upcoming.isNotEmpty()) appointmentUpComingList = appointmentData.upcoming
-                    else appointmentUpComingList = emptyList()
+                    appointmentPastList = appointmentData.past
+                    appointmentUpComingList = appointmentData.upcoming
+                    if (appointmentUpComingList.isNotEmpty()) {
+                        dataBinding.recyclerView.visibility = View.VISIBLE
+                        dataBinding.layoutnoAppointment.visibility = View.GONE
+                        setupRecyclerView(appointmentUpComingList)
+                    } else {
+                        dataBinding.recyclerView.visibility = View.GONE
+                        dataBinding.layoutnoAppointment.visibility = View.VISIBLE
+                    }
                 } else {
                     if (appointmentResponse == null) showErrorMessage("Lỗi mạng")
                     else showErrorMessage(appointmentResponse.checkTypeErr())

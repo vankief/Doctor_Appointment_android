@@ -1,5 +1,7 @@
 package com.fatherofapps.androidbase.data.response
 
+import com.fatherofapps.androidbase.utils.EStatus
+
 
 data class AppointmentResponse(
     val paymentDetailOfflineResponse: PaymentDetailOfflineResponse?,
@@ -22,15 +24,32 @@ data class PaymentDetailOfflineResponse(
      val past: List<DateAppointment>
  )
 
-data class AppointmentDetail(
+data class Appointment(
     val appointmentId: String,
     val doctorName: String,
     val doctorImage: String,
     val service: String,
-    val status: String,
+    val status: EStatus,
     val scheduleTime: String,
 )
 data class DateAppointment(
     val date: String,
-    val appointments: List<AppointmentDetail>
+    val appointments: List<Appointment>
+)
+
+data class AppointmentDetail(
+    val appointmentId: String,
+    val doctorName: String,
+    val doctorImage: String,
+    val totalPatients:  Int,
+    val totalReviews: Int,
+    val experience: String,
+    val service: String,
+    val status: EStatus,
+    val scheduleTime: String,
+    val scheduleDate: String,
+    val patientName: String,
+    val patientPhone: String,
+    val patientAge: String,
+    val fee : Int,
 )

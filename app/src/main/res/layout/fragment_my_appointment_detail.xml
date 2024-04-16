@@ -14,7 +14,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="78dp"
+            android:layout_marginTop="65dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             app:cardCornerRadius="8dp">
@@ -23,69 +23,90 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="16dp">
+                >
 
                 <!-- Phần 1: Ảnh đại diện -->
                 <ImageView
-                    android:id="@+id/doctorImageView"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/ic_avt_doctor"
+                    android:id="@+id/doctorAvatar"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:src="@drawable/ic_img_doctor"
                     android:scaleType="centerCrop"
-                    android:layout_marginEnd="16dp" />
+                    android:layout_marginEnd="16dp"/>
 
                 <!-- Phần 2: Thông tin bác sĩ -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:layout_margin="4dp"
                     android:orientation="vertical">
 
-                    <!-- Số lượng sao và đánh giá -->
                     <TextView
-                        android:id="@+id/doctorNameTextView"
+                        android:id="@+id/txtDoctorName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
                         android:text="Bác Sĩ Nguyễn Văn A"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_marginBottom="4dp"/>
 
+                    <!-- Số lượng sao và đánh giá -->
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_vertical"
-                        android:layout_marginBottom="4dp">
+                        android:layout_marginBottom="4dp"
+                        >
 
-                        <!-- Icon sao -->
-                        <ImageView
-                            android:id="@+id/starIcon"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_star"
-                            android:layout_marginEnd="4dp"
-                            android:layout_gravity="center_vertical"
-                            app:tint="@color/md_theme_light_onPrimary" />
-
-                        <!-- Text đánh giá -->
                         <TextView
-                            android:id="@+id/reviewTextView"
+                            android:id="@+id/txtServiceCard"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="5.0 (20 reviews)"
+                            android:text="Online"
                             android:textSize="14sp"
-                            android:gravity="center_vertical" />
+                            android:gravity="center_vertical"
+                            />
+                        <TextView
+                            android:id="@+id/txtStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" - Đã kết thúc"
+                            android:textSize="14sp"
+                            android:gravity="center_vertical"
+                            />
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/specializationTextView"
+                        android:id="@+id/txtScheduleTimeCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Chuyên Khoa: Nội Tiêu Hóa"
-                        android:textSize="14sp" />
+                        android:text="09:00 - 10:00"
+                        android:textSize="14sp"/>
 
                 </LinearLayout>
+
+                <!-- Phần 3: Icon trái tim đánh dấu -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="8dp"
+                    app:cardBackgroundColor="@color/md_theme_light_primaryContainer"
+                    app:cardCornerRadius="8dp"
+                    android:layout_gravity="center_vertical"
+                    >
+
+                    <!-- Icon trái tim -->
+                    <ImageView
+                        android:id="@+id/imgService"
+                        android:layout_width="35dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/chat_rounded"
+                        app:tint="@color/md_theme_light_primary" />
+                </com.google.android.material.card.MaterialCardView>
+
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -219,70 +240,170 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Giới Thiệu"
-            android:textSize="18sp"
+            android:text="Thời gian hẹn"
+            android:textColor="@color/black"
+            android:textSize="16sp"
             android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="12dp"
             android:layout_marginEnd="24dp" />
-
+            <TextView
+                android:id="@+id/txtService"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Online"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="8dp" />
         <TextView
-            android:id="@+id/doctorDescriptionTextView"
+            android:id="@+id/txtScheduleDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Bác sĩ Nguyễn Văn A là bác sĩ chuyên khoa nội tiêu hóa với hơn 15 năm kinh nghiệm. Anh đã từng làm việc tại Bệnh viện Bạch Mai và Bệnh viện Việt Đức. Anh đã có nhiều bài báo khoa học được đăng tải trên các tạp chí uy tín. Anh cũng là người sáng lập ra ứng dụng Doctor Care. Anh có kỹ năng tốt trong việc chẩn đoán và điều trị các bệnh lý về tiêu hóa. Anh cũng là người rất tận tâm và chu đáo với bệnh nhân."
-            android:textSize="14sp"
-            android:layout_marginStart="24dp"
+            android:text="Thứ 2, 20/09/2021"
+            android:textColor="@color/black"
+            android:textSize="16sp"
             android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp" />
-
+        <TextView
+            android:id="@+id/txtScheduleTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="09:00 - 10:00"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thông tin hẹn"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp" />
         <LinearLayout
-            android:id="@+id/review"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@id/searchBar">
+            android:layout_marginBottom="8dp"
+            >
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Review"
-                style="@style/h2_style" />
+                android:text="Họ và tên       : "
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <TextView
-                style="@style/h2_highlight_style"
-                android:layout_width="0dp"
-                android:textAlignment="textEnd"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:textColor="@color/md_theme_light_onPrimary"
-                android:text="Xem tất cả" />
+                android:id="@+id/txtPatientName"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Nguyễn Văn A"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                />
         </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvSchedule"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="12dp"
-            />
+            android:layout_marginBottom="8dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tuổi                 : "
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txtPatientAge"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="20+"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="8dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Số điện thoại : "
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txtPatientPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="0123456789"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thông tin thanh toán"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp" />
+        <TextView
+            android:id="@+id/txtPayment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1.000.000 VND (Đã thanh toán)"
+            android:textColor="@color/md_theme_light_primary"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp" />
 
         <Button
-            android:id="@+id/bookAppointmentButton"
+            android:id="@+id/btnCallVideo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Đặt Lịch Hẹn"
-            android:textSize="18sp"
+            android:text="Call Video ngay (Bắt dầu lúc 09:00)"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/md_theme_light_primary"
+            android:layout_marginTop="16dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="12dp"
-            android:backgroundTint="@color/md_theme_light_onPrimary"
-            android:textColor="@color/white" />
+            android:visibility="gone"
+            />
+
     </LinearLayout>
 </layout>

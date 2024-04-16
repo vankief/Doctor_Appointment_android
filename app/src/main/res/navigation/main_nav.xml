@@ -167,6 +167,9 @@
         <action
             android:id="@+id/action_appointmentFragment_to_myAppointmentDetailFragment"
             app:destination="@id/myAppointmentDetailFragment" />
+        <action
+            android:id="@+id/action_appointmentFragment_to_fragmentTopDoctor"
+            app:destination="@id/fragmentTopDoctor" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -201,7 +204,11 @@
         android:name="com.fatherofapps.androidbase.ui.appointment.myappointmentdetail.MyAppointmentDetailFragment"
         android:label="MyAppointmentDetailFragment"
         tools:layout="@layout/fragment_my_appointment_detail"
-        />
+        >
+        <argument
+            android:name="appointmentId"
+            app:argType="string" />
+    </fragment>
 
 
 </navigation>

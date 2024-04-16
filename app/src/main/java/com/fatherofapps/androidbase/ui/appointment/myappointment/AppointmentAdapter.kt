@@ -9,11 +9,13 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fatherofapps.androidbase.R
+import com.fatherofapps.androidbase.data.response.Appointment
 import com.fatherofapps.androidbase.data.response.AppointmentDetail
 import com.fatherofapps.androidbase.utils.convertImagePath
+import com.fatherofapps.androidbase.utils.convertStatusToVietnamese
 
 class AppointmentAdapter(
-    private val appointmentList: List<AppointmentDetail>
+    private val appointmentList: List<Appointment>
 ): RecyclerView.Adapter<AppointmentAdapter.AppointmentViewHolder>() {
 
 
@@ -44,7 +46,7 @@ class AppointmentAdapter(
             .load(convertImagePath(appointment.doctorImage))
             .into(holder.doctorImg)
         holder.txtService.text = appointment.service
-        holder.txtStatus.text = appointment.status
+        holder.txtStatus.text = " - "+ convertStatusToVietnamese(appointment.status)
         holder.txtScheduleTime.text = appointment.scheduleTime
         if (appointment.service == "online") {
             holder.imgService.setImageResource(R.drawable.ic_videocall)
@@ -52,7 +54,8 @@ class AppointmentAdapter(
             holder.imgService.setImageResource(R.drawable.chat_rounded)
         }
         holder.itemView.setOnClickListener(){
-            val action = AppointmentFragmentDirections.actionAppointmentFragmentToMyAppointmentDetailFragment()
+            val appoinmentId = appointment.appointmentId
+            val action = AppointmentFragmentDirections.actionAppointmentFragmentToMyAppointmentDetailFragment(appoinmentId)
             holder.itemView.findNavController().navigate(action)
         }
 
