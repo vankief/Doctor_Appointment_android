@@ -32,3 +32,12 @@ fun convertDate(dateString: String): String {
     // Trả về chuỗi rỗng nếu có lỗi xảy ra
     return ""
 }
+fun extractParagraphTags(description: String): String {
+    val pattern = "<p>(.*?)</p>".toRegex()
+    val matches = pattern.findAll(description)
+    val result = StringBuilder()
+    for (match in matches) {
+        result.append(match.groupValues[1]).append("\n")
+    }
+    return result.toString()
+}

@@ -275,4 +275,9 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">#09101D</item>
     </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/black</item>
+        <item name="colorControlActivated">@color/md_theme_light_primary</item>
+    </style>
 </resources>

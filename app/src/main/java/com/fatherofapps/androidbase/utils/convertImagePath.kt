@@ -6,7 +6,11 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 
 fun convertImagePath(path: String): String {
-    return BuildConfig.BASE_URL + path
+    return if (path.startsWith("http://") || path.startsWith("https://")) {
+        path
+    } else {
+        BuildConfig.BASE_URL + path
+    }
 }
 
 fun createPartFromString(stringData: String): RequestBody {

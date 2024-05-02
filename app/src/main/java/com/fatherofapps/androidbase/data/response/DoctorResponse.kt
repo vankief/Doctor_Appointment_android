@@ -42,5 +42,12 @@ data class ListTime(
 
 data class doctorPrice(
     val id: String,
-    val price: Int,
+    val onlinePrice: Int,
+    val offlinePrice: Int,
+)
+
+data class DoctorAppointment(
+    val doctorId: String,
+    val doctorName: String,
+    val doctorImage: String,
 )

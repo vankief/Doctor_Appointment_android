@@ -15,9 +15,10 @@ import com.fatherofapps.androidbase.data.response.DateAppointment
 import com.fatherofapps.androidbase.databinding.FragmentMyAppointmentBinding
 import com.google.android.material.card.MaterialCardView
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class AppointmentFragment: BaseFragment() {
+class AppointmentFragment  @Inject constructor(): BaseFragment() {
     private lateinit var dataBinding: FragmentMyAppointmentBinding
     private val viewModel by viewModels<AppointmentViewModel>()
     private var appointmentPastList: List<DateAppointment> = emptyList()

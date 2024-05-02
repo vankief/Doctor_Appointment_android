@@ -16,3 +16,10 @@ data class registerNotification(
     val token: String
 )
 
+data class createReview(
+    val rating: Int,
+    val comment: String,
+    val doctorId: String,
+    val appointmentId: String
+
+)

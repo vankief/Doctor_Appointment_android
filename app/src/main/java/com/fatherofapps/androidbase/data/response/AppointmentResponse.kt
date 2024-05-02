@@ -52,4 +52,5 @@ data class AppointmentDetail(
     val patientPhone: String,
     val patientAge: String,
     val fee : Int,
+    val isRate: Boolean
 )

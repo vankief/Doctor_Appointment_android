@@ -35,4 +35,5 @@ interface DoctorAPI {
 
     @GET("/doctors/specialist/{SpecialistPath}")
     suspend fun getDoctorBySpecialist(@Path("SpecialistPath") specialistId: String?): Response<ConfigResponse<List<TopDoctorBySpecialist>>>
+
 }

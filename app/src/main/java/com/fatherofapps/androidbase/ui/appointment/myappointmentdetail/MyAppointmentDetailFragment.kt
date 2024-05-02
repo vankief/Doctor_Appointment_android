@@ -34,13 +34,15 @@ import java.net.URL
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import javax.inject.Inject
+
 @AndroidEntryPoint
-class MyAppointmentDetailFragment:BaseFragment() {
+class MyAppointmentDetailFragment  @Inject constructor():BaseFragment() {
         private lateinit var dataBinding: FragmentMyAppointmentDetailBinding
         private val viewModel by viewModels<MyAppointmentDetailViewModel>()
         private val args by navArgs<MyAppointmentDetailFragmentArgs>()
         private var appointmentDetail : AppointmentDetail? = null
-         private val broadcastReceiver = object : BroadcastReceiver() {
+        private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             onBroadcastReceived(intent)
         }
@@ -76,70 +78,92 @@ class MyAppointmentDetailFragment:BaseFragment() {
                 appointmentDetail = response.data
                 appointmentDetail?.let { setupAppointmentDetail(it) }
             } else {
-                if (response == null) showErrorMessage("Lỗi mạng")
-                else showErrorMessage(response.checkTypeErr())
+                showErrorMessage(response?.message ?: "Lỗi không xác định")
             }
         };
     }
 
     private fun setupAppointmentDetail(appointmentDetail: AppointmentDetail) {
-        if (appointmentDetail.service == "online") {
-            dataBinding.btnCallVideo.visibility = View.VISIBLE
-        } else {
-            dataBinding.btnCallVideo.visibility = View.GONE
-        }
-            dataBinding.txtDoctorName.text = appointmentDetail.doctorName
-            Glide.with(requireContext())
+        dataBinding.txtDoctorName.text = appointmentDetail.doctorName
+        Glide.with(requireContext())
             .load(convertImagePath(appointmentDetail.doctorImage))
             .into(dataBinding.doctorAvatar)
-            dataBinding.txtService.text = appointmentDetail.service
-            dataBinding.txtServiceCard.text = appointmentDetail.service
-            dataBinding.txtStatus.text = " - "+ convertStatusToVietnamese(appointmentDetail.status)
-            dataBinding.txtScheduleTime.text = appointmentDetail.scheduleTime
-            dataBinding.txtScheduleTimeCard.text = appointmentDetail.scheduleTime
+        dataBinding.txtService.text = appointmentDetail.service
+        dataBinding.txtServiceCard.text = appointmentDetail.service
+        dataBinding.txtStatus.text = " - " + convertStatusToVietnamese(appointmentDetail.status)
+        dataBinding.txtScheduleTime.text = appointmentDetail.scheduleTime
+        dataBinding.txtScheduleTimeCard.text = appointmentDetail.scheduleTime
 
-            if (appointmentDetail.service == "online") {
-                dataBinding.imgService.setImageResource(R.drawable.ic_videocall)
-            } else {
-                dataBinding.imgService.setImageResource(R.drawable.chat_rounded)
-            }
-            dataBinding.appointmentCountTextView.text = appointmentDetail.totalPatients.toString() + " + "
-            dataBinding.reviewCountTextView.text = appointmentDetail.totalReviews.toString() + " + "
-            dataBinding.experienceCountTextView.text = appointmentDetail.experience.replace("năm", "+")
-            dataBinding.txtScheduleDate.text = convertToVietNamDate(appointmentDetail.scheduleDate)
-            dataBinding.txtPatientName.text = appointmentDetail.patientName
-            dataBinding.txtPatientPhone.text = appointmentDetail.patientPhone
-            dataBinding.txtPatientAge.text = appointmentDetail.patientAge
-            if (appointmentDetail.status == AWAITING_PAYMENT)
-                dataBinding.txtPayment.text = "" + convertToCurrencyFormat(appointmentDetail.fee) + " - Chờ thanh toán"
-            if ( appointmentDetail.status == APPROVED)
-                dataBinding.txtPayment.text = "" + convertToCurrencyFormat(appointmentDetail.fee) + " - Đã thanh toán"
-                dataBinding.btnCallVideo.setText("Gọi video ngay (Bắt đầu lúc ${appointmentDetail.scheduleTime.split(" - ")[0]})")
-        if (checkTime(appointmentDetail.scheduleTime, appointmentDetail.scheduleDate)) {
-            if (appointmentDetail.status != COMPLETED) {
-                dataBinding.btnCallVideo.visibility = View.VISIBLE
-                setupVideoCallButton()
-            } else {
-                dataBinding.btnCallVideo.visibility = View.GONE
-            }
+        // Kiểm tra nếu dịch vụ là "online" và thời gian hẹn đã đến
+        if (appointmentDetail.service == "online") {
+            dataBinding.imgService.setImageResource(R.drawable.ic_videocall)
         } else {
-            dataBinding.btnCallVideo.visibility = View.GONE
+            dataBinding.imgService.setImageResource(R.drawable.chat_rounded)
         }
 
+        dataBinding.appointmentCountTextView.text = appointmentDetail.totalPatients.toString() + " + "
+        dataBinding.reviewCountTextView.text = appointmentDetail.totalReviews.toString() + " + "
+        dataBinding.experienceCountTextView.text = appointmentDetail.experience + "+"
+        dataBinding.txtScheduleDate.text = convertToVietNamDate(appointmentDetail.scheduleDate)
+        dataBinding.txtPatientName.text = appointmentDetail.patientName
+        dataBinding.txtPatientPhone.text = appointmentDetail.patientPhone
+        dataBinding.txtPatientAge.text = appointmentDetail.patientAge
+
+        // Set payment text dựa trên status của appointment
+        when (appointmentDetail.status) {
+            AWAITING_PAYMENT -> dataBinding.txtPayment.text = "" + convertToCurrencyFormat(appointmentDetail.fee) + " - Chờ thanh toán"
+            APPROVED -> {
+                if (appointmentDetail.service == "online") {
+                    dataBinding.txtPayment.text = "" + convertToCurrencyFormat(appointmentDetail.fee) + " - Đã thanh toán"
+                    dataBinding.btnCallVideo.visibility = if (checkTime(appointmentDetail.scheduleTime, appointmentDetail.scheduleDate)) View.VISIBLE else View.GONE
+                    dataBinding.btnCallVideo.setText("Gọi video ngay (Bắt đầu lúc ${appointmentDetail.scheduleTime.split(" - ")[0]})")
+                    setupVideoCallButton()
+
+                } else {
+                    dataBinding.txtPayment.text = "" + convertToCurrencyFormat(appointmentDetail.fee) + " - Đã thanh toán"
+                }
+            }
+            COMPLETED -> {
+                dataBinding.txtPayment.text = "" + convertToCurrencyFormat(appointmentDetail.fee) + " - Đã thanh toán"
+                // Kiểm tra xem có thể đánh giá cuộc hẹn không (trong vòng 7 ngày kể từ ngày hẹn)
+                val canRate = checkReviewValidity(appointmentDetail.scheduleDate, appointmentDetail.scheduleTime)
+                // Nếu đã đánh giá, ẩn nút đánh giá
+                dataBinding.btnReview.visibility = if (canRate && !appointmentDetail.isRate) View.VISIBLE else View.GONE
+                setupReviewButton()
+            }
+
+            else -> {
+                dataBinding.txtPayment.text = "" + convertToCurrencyFormat(appointmentDetail.fee) + " - Đã bị hủy"}
+        }
     }
 
+    private fun checkReviewValidity(scheduleDate: String, scheduleTime: String): Boolean {
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+        val scheduleDateTime = LocalDateTime.parse("$scheduleDate $scheduleTime", formatter)
+        val now = LocalDateTime.now()
+        return now.isBefore(scheduleDateTime.plusDays(7))
+    }
+
+    // Kiểm tra xem thời gian hẹn đã đến chưa
     private fun checkTime(scheduleTime: String, scheduleDate: String): Boolean {
         val currentDateTime = LocalDateTime.now()
         val timeSlotEndTime = getTimeSlotStartTime(scheduleTime)
         val scheduleDateTime = LocalDateTime.parse("$scheduleDate $timeSlotEndTime", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
-        Log.d("MyAppointmentDetailFragment", "currentDateTime: $currentDateTime")
-        Log.d("MyAppointmentDetailFragment", "scheduleDateTime: $scheduleDateTime")
         return currentDateTime.isBefore(scheduleDateTime)
     }
+
+    // Lấy thời gian bắt đầu của khoảng thời gian hẹn
     private fun getTimeSlotStartTime(timeRange: String): LocalTime {
         val startTimeStr = timeRange.split(" - ")[1]
-        val formatter = DateTimeFormatter.ofPattern("HH:mm")
-        return LocalTime.parse(startTimeStr, formatter)
+        return LocalTime.parse(startTimeStr, DateTimeFormatter.ofPattern("HH:mm"))
+    }
+
+    private fun setupReviewButton() {
+        dataBinding.btnReview.setOnClickListener {
+            val action = MyAppointmentDetailFragmentDirections.actionMyAppointmentDetailFragmentToReviewFragment(appointmentDetail?.appointmentId!!)
+            navigateToPage(action)
+            Log.d("MyAppointmentDetailFragment", "appointmentId: ${appointmentDetail?.appointmentId}")
+        }
     }
 
     private fun setupVideoCallButton() {

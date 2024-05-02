@@ -33,7 +33,29 @@ class MainActivity : BaseActivity(){
             supportFragmentManager.findFragmentById(R.id.container) as NavHostFragment
         navController = navHostFragment.navController
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        setupWithNavController(bottomNavigationView, navController)
+        bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.homeFragment -> {
+                    if (navController.currentDestination?.id != R.id.homeFragment) {
+                        navController.navigate(R.id.homeFragment)
+                    }
+                    true
+                }
+                R.id.appointmentFragment -> {
+                    if (navController.currentDestination?.id != R.id.appointmentFragment) {
+                        navController.navigate(R.id.appointmentFragment)
+                    }
+                    true
+                }
+                R.id.settingFragment -> {
+                    if (navController.currentDestination?.id != R.id.settingFragment) {
+                        navController.navigate(R.id.settingFragment)
+                    }
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     override fun showLoading(isShow: Boolean) {

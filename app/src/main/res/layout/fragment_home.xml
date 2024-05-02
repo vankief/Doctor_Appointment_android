@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="68dp"
-            android:hint="Search here ..."
+            android:hint="Tìm kiếm bác sĩ..."
             android:backgroundTint="@color/md_theme_light_primaryContainer"
             />
 

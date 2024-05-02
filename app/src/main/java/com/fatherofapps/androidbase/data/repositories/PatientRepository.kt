@@ -4,6 +4,7 @@ import android.util.Log
 import com.fatherofapps.androidbase.base.network.BaseRemoteService.Companion.TAG
 import com.fatherofapps.androidbase.base.network.NetworkResult
 import com.fatherofapps.androidbase.data.models.Patient
+import com.fatherofapps.androidbase.data.request.createReview
 import com.fatherofapps.androidbase.data.request.registerNotification
 import com.fatherofapps.androidbase.data.request.updatePatient
 import com.fatherofapps.androidbase.data.response.ConfigResponse
@@ -78,6 +79,21 @@ class PatientRepository @Inject constructor(
 
                 is NetworkResult.Error -> {
                     Log.d(TAG, "getPatientDetail: ${result.exception.message}")
+                    return@withContext null
+                }
+            }
+        }
+    suspend fun createReview(review: createReview) =
+        withContext(dispatcher) {
+            when (val result =
+                patientRemoteService.createReview(review)) {
+                is NetworkResult.Success -> {
+                    Log.d(TAG, "createReview: ${result.data}")
+                    return@withContext result.data
+                }
+
+                is NetworkResult.Error -> {
+                    Log.d(TAG, "createReview: ${result.exception.message}")
                     return@withContext null
                 }
             }
