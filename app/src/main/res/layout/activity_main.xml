@@ -40,7 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_menu"
-        app:backgroundTint="@color/md_theme_light_secondaryContainer"
+        app:backgroundTint="@color/white"
         app:itemIconTint="@color/md_theme_light_onPrimary"
         app:itemTextColor="@color/md_theme_light_onPrimary"
         />

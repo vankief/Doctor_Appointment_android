@@ -1,10 +1,11 @@
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/notificationCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="20dp"
     app:cardCornerRadius="8dp"
+    android:layout_marginBottom="8dp"
 
     >
 
@@ -12,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="8dp">
 
         <!-- Phần 1: Ảnh đại diện -->
         <ImageView
@@ -31,7 +32,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/titleTextView"
+                android:id="@+id/txtTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Appointment Alarm"
@@ -40,7 +41,7 @@
                 android:layout_marginBottom="4dp"/>
 
             <TextView
-                android:id="@+id/contentTextView"
+                android:id="@+id/txtContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Your appointment with Dr. Nguyen Van A is coming up in 30 minutes. Please be on time."

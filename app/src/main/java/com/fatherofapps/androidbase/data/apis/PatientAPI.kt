@@ -9,6 +9,7 @@ import com.fatherofapps.androidbase.data.models.Patient
 import com.fatherofapps.androidbase.data.request.createReview
 import com.fatherofapps.androidbase.data.request.registerNotification
 import com.fatherofapps.androidbase.data.response.ConfigResponse
+import com.fatherofapps.androidbase.data.response.DayNotification
 import com.fatherofapps.androidbase.data.response.PatientDetail
 import com.fatherofapps.androidbase.data.response.PatientInfo
 import okhttp3.MultipartBody
@@ -44,4 +45,15 @@ interface PatientAPI {
 
     @POST("/reviews")
     suspend fun createReview(@Body review: createReview): Response<ConfigResponse<Any>>
+
+    @GET("/notification/get-all")
+    suspend fun getNotifications(): Response<ConfigResponse<List<DayNotification>>>
+
+    @GET("/notification/unread")
+    suspend fun getUnreadNotifications(): Response<ConfigResponse<Int>>
+
+    @POST("/notification/read-all")
+    suspend fun markAllNotificationAsRead(): Response<ConfigResponse<List<DayNotification>>>
+
+
 }

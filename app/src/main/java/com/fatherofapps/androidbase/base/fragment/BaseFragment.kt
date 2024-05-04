@@ -1,5 +1,6 @@
 package com.fatherofapps.androidbase.base.fragment
 
+import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
@@ -198,6 +199,12 @@ open class BaseFragment : Fragment() {
             e.printStackTrace()
         }
         return 0
+    }
+
+    protected fun safeNavigateWithArgs(direction: NavDirections, bundle: Bundle? = null) {
+        findNavController().currentDestination?.getAction(direction.actionId)?.run {
+            findNavController().navigate(direction.actionId, bundle)
+        }
     }
 
 }

@@ -9,6 +9,7 @@ import com.fatherofapps.androidbase.data.request.createReview
 import com.fatherofapps.androidbase.data.request.registerNotification
 import com.fatherofapps.androidbase.data.request.updatePatient
 import com.fatherofapps.androidbase.data.response.ConfigResponse
+import com.fatherofapps.androidbase.data.response.DayNotification
 import com.fatherofapps.androidbase.data.response.PatientDetail
 import com.fatherofapps.androidbase.data.response.PatientInfo
 import com.fatherofapps.androidbase.utils.createPartFromString
@@ -51,5 +52,17 @@ class PatientRemoteService @Inject constructor(private val patientAPI: PatientAP
 
     suspend fun createReview(review : createReview): NetworkResult<ConfigResponse<Any>> {
         return callApi { patientAPI.createReview(review) }
+    }
+
+    suspend fun getNotifications(): NetworkResult<ConfigResponse<List<DayNotification>>>{
+        return callApi { patientAPI.getNotifications() }
+    }
+
+    suspend fun getUnreadNotifications(): NetworkResult<ConfigResponse<Int>>{
+        return callApi { patientAPI.getUnreadNotifications() }
+    }
+
+    suspend fun markAllNotificationAsRead(): NetworkResult<ConfigResponse<List<DayNotification>>>{
+        return callApi { patientAPI.markAllNotificationAsRead() }
     }
 }

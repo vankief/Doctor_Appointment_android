@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.fatherofapps.androidbase.base.dialogs.ConfirmDialog
 import com.fatherofapps.androidbase.base.dialogs.ErrorDialog
 import com.fatherofapps.androidbase.base.dialogs.NotifyDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 open class BaseActivity : AppCompatActivity() {
 
@@ -91,5 +92,16 @@ open class BaseActivity : AppCompatActivity() {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
+    }
+
+    protected fun showDialogMaterial(title: String, message: String) {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("Chấp nhận") { dialog, which ->
+                // hide dialog
+                dialog.cancel()
+            }
+            .show()
     }
 }

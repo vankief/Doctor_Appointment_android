@@ -1,6 +1,7 @@
 package com.fatherofapps.androidbase.ui.authencation.login
 
 import android.text.TextUtils
+import android.util.Log
 import androidx.appcompat.widget.ThemedSpinnerAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -36,7 +37,8 @@ class LoginViewModel @Inject constructor(
             _loginResponse.postValue(response!!)
         }
          registerJobFinish()
-        }
+    }
+
     fun validateCredentials(
         emailAddress: String, password: String,
     ): Pair<Boolean, String> {

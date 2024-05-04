@@ -99,7 +99,7 @@ class ReviewFragment @Inject constructor() : BaseFragment() {
                     "Đánh giá thành công",
                     "Cảm ơn bạn đã đánh giá bác sĩ ${doctor?.doctorName}"
                 )
-                val action = ReviewFragmentDirections.actionReviewFragmentToMyAppointmentDetailFragment(args.appointmentId)
+                val action = ReviewFragmentDirections.actionReviewFragmentToHomeFragment()
                 navigateToPage(action)
             } else {
                 showErrorMessage(response.message ?: "Lỗi không xác định")

@@ -64,7 +64,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         // Check if message contains a notification payload.
         remoteMessage.notification?.let {
             Log.d(TAG, "Message Notification Body: ${it.body}")
-            it.body?.let { body -> sendNotification(body) }
+            sendNotification(it.title.toString(), it.body.toString())
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
@@ -116,18 +116,6 @@ class FirebaseMessagingService : FirebaseMessagingService() {
      *
      * @param token The new token.
      */
-//    private fun sendRegistrationToServer(token: String?) {
-//        CoroutineScope(Dispatchers.IO).launch {
-//            token?.let {
-//                patientRepository.registerNotification(token)?.let { response ->
-//                    // Xử lý kết quả nếu cần
-//                    Log.d(TAG, "sendRegistrationToServer: Đăng ký token thành công")
-//                } ?: run {
-//                    Log.d(TAG, "sendRegistrationToServer: Đăng ký token thất bại")
-//                }
-//            }
-//        }
-//    }
 
 
 
@@ -137,7 +125,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
      *
      * @param messageBody FCM message body received.
      */
-    private fun sendNotification(messageBody: String) {
+    private fun sendNotification(title: String, messageBody: String) {
         val requestCode = 0
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -152,7 +140,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.ic_notifi)
-            .setContentTitle(getString(R.string.fcm_message))
+            .setContentTitle(title)
             .setContentText(messageBody)
             .setAutoCancel(true)
             .setSound(defaultSoundUri)

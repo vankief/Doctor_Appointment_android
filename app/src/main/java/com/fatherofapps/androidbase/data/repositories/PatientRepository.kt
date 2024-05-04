@@ -98,4 +98,52 @@ class PatientRepository @Inject constructor(
                 }
             }
         }
+
+    suspend fun getNotifications() =
+        withContext(dispatcher) {
+            when (val result =
+                patientRemoteService.getNotifications()) {
+                is NetworkResult.Success -> {
+                    Log.d(TAG, "getNotifications: ${result.data}")
+                    return@withContext result.data
+                }
+
+                is NetworkResult.Error -> {
+                    Log.d(TAG, "getNotifications: ${result.exception.message}")
+                    return@withContext null
+                }
+            }
+        }
+
+    suspend fun getUnreadNotifications() =
+        withContext(dispatcher) {
+            when (val result =
+                patientRemoteService.getUnreadNotifications()) {
+                is NetworkResult.Success -> {
+                    Log.d(TAG, "getUnreadNotifications: ${result.data}")
+                    return@withContext result.data
+                }
+
+                is NetworkResult.Error -> {
+                    Log.d(TAG, "getUnreadNotifications: ${result.exception.message}")
+                    return@withContext null
+                }
+            }
+        }
+
+    suspend fun markAllNotificationAsRead() =
+        withContext(dispatcher) {
+            when (val result =
+                patientRemoteService.markAllNotificationAsRead()) {
+                is NetworkResult.Success -> {
+                    Log.d(TAG, "markAllNotificationAsRead: ${result.data}")
+                    return@withContext result.data
+                }
+
+                is NetworkResult.Error -> {
+                    Log.d(TAG, "markAllNotificationAsRead: ${result.exception.message}")
+                    return@withContext null
+                }
+            }
+        }
 }

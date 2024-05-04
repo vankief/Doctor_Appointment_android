@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LoginFragment @Inject constructor()  : BaseFragment() {
+class LoginFragment @Inject constructor() : BaseFragment() {
     private lateinit var dataBinding: FragmentLoginBinding
     private val viewModel by viewModels<LoginViewModel>()
     private var isLogin: Boolean = false
@@ -39,9 +39,7 @@ class LoginFragment @Inject constructor()  : BaseFragment() {
         }
     }
 
-    private fun navigateToHome() {
-        findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
-    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,7 +65,6 @@ class LoginFragment @Inject constructor()  : BaseFragment() {
                 val userRequest = getUserRequest()
                 viewModel.doLogin(userRequest)
             } else {
-                Log.d("LoginFragment", "onViewCreated: ${validationResult.second}")
                 showValidationErrors(validationResult.second)
             }
             bindObservers()
@@ -80,7 +77,7 @@ class LoginFragment @Inject constructor()  : BaseFragment() {
     }
 
     private fun navigationToSignUpForm() {
-        navigateToPage(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
+        safeNavigateWithArgs(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
     }
 
     private fun validateUserInput(): Pair<Boolean, String> {
@@ -110,16 +107,14 @@ class LoginFragment @Inject constructor()  : BaseFragment() {
                         it1,
                         it.data.refreshToken
                     )
-                    isFirstTime = viewModel.checkIsFirstTime()
-                    if (isFirstTime) {
-                        navigateToCreateProfile()
-                    } else {
-                        navigateToHome()
-
-                    }
+                }
+                if (viewModel.checkIsFirstTime()) {
+                    navigateToCreateProfile()
+                } else {
+                    navigateToHome()
                 }
             } else {
-                if(it == null) showErrorMessage("Lỗi mạng")
+                if(it == null) showErrorMessage("Lỗi không xác định")
                 else showErrorMessage(it.checkTypeErr())
 
             }
@@ -127,12 +122,20 @@ class LoginFragment @Inject constructor()  : BaseFragment() {
     }
 
     private fun navigateToCreateProfile() {
-        findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToFragementCreateProfile())
+        safeNavigateWithArgs(LoginFragmentDirections.actionLoginFragmentToFragementCreateProfile())
     }
     override fun onDestroyView() {
         super.onDestroyView()
         dataBinding.unbind()
     }
 
+    private fun clearAllFields() {
+        dataBinding.edtEmail.text?.clear()
+        dataBinding.edtPassword.text?.clear()
+        dataBinding.edtEmail.requestFocus()
+    }
+    private fun navigateToHome() {
+        safeNavigateWithArgs(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+    }
 
 }

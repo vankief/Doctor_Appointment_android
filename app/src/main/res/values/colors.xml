@@ -98,4 +98,7 @@
     <color name="color_card_selected">#CC2972FE</color>
     <color name="color_text_selected">#FFFFFF</color>
     <color name="color_text_unselected">#CC2972FE</color>
+
+    <color name="color_notification_read">#FFDAD6</color>
+    <color name="color_notification_unread">#FFB4AB</color>
 </resources>

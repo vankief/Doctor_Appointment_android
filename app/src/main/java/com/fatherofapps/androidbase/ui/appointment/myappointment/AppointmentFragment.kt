@@ -71,8 +71,8 @@ class AppointmentFragment  @Inject constructor(): BaseFragment() {
                         dataBinding.layoutnoAppointment.visibility = View.VISIBLE
                     }
                 } else {
-                    if (appointmentResponse == null) showErrorMessage("Lỗi mạng")
-                    else showErrorMessage(appointmentResponse.checkTypeErr())
+                    showErrorMessage(appointmentResponse.message ?: "Lỗi không xác định")
+
                 }
             }
         }

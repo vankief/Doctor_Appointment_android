@@ -125,8 +125,7 @@ class HomeFragment @Inject constructor(
                     Log.d(TAG, "Notification: $it")
                 }
             } else {
-                if (response == null) showErrorMessage("Lỗi mạng")
-                else showErrorMessage(response.checkTypeErr())
+                showErrorMessage(response.message ?: "Lỗi không xác định")
             }
         })
     }
@@ -159,8 +158,7 @@ class HomeFragment @Inject constructor(
                     setupSpecialistRecyclerView()
                 }}
             else {
-                if (response == null) showErrorMessage("Lỗi mạng")
-                else showErrorMessage(response.checkTypeErr())
+                showErrorMessage(response?.message ?: "Lỗi không xác định")
             }
         })
     }
@@ -174,8 +172,7 @@ class HomeFragment @Inject constructor(
                     setupTopDoctorRecyclerView()
                 }}
             else {
-                if (response == null) showErrorMessage("Lỗi mạng")
-                else showErrorMessage(response.checkTypeErr())
+                showErrorMessage(response?.message ?: "Lỗi không xác định")
             }
         })
     }

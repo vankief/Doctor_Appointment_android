@@ -72,15 +72,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginTop="24dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/layoutnoAppointment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
                 android:layout_marginTop="24dp"
                 android:orientation="vertical">
 
@@ -99,8 +96,6 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp"
                     android:textColor="@color/black" />
-
-
                 <Button
                     android:id="@+id/btnBookNow"
                     android:layout_width="wrap_content"

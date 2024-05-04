@@ -139,7 +139,8 @@ class MyAppointmentDetailFragment  @Inject constructor():BaseFragment() {
 
     private fun checkReviewValidity(scheduleDate: String, scheduleTime: String): Boolean {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-        val scheduleDateTime = LocalDateTime.parse("$scheduleDate $scheduleTime", formatter)
+        val timeSlotEndTime = getTimeSlotStartTime(scheduleTime)
+        val scheduleDateTime = LocalDateTime.parse("$scheduleDate $timeSlotEndTime", formatter)
         val now = LocalDateTime.now()
         return now.isBefore(scheduleDateTime.plusDays(7))
     }
