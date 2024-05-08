@@ -14,6 +14,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.fatherofapps.androidbase.R
+import com.fatherofapps.androidbase.activities.MainActivity
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.response.AppointmentDetail
 import com.fatherofapps.androidbase.databinding.FragmentMyAppointmentDetailBinding
@@ -59,6 +60,8 @@ class MyAppointmentDetailFragment  @Inject constructor():BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         dataBinding = FragmentMyAppointmentDetailBinding.inflate(inflater, container, false)
+        dataBinding.lifecycleOwner = viewLifecycleOwner
+        (activity as MainActivity).setTitle("Chi tiết cuộc hẹn")
         return dataBinding.root
     }
 

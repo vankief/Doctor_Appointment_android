@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fatherofapps.androidbase.R
+import com.fatherofapps.androidbase.activities.MainActivity
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.request.AppointmentRequest
 import com.fatherofapps.androidbase.data.response.PatientDetail
@@ -55,6 +56,8 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
     ): View? {
         dataBinding = FragmentPatientDetailBinding.inflate(inflater, container, false)
         dataBinding.lifecycleOwner = viewLifecycleOwner
+        (activity as MainActivity).setTitle("Thông tin bệnh nhân")
+        (activity as MainActivity).setNavigationBackIcon()
         return dataBinding.root
     }
 

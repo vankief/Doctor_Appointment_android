@@ -9,7 +9,7 @@ enum class EStatus {
 }
 fun convertStatusToVietnamese(status: EStatus): String {
     return when (status) {
-        EStatus.APPROVED -> "Đã duyệt"
+        EStatus.APPROVED -> "Đã duyệt             "
         EStatus.REJECTED -> "Đã từ chối"
         EStatus.CANCELLED -> "Đã hủy              "
         EStatus.COMPLETED -> "Đã hoàn thành"

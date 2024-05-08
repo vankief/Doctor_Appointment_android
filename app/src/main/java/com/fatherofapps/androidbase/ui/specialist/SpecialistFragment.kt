@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import com.fatherofapps.androidbase.activities.MainActivity
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.response.SpecialistDoctor
 import com.fatherofapps.androidbase.databinding.FragmentSpecialistDoctorBinding
@@ -38,6 +39,8 @@ class SpecialistFragment @Inject constructor() : BaseFragment() {
     ): View? {
         dataBinding = FragmentSpecialistDoctorBinding.inflate(inflater, container, false)
         dataBinding.lifecycleOwner = viewLifecycleOwner
+        (activity as MainActivity).setTitle("Chuyên Khoa")
+        (activity as MainActivity).setNavigationBackIcon()
         return dataBinding.root
     }
 

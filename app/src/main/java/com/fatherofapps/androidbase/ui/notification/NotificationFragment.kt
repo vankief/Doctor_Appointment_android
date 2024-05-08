@@ -1,5 +1,6 @@
 package com.fatherofapps.androidbase.ui.notification
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,10 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.activities.MainActivity
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.response.DayNotification
 import com.fatherofapps.androidbase.databinding.FragmentNotificationBinding
+import com.fatherofapps.androidbase.helper.inter.MainActivityListener
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 @AndroidEntryPoint
@@ -33,6 +36,9 @@ class NotificationFragment @Inject constructor(): BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         dataBinding = FragmentNotificationBinding.inflate(inflater, container, false)
+        dataBinding.lifecycleOwner = viewLifecycleOwner
+        (requireActivity() as MainActivity).setTitle("Thông Báo")
+        (requireActivity() as MainActivity).setNavigationBackIcon()
         return dataBinding.root
     }
 
@@ -43,6 +49,7 @@ class NotificationFragment @Inject constructor(): BaseFragment() {
         registerAllExceptionEvent(viewModel, viewLifecycleOwner)
         registerObserverLoadingEvent(viewModel, viewLifecycleOwner)
         setupObservers()
+
     }
 
     private fun setupObservers() {

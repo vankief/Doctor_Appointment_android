@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fatherofapps.androidbase.R
+import com.fatherofapps.androidbase.activities.MainActivity
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.response.DoctorInfo
 import com.fatherofapps.androidbase.databinding.FragmentDoctorDetailBinding
@@ -50,7 +51,8 @@ class DoctorDetailFragment  @Inject constructor(): BaseFragment() {
     ): View? {
         dataBinding = FragmentDoctorDetailBinding.inflate(inflater, container, false)
         dataBinding.lifecycleOwner = viewLifecycleOwner
-
+        (activity as MainActivity).setTitle("Lịch Hẹn")
+        (activity as MainActivity).setNavigationBackIcon()
         return dataBinding.root
     }
 

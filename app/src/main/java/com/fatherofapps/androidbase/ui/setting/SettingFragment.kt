@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.fatherofapps.androidbase.activities.MainActivity
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.response.PatientInfo
 import com.fatherofapps.androidbase.databinding.FragmentSettingBinding
@@ -37,6 +38,9 @@ class SettingFragment @Inject constructor(): BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         dataBinding = FragmentSettingBinding.inflate(inflater, container, false)
+        dataBinding.lifecycleOwner = viewLifecycleOwner
+        (activity as MainActivity).setTitle("Cài đặt")
+        (activity as MainActivity).setNavigationBackIcon()
         return dataBinding.root
     }
 
@@ -44,6 +48,8 @@ class SettingFragment @Inject constructor(): BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         hideOpenTopAppBar(true)
         hideOpenNavigation(true)
+        registerAllExceptionEvent(viewModel, viewLifecycleOwner)
+        registerObserverLoadingEvent(viewModel, viewLifecycleOwner)
         dataBinding.cardViewInvite.setOnClickListener {
             val action = SettingFragmentDirections.actionSettingFragmentToCreatCardFragment()
             navigateToPage(action)

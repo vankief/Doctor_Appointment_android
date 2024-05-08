@@ -99,6 +99,6 @@
     <color name="color_text_selected">#FFFFFF</color>
     <color name="color_text_unselected">#CC2972FE</color>
 
-    <color name="color_notification_read">#FFDAD6</color>
-    <color name="color_notification_unread">#FFB4AB</color>
+    <color name="color_notification_read">#E6DAD6</color>
+    <color name="color_notification_unread">#E6B4AB</color>
 </resources>

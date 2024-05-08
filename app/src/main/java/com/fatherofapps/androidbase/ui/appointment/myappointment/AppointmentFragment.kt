@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fatherofapps.androidbase.R
+import com.fatherofapps.androidbase.activities.MainActivity
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.response.DateAppointment
 import com.fatherofapps.androidbase.databinding.FragmentMyAppointmentBinding
@@ -35,6 +36,9 @@ class AppointmentFragment  @Inject constructor(): BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         dataBinding = FragmentMyAppointmentBinding.inflate(inflater, container, false)
+        dataBinding.lifecycleOwner = viewLifecycleOwner
+        (requireActivity() as MainActivity).setTitle("Lịch hẹn")
+        (requireActivity() as MainActivity).setNavigationBackIcon()
         return dataBinding.root
     }
 

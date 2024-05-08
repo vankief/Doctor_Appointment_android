@@ -81,6 +81,8 @@ class HomeFragment @Inject constructor(
     ): View? {
         dataBinding = FragmentHomeBinding.inflate(inflater, container, false)
         dataBinding.lifecycleOwner = viewLifecycleOwner
+        (requireActivity() as MainActivity).setTitle("DoctorQ")
+        (requireActivity() as MainActivity).setNavigationIcon(R.drawable.logo_02)
         return dataBinding.root
     }
 

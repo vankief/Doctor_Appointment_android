@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import com.fatherofapps.androidbase.activities.MainActivity
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.request.SmartCardRequest
 import com.fatherofapps.androidbase.databinding.FragmentCreateSmartCardBinding
@@ -90,6 +91,8 @@ class CreatCardFragment @Inject constructor(): BaseFragment() {
     ): View? {
         dataBinding = FragmentCreateSmartCardBinding.inflate(inflater, container, false)
         dataBinding.lifecycleOwner = viewLifecycleOwner
+//        (activity as MainActivity).setTitle("Tạo thẻ thông minh")
+//        (activity as MainActivity).setNavigationBackIcon()
         return dataBinding.root
     }
 

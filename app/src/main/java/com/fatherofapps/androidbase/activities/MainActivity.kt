@@ -8,24 +8,21 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.FrameLayout
 import androidx.activity.viewModels
-import androidx.annotation.LongDef
-import androidx.annotation.OptIn
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.base.activities.BaseActivity
+import com.fatherofapps.androidbase.helper.inter.MainActivityListener
 import com.fatherofapps.androidbase.ui.notification.NotificationViewModel
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
-import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity(){
+class MainActivity : BaseActivity() {
 
     private var loadingLayout: FrameLayout? = null
     private lateinit var navController: NavController
@@ -131,4 +128,24 @@ class MainActivity : BaseActivity(){
             badge.isVisible = false
         }
     }
+
+    fun setTitle(title: String) {
+        supportActionBar?.title = title
+    }
+
+    fun setNavigationBackIcon() {
+        materialToolbar.setNavigationIcon(R.drawable.ic_back)
+        materialToolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+        materialToolbar.menu.clear()
+    }
+
+    fun setNavigationIcon(iconResId: Int) {
+        materialToolbar.setNavigationIcon(iconResId)
+        onCreateOptionsMenu(materialToolbar.menu)
+    }
+
+
+
 }

@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.fatherofapps.androidbase.R
+import com.fatherofapps.androidbase.activities.MainActivity
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.models.AppointmentInfo
 import com.fatherofapps.androidbase.data.models.TimeSlotInfo
@@ -58,6 +59,8 @@ class BookingAppointmentFragment @Inject constructor(): BaseFragment() {
     ): View? {
         dataBinding = FragmentBookAppointmentStep2Binding.inflate(inflater, container, false)
         dataBinding.lifecycleOwner = viewLifecycleOwner
+        (activity as MainActivity).setTitle("Đặt Lịch Hẹn")
+        (activity as MainActivity).setNavigationBackIcon()
         return dataBinding.root
     }
 
