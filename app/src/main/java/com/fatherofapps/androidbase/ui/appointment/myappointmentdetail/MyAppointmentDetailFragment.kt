@@ -29,6 +29,7 @@ import org.jitsi.meet.sdk.BroadcastIntentHelper
 import org.jitsi.meet.sdk.JitsiMeet
 import org.jitsi.meet.sdk.JitsiMeetActivity
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
+import org.jitsi.meet.sdk.JitsiMeetUserInfo
 import timber.log.Timber
 import java.net.MalformedURLException
 import java.net.URL
@@ -176,22 +177,31 @@ class MyAppointmentDetailFragment  @Inject constructor():BaseFragment() {
             intentFilter.addAction(BroadcastEvent.Type.CONFERENCE_JOINED.action)
             LocalBroadcastManager.getInstance(requireContext()).registerReceiver(broadcastReceiver, intentFilter)
 
+            val serverUrl = "https://8x8.vc" // Sử dụng URL tương tự như trên FE
+            val roomId = "vpaas-magic-cookie-6e5379b6cb9d497689528c0df4c7bc3a/${appointmentDetail?.appointmentId}" // Sử dụng room ID tương tự như trên FE
+
             try {
-                val serverUrl = URL("https://call.daugiasodep.vn")
+                val url = URL(serverUrl)
                 val defaultOption = JitsiMeetConferenceOptions.Builder()
-                    .setServerURL(serverUrl)
+                    .setServerURL(url)
                     .build()
+
                 JitsiMeet.setDefaultConferenceOptions(defaultOption)
             } catch (e: MalformedURLException) {
                 e.printStackTrace()
             }
+
+            val userInfo = JitsiMeetUserInfo()
+            userInfo.displayName = appointmentDetail?.patientName
             val options = JitsiMeetConferenceOptions.Builder()
-                .setRoom(appointmentDetail?.appointmentId)
+                .setRoom(roomId)
                 .setFeatureFlag("invite.enabled", false)
+                .setUserInfo(userInfo)
                 .build()
             JitsiMeetActivity.launch(requireActivity(), options)
-            }
         }
+    }
+
     private fun registerForBroadcastMessages() {
         val intentFilter = IntentFilter()
 
