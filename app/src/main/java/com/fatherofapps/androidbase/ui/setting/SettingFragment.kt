@@ -51,7 +51,7 @@ class SettingFragment @Inject constructor(): BaseFragment() {
         registerAllExceptionEvent(viewModel, viewLifecycleOwner)
         registerObserverLoadingEvent(viewModel, viewLifecycleOwner)
         dataBinding.cardViewInvite.setOnClickListener {
-            val action = SettingFragmentDirections.actionSettingFragmentToCreatCardFragment()
+            val action = SettingFragmentDirections.actionSettingFragmentToSmartCardFragment()
             navigateToPage(action)
         }
         dataBinding.cardViewLogOut.setOnClickListener {

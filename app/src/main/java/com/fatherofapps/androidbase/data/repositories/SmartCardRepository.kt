@@ -26,4 +26,46 @@ class SmartCardRepository @Inject constructor(
             }
         }
     }
+
+    suspend fun getSmartCardInfo() = withContext(dispatcher) {
+        val result = smartCardRemoteService.getSmartCardInfo()
+
+        when (result) {
+            is NetworkResult.Success -> {
+                return@withContext result.data
+            }
+            is NetworkResult.Error -> {
+                Log.e("Error", "getPosts: ${result.exception ?: "Error"}")
+                return@withContext null
+            }
+        }
+    }
+
+    suspend fun blockSmartCard() = withContext(dispatcher) {
+        val result = smartCardRemoteService.blockSmartCard()
+
+        when (result) {
+            is NetworkResult.Success -> {
+                return@withContext result.data
+            }
+            is NetworkResult.Error -> {
+                Log.e("Error", "getPosts: ${result.exception ?: "Error"}")
+                return@withContext null
+            }
+        }
+    }
+
+    suspend fun unBlockSmartCard() = withContext(dispatcher) {
+        val result = smartCardRemoteService.unblockSmartCard()
+
+        when (result) {
+            is NetworkResult.Success -> {
+                return@withContext result.data
+            }
+            is NetworkResult.Error -> {
+                Log.e("Error", "getPosts: ${result.exception ?: "Error"}")
+                return@withContext null
+            }
+        }
+    }
 }

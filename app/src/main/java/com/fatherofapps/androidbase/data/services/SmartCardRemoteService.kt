@@ -13,4 +13,16 @@ class SmartCardRemoteService @Inject constructor(private val smartCardAPI: Smart
     suspend fun createSmartCard(data: SmartCardRequest) : NetworkResult<ConfigResponse<Any>> {
         return callApi { smartCardAPI.createSmartCard(data) }
     }
+
+    suspend fun getSmartCardInfo() : NetworkResult<ConfigResponse<SmartCardResponse>> {
+        return callApi { smartCardAPI.getSmartCardInfo() }
+    }
+
+    suspend fun blockSmartCard() : NetworkResult<ConfigResponse<Any>> {
+        return callApi { smartCardAPI.blockSmartCard() }
+    }
+
+    suspend fun unblockSmartCard() : NetworkResult<ConfigResponse<Any>> {
+        return callApi { smartCardAPI.unblockSmartCard() }
+    }
 }

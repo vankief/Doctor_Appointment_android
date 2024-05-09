@@ -144,8 +144,7 @@ class CreatCardFragment @Inject constructor(): BaseFragment() {
             dataBinding.txtDob.text.toString().isEmpty() ||
             dataBinding.txtGender.text.toString().isEmpty() ||
             dataBinding.txtAddress.text.toString().isEmpty() ||
-            dataBinding.txtDayCCCD.text.toString().isEmpty()||
-            dataBinding.edtPhone.text.toString().isEmpty()
+            dataBinding.txtDayCCCD.text.toString().isEmpty()
         ) {
             result = Pair(false, "Vui lòng điền đầy đủ thông tin")
         }
@@ -172,14 +171,13 @@ class CreatCardFragment @Inject constructor(): BaseFragment() {
     }
 
     private fun getSmartCardRequest(): SmartCardRequest {
-        val cicNumber= dataBinding.txtCccd.text.toString()
+//        val cicNumber= dataBinding.txtCccd.text.toString()
         val name = dataBinding.txtName.text.toString()
         val gender = dataBinding.txtGender.text.toString() == "Nam"
         val dob = dataBinding.txtDob.text.toString()
         val address = dataBinding.txtAddress.text.toString()
-        val phone = dataBinding.edtPhone.text.toString()
         return dataBinding.run {
-            SmartCardRequest(cicNumber,name, gender, dob, address, phone)
+            SmartCardRequest(name, gender, dob, address)
         }
     }
 }
