@@ -49,11 +49,13 @@ class VideocallFragment : BaseFragment() {
         val intentFilter = IntentFilter()
         intentFilter.addAction(BroadcastEvent.Type.CONFERENCE_JOINED.action)
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(broadcastReceiver, intentFilter)
-
+        val roomId = "vpaas-magic-cookie-6e5379b6cb9d497689528c0df4c7bc3a/c2e4f860-4d9c-4e48-979a-6e157b2a14c9"
         try {
-            val serverUrl = URL("https://call.daugiasodep.vn")
+            val serverUrl = "https://8x8.vc" // Sử dụng URL tương tự như trên FE
+
+            val url = URL(serverUrl)
             val defaultOption = JitsiMeetConferenceOptions.Builder()
-                .setServerURL(serverUrl)
+                .setServerURL(url)
                 .build()
             JitsiMeet.setDefaultConferenceOptions(defaultOption)
         } catch (e: MalformedURLException) {
@@ -66,7 +68,7 @@ class VideocallFragment : BaseFragment() {
             val text = codeBox.text.toString()
             if (text.isNotEmpty()) {
                 val options = JitsiMeetConferenceOptions.Builder()
-                    .setRoom(text)
+                    .setRoom(roomId)
                     .setFeatureFlag("invite.enabled", false)
                     .build()
                 JitsiMeetActivity.launch(requireActivity(), options)
