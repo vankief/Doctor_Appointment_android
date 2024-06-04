@@ -67,22 +67,24 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
         registerAllExceptionEvent(viewModel, viewLifecycleOwner)
         registerObserverLoadingEvent(viewModel, viewLifecycleOwner)
         setupObserver()
-//        validatePatientDetail()
+        validatePatientDetail()
         paymentSheet = PaymentSheet(this, ::onPaymentSheetResult)
         dataBinding.btnContinue.setOnClickListener {
             val validationResult = validatePatientDetail()
             if (validationResult.first) {
                 viewModel.createAppointment(getAppointmentRequest())
+                fetchPaymentIntent()
             } else {
                 showErrorMessage(validationResult.second)
             }
-            fetchPaymentIntent()
+
         }
 
     }
 
     private fun setupRecyclerView() {
         val age = tinhDoTuoi(patientDetail?.dob!!)
+        ageRange = age
         ageRangeAdapter = AgeRangeAdapter(age)
         ageRangeAdapter.onItemClickListener = { ageRange ->
             this.ageRange = ageRange
@@ -236,7 +238,7 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
         if (patientDetail.gender) dataBinding.radioButtonMale.isChecked = true
         else dataBinding.radioButtonFemale.isChecked = true
 
-        if(args.appointmentInfo.service == "online"){
+        if(args.appointmentInfo.service == "Online"){
             dataBinding.cardViewOnline.visibility = View.VISIBLE
             dataBinding.radioButtonOnline.isChecked = true
             dataBinding.cardViewSmartcard.visibility = View.GONE

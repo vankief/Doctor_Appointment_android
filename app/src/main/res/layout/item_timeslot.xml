@@ -14,15 +14,34 @@
         app:cardCornerRadius="25dp"
         app:strokeColor="@color/md_theme_light_onPrimary"
         app:strokeWidth="1dp">
-        <TextView
-            android:id="@+id/txtTimeSlot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:gravity="center"
-            android:text="9:00 - 10:00"
-            android:textAlignment="center"
-            android:layout_gravity="center"
-            android:textColor="@color/md_theme_light_onPrimary"
-            android:textSize="16sp" />
+            android:orientation="vertical"
+            android:padding="8dp">
+            <TextView
+                android:id="@+id/txtTimeSlot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="9:00 - 10:00"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:textColor="@color/md_theme_light_onPrimary"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:id="@+id/txtTimeSlotAvailable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text=" 4 "
+                android:textAlignment="center"
+                android:textColor="@color/md_theme_light_onPrimary"
+                android:textSize="12sp" />
+        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

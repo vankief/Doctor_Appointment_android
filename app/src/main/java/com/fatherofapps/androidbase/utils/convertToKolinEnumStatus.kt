@@ -7,6 +7,7 @@ enum class EStatus {
     COMPLETED,
     AWAITING_PAYMENT
 }
+
 fun convertStatusToVietnamese(status: EStatus): String {
     return when (status) {
         EStatus.APPROVED -> "Đã duyệt             "

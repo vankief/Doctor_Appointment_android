@@ -47,7 +47,4 @@ class PatientDetailViewModel @Inject constructor(
         registerJobFinish()
     }
 
-
-
-
 }

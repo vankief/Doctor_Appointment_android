@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/videocallFragment">
+    app:startDestination="@id/welcomeFragment">
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.fatherofapps.androidbase.ui.authencation.login.LoginFragment"
@@ -223,9 +223,6 @@
         <argument
             android:name="appointmentId"
             app:argType="string" />
-        <action
-            android:id="@+id/action_reviewFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/smartCardFragment"
@@ -235,6 +232,29 @@
         <action
             android:id="@+id/action_smartCardFragment_to_creatCardFragment"
             app:destination="@id/creatCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/historyDetailFragment"
+        android:name="com.fatherofapps.androidbase.ui.history.detail.HistoryDetailFragment"
+        android:label="HistoryDetailFragment"
+        tools:layout="@layout/fragment_history_detail"
+        >
+        <argument
+            android:name="appointmentId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_historyDetailFragment_to_reviewFragment"
+            app:destination="@id/reviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.fatherofapps.androidbase.ui.history.appointment.HistoryFragment"
+        android:label="HistoryFragment"
+        tools:layout="@layout/fragment_history_appointment"
+        >
+        <action
+            android:id="@+id/action_historyFragment_to_historyDetailFragment"
+            app:destination="@id/historyDetailFragment" />
     </fragment>
 
 

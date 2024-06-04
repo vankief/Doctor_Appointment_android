@@ -10,14 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="58dp"
         >
 
         <TextView
             android:id="@+id/TxtDateSchedule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="8dp"
             android:text="Thứ 2, 20/12/2021"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -87,7 +89,9 @@
             android:id="@+id/rvTimeSlot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="8dp"
             android:padding="16dp" />
 
         <TextView
@@ -95,7 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="16dp"
             android:text="Chọn hình thức khám"
             android:textSize="19dp"
             android:textStyle="bold" />

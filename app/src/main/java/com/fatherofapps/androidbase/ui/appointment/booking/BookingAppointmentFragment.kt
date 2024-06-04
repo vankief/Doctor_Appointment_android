@@ -77,31 +77,25 @@ class BookingAppointmentFragment @Inject constructor(): BaseFragment() {
             if (timeSlotInfo == null) {
                 Toast.makeText(context, "Vui lòng chọn thời gian", Toast.LENGTH_SHORT).show()
             } else {
-
-                if(dataBinding.VideoCardView.isCheckable) {
-                    val price = convertCurrencyStringToInteger(dataBinding.txtPriceOnline.text.toString())
-                    appointmentInfo = AppointmentInfo(
-                        doctorId = args.doctorId,
-                        day = args.day,
-                        time = timeSlotInfo!!.normalTime,
-                        price = price,
-                        service = timeSlotInfo!!.service
-                    )
-                    val action = BookingAppointmentFragmentDirections.actionFragmentBookingAppointmentToPatientDetailFragment(appointmentInfo!!)
-                    navigateToPage(action)
+                val price = if (timeSlotInfo!!.service == "Online") {
+                    convertCurrencyStringToInteger(dataBinding.txtPriceOnline.text.toString())
                 } else {
-                    val price = convertCurrencyStringToInteger(dataBinding.tvPrice.text.toString())
-                    appointmentInfo = AppointmentInfo(
-                        doctorId = args.doctorId,
-                        day = args.day,
-                        time = timeSlotInfo!!.normalTime,
-                        price = price,
-                        service = timeSlotInfo!!.service
-                    )
-                    val action = BookingAppointmentFragmentDirections.actionFragmentBookingAppointmentToPatientDetailFragment(appointmentInfo!!)
-                    navigateToPage(action)
+                    convertCurrencyStringToInteger(dataBinding.tvPrice.text.toString())
                 }
-            }
+
+                appointmentInfo = AppointmentInfo(
+                    doctorId = args.doctorId,
+                    day = args.day,
+                    time = timeSlotInfo!!.normalTime,
+                    price = price,
+                    service = timeSlotInfo!!.service
+                )
+
+                val action = BookingAppointmentFragmentDirections.actionFragmentBookingAppointmentToPatientDetailFragment(appointmentInfo!!)
+                navigateToPage(action)
+
+                Log.d(TAG, "appointmentInfo: $appointmentInfo")
+        }
         }
     }
 
@@ -118,7 +112,7 @@ class BookingAppointmentFragment @Inject constructor(): BaseFragment() {
     }
     @SuppressLint("FragmentLiveDataObserve")
     private fun setupObservers() {
-        viewModel.doctorTimeSlottResponse.observe(viewLifecycleOwner, Observer { response ->
+        viewModel.doctorTimeSlotResponse.observe(viewLifecycleOwner, Observer { response ->
             if (response != null && response.isSuccess()) {
                 Log.d(TAG, "DoctorTimeSlot: ${response.data} ")
                 response.data?.let { data ->

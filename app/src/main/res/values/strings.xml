@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">FatherOfApps</string>
+    <string name="app_name">DoctorQ</string>
     <string name="default_notify_title">Message</string>
     <string name="text_email">Email</string>
     <string name="accessibility_service_description">Quyền kiểm soát app</string>

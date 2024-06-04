@@ -3,6 +3,7 @@ package com.fatherofapps.androidbase.data.apis
 import com.fatherofapps.androidbase.data.request.AppointmentRequest
 import com.fatherofapps.androidbase.data.response.AppointmentDetail
 import com.fatherofapps.androidbase.data.response.AppointmentResponse
+import com.fatherofapps.androidbase.data.response.AppointmentsCompleted
 import com.fatherofapps.androidbase.data.response.AppointmentsResponse
 import com.fatherofapps.androidbase.data.response.ConfigResponse
 import com.fatherofapps.androidbase.data.response.DoctorAppointment
@@ -18,6 +19,9 @@ interface AppointmentAPI {
 
     @GET("/appointment")
     suspend fun getAppointments(): Response<ConfigResponse<AppointmentsResponse>>
+
+    @GET("/complete-appointment")
+    suspend fun getCompleteAppointments(): Response<ConfigResponse<AppointmentsCompleted>>
 
     @GET("/appointment/patient/{id}")
     suspend fun getPatientAppointments(@Path("id") id: String): Response<ConfigResponse<AppointmentDetail>>

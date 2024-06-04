@@ -99,7 +99,7 @@ class MyAppointmentDetailFragment  @Inject constructor():BaseFragment() {
         dataBinding.txtScheduleTimeCard.text = appointmentDetail.scheduleTime
 
         // Kiểm tra nếu dịch vụ là "online" và thời gian hẹn đã đến
-        if (appointmentDetail.service == "online") {
+        if (appointmentDetail.service == "Online") {
             dataBinding.imgService.setImageResource(R.drawable.ic_videocall)
         } else {
             dataBinding.imgService.setImageResource(R.drawable.chat_rounded)
@@ -117,7 +117,7 @@ class MyAppointmentDetailFragment  @Inject constructor():BaseFragment() {
         when (appointmentDetail.status) {
             AWAITING_PAYMENT -> dataBinding.txtPayment.text = "" + convertToCurrencyFormat(appointmentDetail.fee) + " - Chờ thanh toán"
             APPROVED -> {
-                if (appointmentDetail.service == "online") {
+                if (appointmentDetail.service == "Online") {
                     dataBinding.txtPayment.text = "" + convertToCurrencyFormat(appointmentDetail.fee) + " - Đã thanh toán"
                     dataBinding.btnCallVideo.visibility = if (checkTime(appointmentDetail.scheduleTime, appointmentDetail.scheduleDate)) View.VISIBLE else View.GONE
                     dataBinding.btnCallVideo.setText("Gọi video ngay (Bắt đầu lúc ${appointmentDetail.scheduleTime.split(" - ")[0]})")
@@ -127,63 +127,37 @@ class MyAppointmentDetailFragment  @Inject constructor():BaseFragment() {
                     dataBinding.txtPayment.text = "" + convertToCurrencyFormat(appointmentDetail.fee) + " - Đã thanh toán"
                 }
             }
-            COMPLETED -> {
-                dataBinding.txtPayment.text = "" + convertToCurrencyFormat(appointmentDetail.fee) + " - Đã thanh toán"
-                // Kiểm tra xem có thể đánh giá cuộc hẹn không (trong vòng 7 ngày kể từ ngày hẹn)
-                val canRate = checkReviewValidity(appointmentDetail.scheduleDate, appointmentDetail.scheduleTime)
-                // Nếu đã đánh giá, ẩn nút đánh giá
-                dataBinding.btnReview.visibility = if (canRate && !appointmentDetail.isRate) View.VISIBLE else View.GONE
-                setupReviewButton()
-            }
-
             else -> {
                 dataBinding.txtPayment.text = "" + convertToCurrencyFormat(appointmentDetail.fee) + " - Đã bị hủy"}
         }
     }
-
-    private fun checkReviewValidity(scheduleDate: String, scheduleTime: String): Boolean {
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-        val timeSlotEndTime = getTimeSlotStartTime(scheduleTime)
-        val scheduleDateTime = LocalDateTime.parse("$scheduleDate $timeSlotEndTime", formatter)
-        val now = LocalDateTime.now()
-        return now.isBefore(scheduleDateTime.plusDays(7))
-    }
-
-    // Kiểm tra xem thời gian hẹn đã đến chưa
     private fun checkTime(scheduleTime: String, scheduleDate: String): Boolean {
         val currentDateTime = LocalDateTime.now()
-        val timeSlotEndTime = getTimeSlotStartTime(scheduleTime)
+        val timeSlotEndTime = getTimeSlotEndTime(scheduleTime)  // Hàm này trả về thời gian kết thúc
         val scheduleDateTime = LocalDateTime.parse("$scheduleDate $timeSlotEndTime", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
         return currentDateTime.isBefore(scheduleDateTime)
     }
 
-    // Lấy thời gian bắt đầu của khoảng thời gian hẹn
-    private fun getTimeSlotStartTime(timeRange: String): LocalTime {
-        val startTimeStr = timeRange.split(" - ")[1]
-        return LocalTime.parse(startTimeStr, DateTimeFormatter.ofPattern("HH:mm"))
+    private fun getTimeSlotEndTime(timeRange: String): LocalTime {
+        val endTimeStr = timeRange.split(" - ")[1]  // Giả sử chuỗi có định dạng "start - end"
+        return LocalTime.parse(endTimeStr, DateTimeFormatter.ofPattern("HH:mm"))
     }
 
-    private fun setupReviewButton() {
-        dataBinding.btnReview.setOnClickListener {
-            val action = MyAppointmentDetailFragmentDirections.actionMyAppointmentDetailFragmentToReviewFragment(appointmentDetail?.appointmentId!!)
-            navigateToPage(action)
-            Log.d("MyAppointmentDetailFragment", "appointmentId: ${appointmentDetail?.appointmentId}")
-        }
-    }
 
     private fun setupVideoCallButton() {
         dataBinding.btnCallVideo.setOnClickListener {
             val intentFilter = IntentFilter()
             intentFilter.addAction(BroadcastEvent.Type.CONFERENCE_JOINED.action)
             LocalBroadcastManager.getInstance(requireContext()).registerReceiver(broadcastReceiver, intentFilter)
-
-            val serverUrl = "https://8x8.vc" // Sử dụng URL tương tự như trên FE
-            val roomId = "vpaas-magic-cookie-6e5379b6cb9d497689528c0df4c7bc3a/${appointmentDetail?.appointmentId}" // Sử dụng room ID tương tự như trên FE
+            val serverUrl = "https://8x8.vc/vpaas-magic-cookie-81ab7c0a26124f9c9a85e4294b6cd2ac" // Sử dụng URL tương tự như trên FE
+            val roomId = "/roomId${appointmentDetail?.appointmentId}" // Sử dụng room ID tương tự như trên FE
+            val token = "eyJraWQiOiJ2cGFhcy1tYWdpYy1jb29raWUtODFhYjdjMGEyNjEyNGY5YzlhODVlNDI5NGI2Y2QyYWMvNjVhMjRiLVNBTVBMRV9BUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJqaXRzaSIsImlzcyI6ImNoYXQiLCJpYXQiOjE3MTY0NDc5MDQsImV4cCI6MTcxNjQ1NTEwNCwibmJmIjoxNzE2NDQ3ODk5LCJzdWIiOiJ2cGFhcy1tYWdpYy1jb29raWUtODFhYjdjMGEyNjEyNGY5YzlhODVlNDI5NGI2Y2QyYWMiLCJjb250ZXh0Ijp7ImZlYXR1cmVzIjp7ImxpdmVzdHJlYW1pbmciOnRydWUsIm91dGJvdW5kLWNhbGwiOnRydWUsInNpcC1vdXRib3VuZC1jYWxsIjpmYWxzZSwidHJhbnNjcmlwdGlvbiI6dHJ1ZSwicmVjb3JkaW5nIjp0cnVlfSwidXNlciI6eyJoaWRkZW4tZnJvbS1yZWNvcmRlciI6ZmFsc2UsIm1vZGVyYXRvciI6dHJ1ZSwibmFtZSI6InVvbmd0aGl2YW5raWV1MDkwNCIsImlkIjoiZ29vZ2xlLW9hdXRoMnwxMTQ5Mzc5NTc0NTM5OTc5MDE2NzgiLCJhdmF0YXIiOiIiLCJlbWFpbCI6InVvbmd0aGl2YW5raWV1MDkwNEBnbWFpbC5jb20ifX0sInJvb20iOiIqIn0.XYY-QYzgRSdZAA3OXtwOo7QmTfEy8roK4NV4AlIfXFCjPEu7tmNW5u6g-5L-otRVdNuZuK_yxVH6f-Da1ip8N7KvCHon-Ti29G7YJ6Mwhc_-NDNTPRNsbGT3nShLP7NKGW-yzbqlmS1_1278kjsGYshN3Tu92ombcUqwu0l4yZZrjLI8P1pf2fzvvkEbI5-xZcylCikWY_TQCL_t1iusq83lkw5m3IlMTMqZbavX5cH8tru3wSgnwhEcLNmRlBe-dYPxV8oYCX53Ra-5aoCw8mLIS88CkfHABZ2ZV5ieSIXrWVWoRaffPAac9xVoihTUEZB5DYjd_jA7a-XDZj-IvQ"
 
             try {
                 val url = URL(serverUrl)
                 val defaultOption = JitsiMeetConferenceOptions.Builder()
                     .setServerURL(url)
+                    .setToken(token)
                     .build()
 
                 JitsiMeet.setDefaultConferenceOptions(defaultOption)
@@ -229,6 +203,10 @@ class MyAppointmentDetailFragment  @Inject constructor():BaseFragment() {
                 else -> Timber.i("Received event: %s", event.type)
             }
         }
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(broadcastReceiver)
     }
 
     // Example for sending actions to JitsiMeetSDK

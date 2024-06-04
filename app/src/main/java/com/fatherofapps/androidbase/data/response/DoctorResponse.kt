@@ -38,6 +38,7 @@ data class ListTime(
     val timeSlot: TimeSlot,
     val service: String,
     val maximumPatient: Int,
+    val currentPatient: Int
 )
 
 data class doctorPrice(

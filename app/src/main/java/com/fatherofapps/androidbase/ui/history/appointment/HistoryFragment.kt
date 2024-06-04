@@ -1,7 +1,6 @@
-package com.fatherofapps.androidbase.ui.appointment.myappointment
+package com.fatherofapps.androidbase.ui.history.appointment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,21 +9,23 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fatherofapps.androidbase.R
-import com.fatherofapps.androidbase.activities.MainActivity
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.response.DateAppointment
-import com.fatherofapps.androidbase.databinding.FragmentMyAppointmentBinding
+import com.fatherofapps.androidbase.databinding.FragmentHistoryAppointmentBinding
+import com.fatherofapps.androidbase.ui.appointment.myappointment.AppointmentFragmentDirections
+import com.fatherofapps.androidbase.ui.appointment.myappointment.ScheduleDayAdapter
 import com.google.android.material.card.MaterialCardView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AppointmentFragment  @Inject constructor(): BaseFragment() {
-    private lateinit var dataBinding: FragmentMyAppointmentBinding
-    private val viewModel by viewModels<AppointmentViewModel>()
-    private var appointmentPastList: List<DateAppointment> = emptyList()
-    private var appointmentUpComingList: List<DateAppointment> = emptyList()
-    private var scheduleDayAdapter: ScheduleDayAdapter? = null
+class HistoryFragment @Inject constructor(): BaseFragment(){
+    private lateinit var dataBinding: FragmentHistoryAppointmentBinding
+    private val viewModel by viewModels<HistoryViewModel>()
+    private var appointmentOnlList: List<DateAppointment> = emptyList()
+    private var appointmentOffList: List<DateAppointment> = emptyList()
+    private var dayAdapter: DayAdapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getAppointments()
@@ -33,26 +34,20 @@ class AppointmentFragment  @Inject constructor(): BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        dataBinding = FragmentMyAppointmentBinding.inflate(inflater, container, false)
-        dataBinding.lifecycleOwner = viewLifecycleOwner
-        (requireActivity() as MainActivity).setTitle("Lịch hẹn")
-        (requireActivity() as MainActivity).setNavigationBackIcon()
+        savedInstanceState: Bundle?): View? {
+        dataBinding = FragmentHistoryAppointmentBinding.inflate(inflater, container, false)
         return dataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        hideOpenTopAppBar(true)
-        hideOpenNavigation(true)
         registerAllExceptionEvent(viewModel, viewLifecycleOwner)
         registerObserverLoadingEvent(viewModel, viewLifecycleOwner)
         setupObservers()
-        setupCardUpComing()
-        setupCardPast()
-            selectCard(dataBinding.cardUpComing)
-            selectText(dataBinding.txtUpComing)
+        setupCardOnl()
+        setupCardOff()
+        selectCard(dataBinding.cardOnline)
+        selectText(dataBinding.txtOnline)
         dataBinding.btnBookNow.setOnClickListener {
             val action = AppointmentFragmentDirections.actionAppointmentFragmentToFragmentTopDoctor("all")
             navigateToPage(action)
@@ -64,63 +59,65 @@ class AppointmentFragment  @Inject constructor(): BaseFragment() {
             response?.let { appointmentResponse ->
                 if (appointmentResponse.data != null && appointmentResponse.isSuccess()) {
                     val appointmentData = appointmentResponse.data
-                    appointmentPastList = appointmentData.past
-                    appointmentUpComingList = appointmentData.upcoming
-                    if (appointmentUpComingList.isNotEmpty()) {
-                        dataBinding.recyclerView.visibility = View.VISIBLE
+                    appointmentOnlList = appointmentData.online
+                    appointmentOffList = appointmentData.offline
+                    if (appointmentOnlList.isNotEmpty()) {
+                        dataBinding.rvHistory.visibility = View.VISIBLE
                         dataBinding.layoutnoAppointment.visibility = View.GONE
-                        setupRecyclerView(appointmentUpComingList)
+                        setupRecyclerView(appointmentOnlList)
                     } else {
-                        dataBinding.recyclerView.visibility = View.GONE
+                        dataBinding.rvHistory.visibility = View.GONE
                         dataBinding.layoutnoAppointment.visibility = View.VISIBLE
+
                     }
                 } else {
                     showErrorMessage(appointmentResponse.message ?: "Lỗi không xác định")
+
                 }
             }
         }
     }
 
-    private fun setupRecyclerView(appointment: List<DateAppointment>) {
-        scheduleDayAdapter = ScheduleDayAdapter(appointment)
-        dataBinding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            adapter = scheduleDayAdapter
-        }
-    }
-    private fun setupCardUpComing(){
-        dataBinding.cardUpComing.setOnClickListener {
-            selectCard(dataBinding.cardUpComing)
-            deselectCard(dataBinding.cardPast)
-            selectText(dataBinding.txtUpComing)
-            deselectText(dataBinding.txtPast)
-            if (appointmentUpComingList.isNotEmpty()) {
-                dataBinding.recyclerView.visibility = View.VISIBLE
+    private fun setupCardOnl() {
+        dataBinding.cardOnline.setOnClickListener {
+            selectCard(dataBinding.cardOnline)
+            selectText(dataBinding.txtOnline)
+            deselectCard(dataBinding.cardOffline)
+            deselectText(dataBinding.txtOffline)
+            if (appointmentOnlList.isNotEmpty()) {
+                dataBinding.rvHistory.visibility = View.VISIBLE
                 dataBinding.layoutnoAppointment.visibility = View.GONE
-                setupRecyclerView(appointmentUpComingList)
+                setupRecyclerView(appointmentOnlList)
             } else {
-                dataBinding.recyclerView.visibility = View.GONE
+                dataBinding.rvHistory.visibility = View.GONE
                 dataBinding.layoutnoAppointment.visibility = View.VISIBLE
             }
         }
     }
-    private fun setupCardPast(){
-        dataBinding.cardPast.setOnClickListener {
-            selectCard(dataBinding.cardPast)
-            deselectCard(dataBinding.cardUpComing)
-            selectText(dataBinding.txtPast)
-            deselectText(dataBinding.txtUpComing)
-            if (appointmentPastList.isNotEmpty()) {
-                dataBinding.recyclerView.visibility = View.VISIBLE
+    private fun setupCardOff() {
+        dataBinding.cardOffline.setOnClickListener {
+            selectCard(dataBinding.cardOffline)
+            selectText(dataBinding.txtOffline)
+            deselectCard(dataBinding.cardOnline)
+            deselectText(dataBinding.txtOnline)
+            if (appointmentOffList.isNotEmpty()) {
+                dataBinding.rvHistory.visibility = View.VISIBLE
                 dataBinding.layoutnoAppointment.visibility = View.GONE
-                setupRecyclerView(appointmentPastList)
+                setupRecyclerView(appointmentOffList)
             } else {
-                dataBinding.recyclerView.visibility = View.GONE
+                dataBinding.rvHistory.visibility = View.GONE
                 dataBinding.layoutnoAppointment.visibility = View.VISIBLE
             }
-        }
-    }
 
+        }
+    }
+    private fun setupRecyclerView(appointment: List<DateAppointment>) {
+        dayAdapter = DayAdapter(appointment)
+        dataBinding.rvHistory.apply {
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            adapter = dayAdapter
+        }
+    }
     private fun selectCard(cardView: MaterialCardView) {
         cardView.setCardBackgroundColor(resources.getColor(R.color.color_card_selected))
     }

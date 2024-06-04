@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="65dp">
+        android:layout_marginTop="69dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardUpComing"
+                android:id="@+id/cardOnline"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -30,11 +30,11 @@
                 app:strokeWidth="1dp">
 
                 <TextView
-                    android:id="@+id/txtUpComing"
+                    android:id="@+id/txtOnline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Sắp tới"
+                    android:text="Video call"
                     android:textStyle="bold"
                     android:textAlignment="center"
                     android:layout_gravity="center"
@@ -43,7 +43,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardPast"
+                android:id="@+id/cardOffline"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -53,11 +53,11 @@
                 app:strokeWidth="1dp">
 
                 <TextView
-                    android:id="@+id/txtPast"
+                    android:id="@+id/txtOffline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Trước đây"
+                    android:text="Tại Bênh viện"
                     android:textStyle="bold"
                     android:textAlignment="center"
                     android:layout_gravity="center"
@@ -67,53 +67,48 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layoutUpComing"
+            android:id="@+id/layoutnoAppointment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
+            android:layout_margin="24dp"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/layoutnoAppointment"
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:orientation="vertical">
+                android:src="@drawable/ic_no_appointment"
+                android:layout_gravity="center" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_no_appointment"
-                    android:layout_gravity="center" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Bạn không có lịch hẹn nào cả"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="16dp"
-                    android:textColor="@color/black" />
-                <Button
-                    android:id="@+id/btnBookNow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Đặt Lịch Ngay"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="16dp"
-                    android:textColor="@color/white"/>
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="80dp"
-                android:visibility="gone" />
+                android:text="Bạn không có lịch hẹn nào cả"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/btnBookNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đặt Lịch Ngay"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/white" />
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvHistory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="60dp"
+            android:visibility="gone" />
     </LinearLayout>
 </layout>

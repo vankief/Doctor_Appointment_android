@@ -49,13 +49,15 @@ class VideocallFragment : BaseFragment() {
         val intentFilter = IntentFilter()
         intentFilter.addAction(BroadcastEvent.Type.CONFERENCE_JOINED.action)
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(broadcastReceiver, intentFilter)
-        val roomId = "vpaas-magic-cookie-6e5379b6cb9d497689528c0df4c7bc3a/c2e4f860-4d9c-4e48-979a-6e157b2a14c9"
+        val roomId = "roomId0231620b-3be8-4141-943a-024c5efbf0e1"
+        val token = "eyJraWQiOiJ2cGFhcy1tYWdpYy1jb29raWUtNmU1Mzc5YjZjYjlkNDk3Njg5NTI4YzBkZjRjN2JjM2EvNzA5YzEzLVNBTVBMRV9BUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJqaXRzaSIsImlzcyI6ImNoYXQiLCJpYXQiOjE3MTU0MDg0OTQsImV4cCI6MTcxNTQxNTY5NCwibmJmIjoxNzE1NDA4NDg5LCJzdWIiOiJ2cGFhcy1tYWdpYy1jb29raWUtNmU1Mzc5YjZjYjlkNDk3Njg5NTI4YzBkZjRjN2JjM2EiLCJjb250ZXh0Ijp7ImZlYXR1cmVzIjp7ImxpdmVzdHJlYW1pbmciOnRydWUsIm91dGJvdW5kLWNhbGwiOnRydWUsInNpcC1vdXRib3VuZC1jYWxsIjpmYWxzZSwidHJhbnNjcmlwdGlvbiI6dHJ1ZSwicmVjb3JkaW5nIjp0cnVlfSwidXNlciI6eyJoaWRkZW4tZnJvbS1yZWNvcmRlciI6ZmFsc2UsIm1vZGVyYXRvciI6dHJ1ZSwibmFtZSI6ImRvbmdtaW5oZHVvbmc5OTEiLCJpZCI6Imdvb2dsZS1vYXV0aDJ8MTA5MTU3Njc4ODc4NDUxMzIyNzI5IiwiYXZhdGFyIjoiaHR0cHM6Ly9lbmNyeXB0ZWQtdGJuMC5nc3RhdGljLmNvbS9pbWFnZXM_cT10Ym46QU5kOUdjVFh3V3dFekZUamRfaUU5SzduWFRSTXVkcXB4SlZkT1lIU1BfeU9PTGtEZncmcyIsImVtYWlsIjoidmFua2lldUBnbWFpbC5jb20ifX0sInJvb20iOiIqIn0.VdK-tCs4dxfD4VCNcn-XDzfip3N9dckbyVk7GqwXQ_60yxA6dA01L0YbxQD3AAwBoRE9vG0ELU39rxj6V2CO9J6uWQjH_yWpG8kJjvyosRP_HYWD1-L8DwezjJcAKjeXpCbnB0G1ZLepcxRc0EIk9X2hAkrPpyhalYnPi1y-Fq1JNRTkAmsP8qJud7zMl4XmonP-u_JjZpssHBFCmznNVPNQ2Tt0IhJmr12wrRtVsijaJ79_eHZwSsxWtWpP4oFR7RogsIWVQzDpt5tX7PWlNRAnzX4GxtUz0fDuR-CKe9dzONc5ewNRYZ0MZcZWGmZrbSGa296FF0mx4Rd4QfApEg"
         try {
-            val serverUrl = "https://8x8.vc" // Sử dụng URL tương tự như trên FE
+            val serverUrl = "https://8x8.vc/vpaas-magic-cookie-6e5379b6cb9d497689528c0df4c7bc3a/" // Sử dụng URL tương tự như trên FE
 
             val url = URL(serverUrl)
             val defaultOption = JitsiMeetConferenceOptions.Builder()
                 .setServerURL(url)
+                .setToken(token)
                 .build()
             JitsiMeet.setDefaultConferenceOptions(defaultOption)
         } catch (e: MalformedURLException) {

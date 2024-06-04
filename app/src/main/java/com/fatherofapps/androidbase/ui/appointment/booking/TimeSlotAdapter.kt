@@ -20,9 +20,9 @@ import java.util.Locale
 
 
 class TimeSlotAdapter(
-    var listTimeSlot: List<ListTime>
+    private  var listTimeSlot: List<ListTime>
 ): RecyclerView.Adapter<TimeSlotAdapter.TimeSlotViewHolder>() {
-    var selectedPosition = RecyclerView.NO_POSITION
+    private var selectedPosition = RecyclerView.NO_POSITION
 
     var onItemClickListener: ((TimeSlotInfo) -> Unit)? = null
 
@@ -32,6 +32,7 @@ class TimeSlotAdapter(
     inner class TimeSlotViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val cardTimeSlot : MaterialCardView = itemView.findViewById(R.id.cardTimeSlot)
         val txtTimeSlot: TextView = itemView.findViewById(R.id.txtTimeSlot)
+        val txtTimeSlotAvailable: TextView = itemView.findViewById(R.id.txtTimeSlotAvailable)
     }
 
 
@@ -50,13 +51,14 @@ class TimeSlotAdapter(
         val timeSlot = listTimeSlot[position]
         val normalTime = convertToNormalTime(timeSlot.timeSlot)
         holder.txtTimeSlot.text = normalTime
-        val timeSlotInfo = TimeSlotInfo(normalTime, timeSlot.service)
+        holder.txtTimeSlotAvailable.text = "${timeSlot.currentPatient}-${timeSlot.maximumPatient}"
+        val timeSlotInfo = TimeSlotInfo(normalTime, timeSlot.service, timeSlot.maximumPatient, timeSlot.currentPatient)
         val isSelected = position == selectedPosition
 
-        if (isCardOfflineSelected && timeSlot.service == "online") {
+        if (isCardOfflineSelected && timeSlot.service == "Online") {
             holder.itemView.alpha = 0.5f
             holder.itemView.isEnabled = false
-        } else if (isCardOnlineSelected && timeSlot.service == "offline") {
+        } else if (isCardOnlineSelected && timeSlot.service == "Offline") {
             holder.itemView.alpha = 0.5f
             holder.itemView.isEnabled = false
 

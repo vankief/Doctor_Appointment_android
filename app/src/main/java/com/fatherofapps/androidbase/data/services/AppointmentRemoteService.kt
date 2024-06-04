@@ -6,6 +6,7 @@ import com.fatherofapps.androidbase.data.apis.AppointmentAPI
 import com.fatherofapps.androidbase.data.request.AppointmentRequest
 import com.fatherofapps.androidbase.data.response.AppointmentDetail
 import com.fatherofapps.androidbase.data.response.AppointmentResponse
+import com.fatherofapps.androidbase.data.response.AppointmentsCompleted
 import com.fatherofapps.androidbase.data.response.AppointmentsResponse
 import com.fatherofapps.androidbase.data.response.ConfigResponse
 import com.fatherofapps.androidbase.data.response.DoctorAppointment
@@ -18,6 +19,10 @@ class AppointmentRemoteService @Inject constructor( private val appointmentAPI: 
 
     suspend fun getAppointments(): NetworkResult<ConfigResponse<AppointmentsResponse>> {
         return callApi { appointmentAPI.getAppointments() }
+    }
+
+    suspend fun getCompleteAppointments(): NetworkResult<ConfigResponse<AppointmentsCompleted>> {
+        return callApi { appointmentAPI.getCompleteAppointments() }
     }
 
     suspend fun getPatientAppointments(id: String): NetworkResult<ConfigResponse<AppointmentDetail>> {

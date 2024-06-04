@@ -63,6 +63,13 @@ class MainActivity : BaseActivity() {
                     }
                     true
                 }
+                R.id.historyFragment -> {
+                    if (navController.currentDestination?.id != R.id.historyFragment) {
+                        navController.navigate(R.id.historyFragment)
+                    }
+                    true
+                }
+
                 else -> false
             }
         }

@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="8dp"
         >
 
         <!-- Phần 1: Ảnh đại diện -->
@@ -52,7 +51,7 @@
                 <TextView
                     android:id="@+id/txtService"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="Online"
                     android:textSize="14sp"
                     android:gravity="center_vertical"
@@ -60,7 +59,7 @@
                 <TextView
                     android:id="@+id/txtStatus"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:text=" - Đã kết thúc"
                     android:textSize="14sp"
                     android:gravity="center_vertical"
@@ -76,6 +75,7 @@
 
         </LinearLayout>
 
+        <!-- Phần 3: Icon trái tim đánh dấu -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="50dp"
             android:layout_height="40dp"
@@ -87,12 +87,13 @@
 
             <!-- Icon trái tim -->
             <ImageView
-                android:id="@+id/imgService"
+                android:id="@+id/imgDetail"
                 android:layout_width="35dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:src="@drawable/chat_rounded"
-                app:tint="@color/md_theme_light_primary" />
+                android:src="@drawable/chevron_right"
+                app:tint="@color/md_theme_light_primary"
+                />
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

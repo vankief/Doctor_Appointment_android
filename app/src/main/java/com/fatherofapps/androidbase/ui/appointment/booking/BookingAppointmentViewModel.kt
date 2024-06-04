@@ -17,11 +17,11 @@ class BookingAppointmentViewModel @Inject constructor(
     private val repository: DoctorRepository,
     private val preferenceManager: PreferenceManager
 ) : BaseViewModel(){
-    private var _doctorTimeSlottResponse = MutableLiveData<ConfigResponse<List<ListTime>>?>()
+    private var _doctorTimeSlotResponse = MutableLiveData<ConfigResponse<List<ListTime>>?>()
 
     private var _doctorPriceResponse = MutableLiveData<ConfigResponse<doctorPrice>?>()
-    val doctorTimeSlottResponse: MutableLiveData<ConfigResponse<List<ListTime>>?>
-        get() = _doctorTimeSlottResponse
+    val doctorTimeSlotResponse: MutableLiveData<ConfigResponse<List<ListTime>>?>
+        get() = _doctorTimeSlotResponse
 
     val doctorPriceResponse: MutableLiveData<ConfigResponse<doctorPrice>?>
         get() = _doctorPriceResponse
@@ -30,7 +30,7 @@ class BookingAppointmentViewModel @Inject constructor(
         showLoading(true)
         parentJob = viewModelScope.launch(handler) {
             val data = repository.getDoctorTimeSlot(doctorId ?: "",day)
-            _doctorTimeSlottResponse.postValue(data)
+            _doctorTimeSlotResponse.postValue(data)
         }
         registerJobFinish()
     }

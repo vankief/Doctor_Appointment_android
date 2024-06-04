@@ -1,4 +1,4 @@
-package com.fatherofapps.androidbase.ui.appointment.myappointment
+package com.fatherofapps.androidbase.ui.history.appointment
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,16 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.data.response.Appointment
-import com.fatherofapps.androidbase.data.response.AppointmentDetail
 import com.fatherofapps.androidbase.utils.convertImagePath
 import com.fatherofapps.androidbase.utils.convertStatusToVietnamese
 
-class AppointmentAdapter(
+class HistoryAppointmentAdapter(
     private val appointmentList: List<Appointment>
-): RecyclerView.Adapter<AppointmentAdapter.AppointmentViewHolder>() {
+): RecyclerView.Adapter<HistoryAppointmentAdapter.HistoryAppointmentViewHolder>() {
 
-
-    inner class AppointmentViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class HistoryAppointmentViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val doctorImg: ImageView = itemView.findViewById(R.id.doctorAvatar)
         val txtDoctorNam:TextView = itemView.findViewById(R.id.txtDoctorName)
         val txtService:TextView = itemView.findViewById(R.id.txtService)
@@ -28,16 +26,16 @@ class AppointmentAdapter(
         val imgService: ImageView = itemView.findViewById(R.id.imgService)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppointmentViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryAppointmentViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_appointment_card, parent, false)
-        return AppointmentViewHolder(view)
+        return HistoryAppointmentViewHolder(view)
     }
 
     override fun getItemCount(): Int {
         return appointmentList.size
     }
 
-    override fun onBindViewHolder(holder: AppointmentViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HistoryAppointmentViewHolder, position: Int) {
         val appointment = appointmentList[position]
         holder.txtDoctorNam.text = appointment.doctorName
         Glide.with(holder.itemView.context)
@@ -52,8 +50,8 @@ class AppointmentAdapter(
             holder.imgService.setImageResource(R.drawable.chat_rounded)
         }
         holder.itemView.setOnClickListener(){
-            val appoinmentId = appointment.appointmentId
-            val action = AppointmentFragmentDirections.actionAppointmentFragmentToMyAppointmentDetailFragment(appoinmentId)
+            val appointmentId = appointment.appointmentId
+            val action = HistoryFragmentDirections.actionHistoryFragmentToHistoryDetailFragment(appointmentId)
             holder.itemView.findNavController().navigate(action)
         }
     }

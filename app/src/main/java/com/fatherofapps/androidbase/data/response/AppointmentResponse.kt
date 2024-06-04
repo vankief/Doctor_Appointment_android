@@ -23,6 +23,10 @@ data class PaymentDetailOfflineResponse(
      val upcoming: List<DateAppointment>,
      val past: List<DateAppointment>
  )
+data class AppointmentsCompleted(
+    val online: List<DateAppointment>,
+    val offline: List<DateAppointment>
+)
 
 data class Appointment(
     val appointmentId: String,
@@ -52,5 +56,6 @@ data class AppointmentDetail(
     val patientPhone: String,
     val patientAge: String,
     val fee : Int,
-    val isRate: Boolean
+    val isRate: Boolean,
+    var conclusion: String?,
 )
