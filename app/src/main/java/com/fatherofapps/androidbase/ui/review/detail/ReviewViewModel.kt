@@ -1,4 +1,4 @@
-package com.fatherofapps.androidbase.ui.review
+package com.fatherofapps.androidbase.ui.review.detail
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope

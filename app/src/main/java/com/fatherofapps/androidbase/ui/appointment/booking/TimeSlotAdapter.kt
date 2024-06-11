@@ -51,7 +51,8 @@ class TimeSlotAdapter(
         val timeSlot = listTimeSlot[position]
         val normalTime = convertToNormalTime(timeSlot.timeSlot)
         holder.txtTimeSlot.text = normalTime
-        holder.txtTimeSlotAvailable.text = "${timeSlot.currentPatient}-${timeSlot.maximumPatient}"
+        val available = timeSlot.maximumPatient - timeSlot.currentPatient
+        holder.txtTimeSlotAvailable.text = available.toString()
         val timeSlotInfo = TimeSlotInfo(normalTime, timeSlot.service, timeSlot.maximumPatient, timeSlot.currentPatient)
         val isSelected = position == selectedPosition
 

@@ -2,6 +2,7 @@ package com.fatherofapps.androidbase.data.response
 
 import com.fatherofapps.androidbase.data.models.Specialist
 import com.fatherofapps.androidbase.utils.TimeSlot
+import java.util.Date
 
 data class TopDoctor(
     val id: String,
@@ -51,4 +52,13 @@ data class DoctorAppointment(
     val doctorId: String,
     val doctorName: String,
     val doctorImage: String,
+)
+
+data class ReViewResponse(
+    val id: String,
+    val patientName: String,
+    val patientImage: String,
+    val rating: Int,
+    val comment: String,
+    val createdDate: String,
 )

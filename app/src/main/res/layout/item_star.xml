@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/itemSpecialist"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:cardCornerRadius="16dp"
+        app:strokeColor="@color/md_theme_light_onPrimary"
+        app:strokeWidth="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/imgSpecialist"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_star_1"
+                android:scaleType="centerCrop"
+                android:layout_marginEnd="4dp"
+                android:backgroundTint="@color/md_theme_light_primary"
+                />
+
+            <TextView
+                android:id="@+id/txtStar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="5"
+                android:textColor="@color/md_theme_light_onPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

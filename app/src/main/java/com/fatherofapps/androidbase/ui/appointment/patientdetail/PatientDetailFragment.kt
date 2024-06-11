@@ -73,6 +73,7 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
             val validationResult = validatePatientDetail()
             if (validationResult.first) {
                 viewModel.createAppointment(getAppointmentRequest())
+                Log.d(TAG, "onViewCreated: ${getAppointmentRequest()}")
                 fetchPaymentIntent()
             } else {
                 showErrorMessage(validationResult.second)
@@ -106,6 +107,7 @@ class PatientDetailFragment @Inject constructor() : BaseFragment() {
         val scheduledTime = args.appointmentInfo.time
         val scheduledDate = args.appointmentInfo.day
         val service = args.appointmentInfo.service
+
         return dataBinding.run {
             AppointmentRequest(
                 doctorId, scheduledDate, scheduledTime, patientName,

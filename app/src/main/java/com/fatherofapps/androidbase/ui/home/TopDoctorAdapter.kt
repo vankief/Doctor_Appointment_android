@@ -56,7 +56,7 @@ class TopDoctorAdapter(
         Glide.with(holder.itemView.context)
             .load(convertImagePath(doctor.img))
             .override(160, 160)
-            .centerCrop()
+            .fitCenter()
             .into(holder.imgDoctor)
         holder.txtDoctorName.text = doctor.name
         holder.txtDoctorSpecialization.text = doctor.specialist

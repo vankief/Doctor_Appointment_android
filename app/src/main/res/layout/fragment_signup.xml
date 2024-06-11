@@ -35,7 +35,7 @@
             android:layout_height="68dp"
             android:layout_marginTop="8dp"
             android:hint="Email"
-            app:placeholderText="Họ tên"
+            app:placeholderText="Email"
             android:layout_gravity="center"
             app:startIconDrawable="@drawable/email_24">
 

@@ -107,6 +107,9 @@
         <action
             android:id="@+id/action_fragmentDoctorDetail_to_fragmentBookingAppointment"
             app:destination="@id/fragmentBookingAppointment" />
+        <action
+            android:id="@+id/action_doctorDetailfragment_to_reviewDetailFragment"
+            app:destination="@id/reviewDetailFragment" />
     </fragment>
      <fragment
         android:id="@+id/fragmentBookingAppointment"
@@ -216,13 +219,16 @@
     </fragment>
     <fragment
         android:id="@+id/reviewFragment"
-        android:name="com.fatherofapps.androidbase.ui.review.ReviewFragment"
+        android:name="com.fatherofapps.androidbase.ui.review.detail.ReviewFragment"
         android:label="ReviewFragment"
         tools:layout="@layout/fragment_review"
         >
         <argument
             android:name="appointmentId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_reviewFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/smartCardFragment"
@@ -255,6 +261,19 @@
         <action
             android:id="@+id/action_historyFragment_to_historyDetailFragment"
             app:destination="@id/historyDetailFragment" />
+        <action
+            android:id="@+id/action_historyFragment_to_fragmentTopDoctor"
+            app:destination="@id/fragmentTopDoctor" />
+    </fragment>
+    <fragment
+        android:id="@+id/reviewDetailFragment"
+        android:name="com.fatherofapps.androidbase.ui.review.all.ReviewDetailFragment"
+        android:label="ReviewDetailFragment"
+        tools:layout="@layout/fragment_review_detail"
+        >
+        <argument
+            android:name="doctorId"
+            app:argType="string" />
     </fragment>
 
 

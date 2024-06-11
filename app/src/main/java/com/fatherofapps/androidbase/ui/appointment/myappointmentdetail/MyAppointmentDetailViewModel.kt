@@ -6,6 +6,7 @@ import com.fatherofapps.androidbase.base.viewmodel.BaseViewModel
 import com.fatherofapps.androidbase.data.repositories.AppointmentRepository
 import com.fatherofapps.androidbase.data.response.AppointmentDetail
 import com.fatherofapps.androidbase.data.response.ConfigResponse
+import com.fatherofapps.androidbase.data.response.PaymentDetailOnlineResponse
 import com.fatherofapps.androidbase.helper.preferences.PreferenceManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,11 +21,24 @@ class MyAppointmentDetailViewModel @Inject constructor(
     val AppointmentsResponse: MutableLiveData<ConfigResponse<AppointmentDetail>>
         get() = _AppointmentsResponse
 
+    private var _paymentDetailOnlineResponse = MutableLiveData<ConfigResponse<PaymentDetailOnlineResponse>>()
+    val paymentDetailOnlineResponse: MutableLiveData<ConfigResponse<PaymentDetailOnlineResponse>>
+        get() = _paymentDetailOnlineResponse
+
     fun getPatientAppointments(id: String) {
         showLoading(true)
         parentJob = viewModelScope.launch {
             val response = appointmentRepository.getPatientAppointments(id)
             _AppointmentsResponse.postValue(response!!)
+        }
+        registerJobFinish()
+    }
+
+    fun getPaymentDetailOnline(appointmentId: String) {
+        showLoading(true)
+        parentJob = viewModelScope.launch {
+            val response = appointmentRepository.paymentAppointment(appointmentId)
+            _paymentDetailOnlineResponse.postValue(response!!)
         }
         registerJobFinish()
     }

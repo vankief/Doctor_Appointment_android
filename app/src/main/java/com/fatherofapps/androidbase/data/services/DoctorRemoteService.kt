@@ -6,6 +6,7 @@ import com.fatherofapps.androidbase.data.apis.DoctorAPI
 import com.fatherofapps.androidbase.data.response.ConfigResponse
 import com.fatherofapps.androidbase.data.response.DoctorInfo
 import com.fatherofapps.androidbase.data.response.ListTime
+import com.fatherofapps.androidbase.data.response.ReViewResponse
 import com.fatherofapps.androidbase.data.response.TopDoctor
 import com.fatherofapps.androidbase.data.response.TopDoctorBySpecialist
 import com.fatherofapps.androidbase.data.response.doctorPrice
@@ -40,6 +41,11 @@ class DoctorRemoteService @Inject constructor(private val doctorAPI: DoctorAPI) 
     suspend fun getDoctorScheduleDay(id: String): NetworkResult<ConfigResponse<List<String>>>
     {
         return callApi { doctorAPI.getDoctorScheduleDay(id) }
+    }
+
+    suspend fun getDoctorReview(id: String, star: Int): NetworkResult<ConfigResponse<List<ReViewResponse>>>
+    {
+        return callApi { doctorAPI.getDoctorReview(id, star) }
     }
 
 }

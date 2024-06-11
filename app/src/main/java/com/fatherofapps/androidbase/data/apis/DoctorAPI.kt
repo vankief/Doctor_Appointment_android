@@ -4,6 +4,7 @@ import com.fatherofapps.androidbase.data.request.DoctorFilter
 import com.fatherofapps.androidbase.data.response.ConfigResponse
 import com.fatherofapps.androidbase.data.response.DoctorInfo
 import com.fatherofapps.androidbase.data.response.ListTime
+import com.fatherofapps.androidbase.data.response.ReViewResponse
 import com.fatherofapps.androidbase.data.response.TopDoctor
 import com.fatherofapps.androidbase.data.response.TopDoctorBySpecialist
 import com.fatherofapps.androidbase.data.response.doctorPrice
@@ -36,4 +37,6 @@ interface DoctorAPI {
     @GET("/doctors/specialist/{SpecialistPath}")
     suspend fun getDoctorBySpecialist(@Path("SpecialistPath") specialistId: String?): Response<ConfigResponse<List<TopDoctorBySpecialist>>>
 
+    @GET("/doctors/reviews/{DoctorPath}/{star}")
+    suspend fun getDoctorReview(@Path("DoctorPath") id: String, @Path("star") star: Int): Response<ConfigResponse<List<ReViewResponse>>>
 }

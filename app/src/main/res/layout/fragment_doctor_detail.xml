@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="16dp">
+                >
 
                 <!-- Phần 1: Ảnh đại diện -->
                 <ImageView
@@ -254,6 +254,7 @@
                 style="@style/h2_style" />
 
             <TextView
+                android:id="@+id/seeAllReviewTextView"
                 style="@style/h2_highlight_style"
                 android:layout_width="0dp"
                 android:textAlignment="textEnd"

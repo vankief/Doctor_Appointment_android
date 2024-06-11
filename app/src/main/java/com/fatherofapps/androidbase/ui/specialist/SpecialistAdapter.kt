@@ -55,10 +55,10 @@ class SpecialistAdapter(
         holder.materialCardView.setCardBackgroundColor(color)
         Glide.with(holder.itemView.context)
             .load(convertImagePath(specialist.img))
-            .override(90,90)
+            .fitCenter()
             .into(holder.imgSpecialist)
         holder.txtSpecialistName.text = specialist.name
-        holder.txtDoctorCount.text = specialist.numberOfDoctors.toString()
+        holder.txtDoctorCount.text = specialist.numberOfDoctors.toString() + " Bác sĩ"
 
         holder.itemView.setOnClickListener() {
             val specialistId = specialist.id

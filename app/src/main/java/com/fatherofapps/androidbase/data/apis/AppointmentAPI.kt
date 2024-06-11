@@ -7,6 +7,7 @@ import com.fatherofapps.androidbase.data.response.AppointmentsCompleted
 import com.fatherofapps.androidbase.data.response.AppointmentsResponse
 import com.fatherofapps.androidbase.data.response.ConfigResponse
 import com.fatherofapps.androidbase.data.response.DoctorAppointment
+import com.fatherofapps.androidbase.data.response.PaymentDetailOnlineResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -29,5 +30,8 @@ interface AppointmentAPI {
 
     @GET("/appointment/doctor/{id}")
     suspend fun getDoctorAppointments(@Path("id") id: String): Response<ConfigResponse<DoctorAppointment>>
+
+    @POST("/appointment/payment/{id}")
+    suspend fun paymentAppointment(@Path("id") id: String): Response<ConfigResponse<PaymentDetailOnlineResponse>>
 
 }

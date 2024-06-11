@@ -11,15 +11,18 @@ import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.response.AppointmentDetail
 import com.fatherofapps.androidbase.databinding.FragmentHistoryDetailBinding
-import com.fatherofapps.androidbase.utils.EStatus
 import com.fatherofapps.androidbase.utils.convertImagePath
 import com.fatherofapps.androidbase.utils.convertStatusToVietnamese
 import com.fatherofapps.androidbase.utils.convertToVietNamDate
+import com.fatherofapps.androidbase.utils.extractParagraphTags
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
-class HistoryDetailFragment: BaseFragment() {
+@AndroidEntryPoint
+class HistoryDetailFragment @Inject constructor(): BaseFragment() {
     private lateinit var dataBinding: FragmentHistoryDetailBinding
     private val viewModel by viewModels<HistoryDetailViewModel>()
     private val args by navArgs<HistoryDetailFragmentArgs>()
@@ -80,7 +83,8 @@ class HistoryDetailFragment: BaseFragment() {
         dataBinding.txtPatientName.text = appointmentDetail.patientName
         dataBinding.txtPatientPhone.text = appointmentDetail.patientPhone
         dataBinding.txtPatientAge.text = appointmentDetail.patientAge
-        dataBinding.txtResult.text = appointmentDetail.conclusion
+        dataBinding.txtReason.text = appointmentDetail.reason
+        dataBinding.txtResult.text = extractParagraphTags(appointmentDetail.conclusion)
 
             // Kiểm tra xem có thể đánh giá cuộc hẹn không (trong vòng 7 ngày kể từ ngày hẹn)
             val canRate = checkReviewValidity(appointmentDetail.scheduleDate, appointmentDetail.scheduleTime)

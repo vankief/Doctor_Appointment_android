@@ -50,6 +50,7 @@ data class AppointmentDetail(
     val experience: String,
     val service: String,
     val status: EStatus,
+    val reason: String,
     val scheduleTime: String,
     val scheduleDate: String,
     val patientName: String,

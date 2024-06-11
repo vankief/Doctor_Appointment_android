@@ -12,8 +12,6 @@ import com.fatherofapps.androidbase.R
 import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.response.DateAppointment
 import com.fatherofapps.androidbase.databinding.FragmentHistoryAppointmentBinding
-import com.fatherofapps.androidbase.ui.appointment.myappointment.AppointmentFragmentDirections
-import com.fatherofapps.androidbase.ui.appointment.myappointment.ScheduleDayAdapter
 import com.google.android.material.card.MaterialCardView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -49,7 +47,7 @@ class HistoryFragment @Inject constructor(): BaseFragment(){
         selectCard(dataBinding.cardOnline)
         selectText(dataBinding.txtOnline)
         dataBinding.btnBookNow.setOnClickListener {
-            val action = AppointmentFragmentDirections.actionAppointmentFragmentToFragmentTopDoctor("all")
+            val action = HistoryFragmentDirections.actionHistoryFragmentToFragmentTopDoctor("all")
             navigateToPage(action)
         }
     }

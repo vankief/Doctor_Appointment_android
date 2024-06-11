@@ -7,9 +7,11 @@ import com.fatherofapps.androidbase.data.repositories.AppointmentRepository
 import com.fatherofapps.androidbase.data.response.AppointmentDetail
 import com.fatherofapps.androidbase.data.response.ConfigResponse
 import com.fatherofapps.androidbase.helper.preferences.PreferenceManager
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class HistoryDetailViewModel @Inject constructor(
     private val appointmentRepository: AppointmentRepository,
     private val preferenceManager: PreferenceManager

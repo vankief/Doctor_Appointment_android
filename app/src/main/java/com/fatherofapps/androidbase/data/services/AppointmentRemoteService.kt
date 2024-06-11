@@ -10,6 +10,7 @@ import com.fatherofapps.androidbase.data.response.AppointmentsCompleted
 import com.fatherofapps.androidbase.data.response.AppointmentsResponse
 import com.fatherofapps.androidbase.data.response.ConfigResponse
 import com.fatherofapps.androidbase.data.response.DoctorAppointment
+import com.fatherofapps.androidbase.data.response.PaymentDetailOnlineResponse
 import javax.inject.Inject
 
 class AppointmentRemoteService @Inject constructor( private val appointmentAPI: AppointmentAPI) : BaseRemoteService(){
@@ -31,5 +32,9 @@ class AppointmentRemoteService @Inject constructor( private val appointmentAPI: 
 
     suspend fun getDoctorAppointments(id: String): NetworkResult<ConfigResponse<DoctorAppointment>> {
         return callApi { appointmentAPI.getDoctorAppointments(id) }
+    }
+
+    suspend fun paymentAppointment(id: String): NetworkResult<ConfigResponse<PaymentDetailOnlineResponse>> {
+        return callApi { appointmentAPI.paymentAppointment(id) }
     }
 }

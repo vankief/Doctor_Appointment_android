@@ -95,4 +95,18 @@ class DoctorRepository @Inject constructor(
             }
         }
     }
+
+    suspend fun getDoctorReview(id: String, star: Int) = withContext(dispatcher) {
+        val result = doctorRemoteService.getDoctorReview(id, star)
+
+        when (result) {
+            is NetworkResult.Success -> {
+                return@withContext result.data
+            }
+            is NetworkResult.Error -> {
+                Log.e("Error", "getPosts: ${result.exception ?: "Error"}")
+                return@withContext null
+            }
+        }
+    }
 }

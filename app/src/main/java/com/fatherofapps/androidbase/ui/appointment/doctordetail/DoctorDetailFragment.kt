@@ -21,6 +21,7 @@ import com.fatherofapps.androidbase.data.response.DoctorInfo
 import com.fatherofapps.androidbase.databinding.FragmentDoctorDetailBinding
 import com.fatherofapps.androidbase.ui.home.HomeFragment
 import com.fatherofapps.androidbase.utils.convertImagePath
+import com.fatherofapps.androidbase.utils.extractParagraphTags
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -71,6 +72,10 @@ class DoctorDetailFragment  @Inject constructor(): BaseFragment() {
                 findNavController().navigate(action)
             }
         }
+        dataBinding.seeAllReviewTextView.setOnClickListener {
+            val action = DoctorDetailFragmentDirections.actionDoctorDetailfragmentToReviewDetailFragment(doctorInfo.id)
+            findNavController().navigate(action)
+        }
     }
 
     private fun setupRecyclerView() {
@@ -90,12 +95,12 @@ class DoctorDetailFragment  @Inject constructor(): BaseFragment() {
         this.doctorInfo = doctorInfo
         dataBinding.doctorNameTextView.text = "Bác Sĩ ${doctorInfo.name}"
         dataBinding.specializationTextView.text = doctorInfo.specialist
-        dataBinding.doctorDescriptionTextView.text = doctorInfo.description
-        dataBinding.appointmentCountTextView.text = doctorInfo.totalPatients.toString()
+        dataBinding.doctorDescriptionTextView.text = extractParagraphTags(doctorInfo.description)
+        dataBinding.appointmentCountTextView.text = doctorInfo.totalPatients.toString() + "+"
         var totalRating = String.format("%.1f", doctorInfo.averageRating)
         dataBinding.reviewTextView.text = "$totalRating (${doctorInfo.totalReviews})"
-        dataBinding.experienceCountTextView.text = doctorInfo.experience
-        dataBinding.reviewCountTextView.text = doctorInfo.totalReviews.toString()
+        dataBinding.experienceCountTextView.text = doctorInfo.experience + "+"
+        dataBinding.reviewCountTextView.text = doctorInfo.totalReviews.toString() + "+"
         // Load image using Glide
         Glide.with(this)
             .load(convertImagePath(doctorInfo.img)) // Đường dẫn của ảnh

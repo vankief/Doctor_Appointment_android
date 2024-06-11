@@ -1,4 +1,4 @@
-package com.fatherofapps.androidbase.ui.review
+package com.fatherofapps.androidbase.ui.review.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +12,8 @@ import com.fatherofapps.androidbase.base.fragment.BaseFragment
 import com.fatherofapps.androidbase.data.request.createReview
 import com.fatherofapps.androidbase.data.response.DoctorAppointment
 import com.fatherofapps.androidbase.databinding.FragmentReviewBinding
+import com.fatherofapps.androidbase.ui.review.detail.ReviewFragmentArgs
+import com.fatherofapps.androidbase.ui.review.detail.ReviewFragmentDirections
 import com.fatherofapps.androidbase.utils.convertImagePath
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
