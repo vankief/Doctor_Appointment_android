@@ -173,14 +173,14 @@ class MyAppointmentDetailFragment  @Inject constructor():BaseFragment() {
             val intentFilter = IntentFilter()
             intentFilter.addAction(BroadcastEvent.Type.CONFERENCE_JOINED.action)
             LocalBroadcastManager.getInstance(requireContext()).registerReceiver(broadcastReceiver, intentFilter)
-//            val serverUrl = "https://8x8.vc/vpaas-magic-cookie-81ab7c0a26124f9c9a85e4294b6cd2ac" // Sử dụng URL tương tự như trên FE
-            val roomId = "Room Id ${appointmentDetail?.appointmentId}" // Sử dụng room ID tương tự như trên FE
-            //val token = "eyJraWQiOiJ2cGFhcy1tYWdpYy1jb29raWUtODFhYjdjMGEyNjEyNGY5YzlhODVlNDI5NGI2Y2QyYWMvNjVhMjRiLVNBTVBMRV9BUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJqaXRzaSIsImlzcyI6ImNoYXQiLCJpYXQiOjE3MTgwMzU3MTYsImV4cCI6MTcxODA0MjkxNiwibmJmIjoxNzE4MDM1NzExLCJzdWIiOiJ2cGFhcy1tYWdpYy1jb29raWUtODFhYjdjMGEyNjEyNGY5YzlhODVlNDI5NGI2Y2QyYWMiLCJjb250ZXh0Ijp7ImZlYXR1cmVzIjp7ImxpdmVzdHJlYW1pbmciOnRydWUsIm91dGJvdW5kLWNhbGwiOnRydWUsInNpcC1vdXRib3VuZC1jYWxsIjpmYWxzZSwidHJhbnNjcmlwdGlvbiI6dHJ1ZSwicmVjb3JkaW5nIjp0cnVlfSwidXNlciI6eyJoaWRkZW4tZnJvbS1yZWNvcmRlciI6ZmFsc2UsIm1vZGVyYXRvciI6dHJ1ZSwibmFtZSI6InVvbmd0aGl2YW5raWV1MDkwNCIsImlkIjoiZ29vZ2xlLW9hdXRoMnwxMTQ5Mzc5NTc0NTM5OTc5MDE2NzgiLCJhdmF0YXIiOiIiLCJlbWFpbCI6InVvbmd0aGl2YW5raWV1MDkwNEBnbWFpbC5jb20ifX0sInJvb20iOiIqIn0.IBoch_HU-X0SpjMQxZvtCeFw_v_EgwdxqlSm1v0hDt_XiG_YQ8W2ydNuRQxN7HfK60WtILpPiEbZcY82wFqFRXoOqkqH_muD_I-FVjpwkG8T0dTNog1Q6PLKlHZMKvx5gDnveF3jrdxGoSpFNziUwJNP00PY3Mjo125bRHap-qH2bi4ScOvfC2DqHaZ8hR2YUNO1uhc5X96vnhk6p-HC1H8ugfTP1WoK-xiMB_3nGAF9OyH8zoM8HsOpsWWMA7cAHu32rfVYV4hvO2mdkbjLZTVgbrkwxKoJgPo9KGI3EjzujuLnWYlvIKkJ4rxnnhV77PlwUHJ7ZJnAnGxRv4819w"
+            val serverUrl = "https://8x8.vc"
+            val roomId = "vpaas-magic-cookie-81ab7c0a26124f9c9a85e4294b6cd2ac/${appointmentDetail?.appointmentId}" // Sử dụng room ID tương tự như trên FE
+            val token = "eyJraWQiOiJ2cGFhcy1tYWdpYy1jb29raWUtODFhYjdjMGEyNjEyNGY5YzlhODVlNDI5NGI2Y2QyYWMvNjVhMjRiLVNBTVBMRV9BUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJqaXRzaSIsImlzcyI6ImNoYXQiLCJpYXQiOjE3MTgwMzU3MTYsImV4cCI6MTcxODA0MjkxNiwibmJmIjoxNzE4MDM1NzExLCJzdWIiOiJ2cGFhcy1tYWdpYy1jb29raWUtODFhYjdjMGEyNjEyNGY5YzlhODVlNDI5NGI2Y2QyYWMiLCJjb250ZXh0Ijp7ImZlYXR1cmVzIjp7ImxpdmVzdHJlYW1pbmciOnRydWUsIm91dGJvdW5kLWNhbGwiOnRydWUsInNpcC1vdXRib3VuZC1jYWxsIjpmYWxzZSwidHJhbnNjcmlwdGlvbiI6dHJ1ZSwicmVjb3JkaW5nIjp0cnVlfSwidXNlciI6eyJoaWRkZW4tZnJvbS1yZWNvcmRlciI6ZmFsc2UsIm1vZGVyYXRvciI6dHJ1ZSwibmFtZSI6InVvbmd0aGl2YW5raWV1MDkwNCIsImlkIjoiZ29vZ2xlLW9hdXRoMnwxMTQ5Mzc5NTc0NTM5OTc5MDE2NzgiLCJhdmF0YXIiOiIiLCJlbWFpbCI6InVvbmd0aGl2YW5raWV1MDkwNEBnbWFpbC5jb20ifX0sInJvb20iOiIqIn0.IBoch_HU-X0SpjMQxZvtCeFw_v_EgwdxqlSm1v0hDt_XiG_YQ8W2ydNuRQxN7HfK60WtILpPiEbZcY82wFqFRXoOqkqH_muD_I-FVjpwkG8T0dTNog1Q6PLKlHZMKvx5gDnveF3jrdxGoSpFNziUwJNP00PY3Mjo125bRHap-qH2bi4ScOvfC2DqHaZ8hR2YUNO1uhc5X96vnhk6p-HC1H8ugfTP1WoK-xiMB_3nGAF9OyH8zoM8HsOpsWWMA7cAHu32rfVYV4hvO2mdkbjLZTVgbrkwxKoJgPo9KGI3EjzujuLnWYlvIKkJ4rxnnhV77PlwUHJ7ZJnAnGxRv4819w"
             try {
-                val url = URL("https://meet.jit.si")
+                val url = URL(serverUrl)
                 val defaultOption = JitsiMeetConferenceOptions.Builder()
                     .setServerURL(url)
-//                    .setToken(token)
+                    .setToken(token)
                     .build()
 
                 JitsiMeet.setDefaultConferenceOptions(defaultOption)
